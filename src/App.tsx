@@ -1,17 +1,18 @@
 //npm modules
 import '@trussworks/react-uswds/lib/index.css'; 
 import '@trussworks/react-uswds/lib/uswds.css';
+import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
 
 //components
 import NavBar from './components/NavBar';
 
 //pages
 import Login from './pages/Login';
+import Signup from './pages/Signup';
 
 //services
 
 //stylesheets
-import './App.css'
 
 function App() {
 
@@ -19,7 +20,12 @@ function App() {
         <>
             {/* if signed in, add navbar */}
             <NavBar />
-            <Login/>
+            <BrowserRouter basename='/'>
+                <Routes>
+                    <Route path='/' element={<Login />} />
+                    <Route path='/signup' element={<Signup />} />
+                </Routes>
+            </BrowserRouter>
         </>
     )
 }

@@ -1,6 +1,6 @@
 import { Grid, GridContainer, Form, Fieldset, Label, TextInput, Button, Link} from '@trussworks/react-uswds'
 import { useState } from 'react';
-
+import { NavLink } from 'react-router-dom';
 
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
@@ -16,7 +16,7 @@ const Login = () => {
                         col: 6
                         }}>
                             <div className="bg-white padding-y-3 padding-x-5 border border-base-lighter">
-                                <h1 className="margin-bottom-0">Sign in</h1>
+                                <h1 className="margin-bottom-0">Sign in to</h1>
                                 <Form onSubmit={() => {}}> {/* On submit, do nothing */}
                                     <Fieldset legend="Access your account" legendStyle="large">
                                     <Label htmlFor="email">Email address</Label>
@@ -31,16 +31,16 @@ const Login = () => {
 
                                     <Button type="submit">Sign in</Button>
 
-                                    <p>
+                                    {/* <p>
                                         <Link href="javascript:void();">Forgot password?</Link>
-                                    </p>
+                                    </p> */}
                                     </Fieldset>
                                 </Form>
                             </div>
 
                             <p className="text-center">
                             {"Don't have an account? "}
-                            <Link href="javascript:void();">Create your account now</Link>
+                            <NavLink to='/signup'>Create your account now</NavLink>
                             </p>
                         </Grid>
                         </Grid>

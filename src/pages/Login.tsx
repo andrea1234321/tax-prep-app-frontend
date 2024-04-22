@@ -17,7 +17,7 @@ const Login = () => {
                         }}>
                             <div className="bg-white padding-y-3 padding-x-5 border border-base-lighter">
                                 <h1 className="margin-bottom-0">Sign in</h1>
-                                <Form >
+                                <Form onSubmit={() => {}}> {/* On submit, do nothing */}
                                     <Fieldset legend="Access your account" legendStyle="large">
                                     <Label htmlFor="email">Email address</Label>
                                     <TextInput id="email" name="email" type="email" autoCorrect="off" autoCapitalize="off" required={true} />

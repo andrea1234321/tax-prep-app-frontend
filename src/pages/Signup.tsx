@@ -2,9 +2,48 @@ import { Grid, GridContainer, Form, Fieldset, Label, TextInput, Button, Link} fr
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
+type UserData = {
+    email: string,
+    password: string,
+    'password-confirm': string
+}
+
 const Signup = () => {
-  const [showPassword, setShowPassword] = useState(false);
-    return ( 
+    const backendUrl = 'http://localhost:8080'
+
+    const [showPassword, setShowPassword] = useState(false);
+
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        const form = event.target;
+        const formData = new FormData(form as HTMLFormElement);
+        const formJson = Object.fromEntries(formData.entries()) as UserData;
+
+        if (formJson.password !== formJson['password-confirm']) {
+            console.log("Passwords do not match!");
+            return;
+        }
+
+        fetch(backendUrl + '/users/register', {
+            method: 'POST',
+            headers : {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email: formJson.email,
+                password: formJson.password
+            })
+        })
+        .then((data: Response) => {
+            console.log(data);
+            if (data.status === 201) {
+                console.log("User created.");
+            }
+        })
+        .catch((error: Error) => console.error(error));
+    };
+
+    return (
         <>
             <main id="main-content">
                 <div className="bg-base-lightest">
@@ -19,7 +58,7 @@ const Signup = () => {
                         }}>
                             <div className="bg-white padding-y-3 padding-x-5 border border-base-lighter">
                                 <h1 className="margin-bottom-0">Create account</h1>
-                                <Form onSubmit={()=> {}}>
+                                <Form onSubmit={handleSubmit}>
                                     <Fieldset legend="Get started with an account.">
                                     <p>
                                         <abbr title="required" className="usa-hint usa-hint--required">

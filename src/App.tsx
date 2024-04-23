@@ -1,7 +1,7 @@
 //npm modules
 import '@trussworks/react-uswds/lib/index.css'; 
 import '@trussworks/react-uswds/lib/uswds.css';
-import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 //components
 import NavBar from './components/NavBar';
@@ -9,6 +9,7 @@ import NavBar from './components/NavBar';
 //pages
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import Landing from './pages/Landing';
 
 //services
 
@@ -23,7 +24,8 @@ function App() {
             <BrowserRouter basename='/'>
                 <Routes>
                     <Route path='/' element={<Login />} />
-                    <Route path='/signup' element={<Signup />} />
+                    <Route path='/register' element={<Signup />} />
+                    <Route path='/home' element={<Landing />} />
                 </Routes>
             </BrowserRouter>
         </>

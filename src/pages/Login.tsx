@@ -16,19 +16,17 @@ const Login = () => {
         const form = evt.target;
         const formData = new FormData(form as HTMLFormElement);
         const formJson = Object.fromEntries(formData.entries()) as UserData;
-        fetch(backendUrl + '/users/login', {
+
+        fetch(backendUrl + '/login', {
             method: 'POST',
             headers : {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/x-www-form-urlencoded'
             },
-            body: JSON.stringify({
-                email: formJson.email,
-                password: formJson.password
-            })
+            body : 'username=' + encodeURIComponent(formJson.email) + '&password=' + encodeURIComponent(formJson.password)
         })
         .then((data: Response) => {
             console.log(data);
-            if (data.status === 202) {
+            if (data.status === 200) {
                 console.log("User Accepted.");
                 navigate("/home")
             }else{

@@ -1,9 +1,44 @@
-import { Grid, GridContainer, Form, Fieldset, Label, TextInput, Button, Link} from '@trussworks/react-uswds'
+import { Grid, GridContainer, Form, Fieldset, Label, TextInput, Button} from '@trussworks/react-uswds'
 import { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
+    const navigate = useNavigate();
+    type UserData = {
+        email: string,
+        password: string
+    }
+    
+    const handleSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
+        const backendUrl = 'http://localhost:8080'
+        evt.preventDefault()
+        const form = evt.target;
+        const formData = new FormData(form as HTMLFormElement);
+        const formJson = Object.fromEntries(formData.entries()) as UserData;
+        fetch(backendUrl + '/users/login', {
+            method: 'POST',
+            headers : {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email: formJson.email,
+                password: formJson.password
+            })
+        })
+        .then((data: Response) => {
+            console.log(data);
+            if (data.status === 202) {
+                console.log("User Accepted.");
+                navigate("/home")
+            }else{
+                console.log("user rejected")
+            }
+        })
+        .catch((error: Error) => console.error(error));
+    };
+    
+
     return ( 
         <>
             <main id="main-content">
@@ -17,7 +52,7 @@ const Login = () => {
                         }}>
                             <div className="bg-white padding-y-3 padding-x-5 border border-base-lighter">
                                 <h1 className="margin-bottom-0">Sign in to</h1>
-                                <Form onSubmit={() => {}}> {/* On submit, do nothing */}
+                                <Form onSubmit={handleSubmit}> {/* On submit, do nothing */}
                                     <Fieldset legend="Access your account" legendStyle="large">
                                     <Label htmlFor="email">Email address</Label>
                                     <TextInput id="email" name="email" type="email" autoCorrect="off" autoCapitalize="off" required={true} />
@@ -40,7 +75,7 @@ const Login = () => {
 
                             <p className="text-center">
                             {"Don't have an account? "}
-                            <NavLink to='/signup'>Create your account now</NavLink>
+                            <NavLink to='/register'>Create your account now</NavLink>
                             </p>
                         </Grid>
                         </Grid>

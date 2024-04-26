@@ -1,9 +1,10 @@
 import { Grid, GridContainer, Form, Fieldset, Label, TextInput, Button} from '@trussworks/react-uswds'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
+    const googleClientId= import.meta.env.GOOGLE_CLIENT_ID;
     const navigate = useNavigate();
     type UserData = {
         email: string,
@@ -35,7 +36,21 @@ const Login = () => {
         })
         .catch((error: Error) => console.error(error));
     };
-    
+    function handleCallbackResponse(response: any){
+        console.log("Encoded JWT: ", response.credentials)
+    }
+    useEffect(()=> {
+        google.accounts.id.initialize({
+            client_id: googleClientId,
+            callback: handleCallbackResponse
+        })
+
+        google.accounts.id.renderButton(
+            document.getElementById("signInDiv"),
+            {theme: "outline", size: "large"}
+        )
+    }, [])
+
 
     return ( 
         <>
@@ -79,6 +94,8 @@ const Login = () => {
                         </Grid>
                     </GridContainer>
                 </div>
+                <div id="signInDiv"></div>
+                <button onClick={()=> {}}>Log out</button>
             </main>
         </>
     );

@@ -4,7 +4,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
-    const googleClientId= import.meta.env.GOOGLE_CLIENT_ID;
+    const googleClientId= import.meta.env.VITE_GOOGLE_CLIENT_ID;
     const navigate = useNavigate();
     type UserData = {
         email: string,
@@ -36,13 +36,16 @@ const Login = () => {
         })
         .catch((error: Error) => console.error(error));
     };
-    function handleCallbackResponse(response: any){
-        console.log("Encoded JWT: ", response.credentials)
+    function handleCredentialResponse(response: any){
+        console.log("Encoded JWT: ", response.credential)
     }
+
+
     useEffect(()=> {
+        /* global google */
         google.accounts.id.initialize({
             client_id: googleClientId,
-            callback: handleCallbackResponse
+            callback: handleCredentialResponse
         })
 
         google.accounts.id.renderButton(
@@ -78,10 +81,8 @@ const Login = () => {
                                     </button>
 
                                     <Button type="submit">Sign in</Button>
-
-                                    {/* <p>
-                                        <Link href="javascript:void();">Forgot password?</Link>
-                                    </p> */}
+                                    <p>or</p>
+                                    <div id="signInDiv"></div>
                                     </Fieldset>
                                 </Form>
                             </div>
@@ -94,8 +95,6 @@ const Login = () => {
                         </Grid>
                     </GridContainer>
                 </div>
-                <div id="signInDiv"></div>
-                <button onClick={()=> {}}>Log out</button>
             </main>
         </>
     );

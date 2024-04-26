@@ -16,11 +16,6 @@ import Landing from './pages/Landing';
 //stylesheets
 
 function App() {
-    const handleLogin= () => {
-        window.location.replace("http://localhost:8080/signin");
-        console.log("we signed in")
-    }
-
     return (
         <>
             {/* if signed in, add navbar */}
@@ -32,7 +27,6 @@ function App() {
                     <Route path='/home' element={<Landing />} />
                 </Routes>
             </BrowserRouter>
-            <button onClick={handleLogin}>Click me</button>
         </>
     )
 }

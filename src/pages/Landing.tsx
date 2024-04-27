@@ -1,6 +1,6 @@
 import { Button, GridContainer } from "@trussworks/react-uswds";
 import { useEffect, useState } from "react";
-
+import { Link } from "react-router-dom";
 interface UserInfo {
     name: string;
   }
@@ -23,7 +23,7 @@ const Landing = () => {
                 <GridContainer containerSize="mobile-lg">
                     {userInfo ? <h1 >Welcome {userInfo.name}</h1> : <h1 >Welcome</h1> }
                     <h2>It's time to file taxes</h2>
-                    <Button type="button">File Tax Return</Button>
+                    <Link to="/personalInformation"><Button type="button">File Tax Return</Button></Link>
                 </GridContainer>
             </main>
         </>

@@ -10,10 +10,13 @@ import NavBar from './components/NavBar';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Landing from './pages/Landing';
+import PersonalInfo from './pages/PersonalInfo';
 
 //services
 
 //stylesheets
+import './App.css' 
+
 
 function App() {
     return (
@@ -25,6 +28,7 @@ function App() {
                     <Route path='/' element={<Login />} />
                     <Route path='/register' element={<Signup />} />
                     <Route path='/home' element={<Landing />} />
+                    <Route path='/personalInformation' element={<PersonalInfo />} />
                 </Routes>
             </BrowserRouter>
         </>

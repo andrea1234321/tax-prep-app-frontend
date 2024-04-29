@@ -1,19 +1,22 @@
 import { StepIndicator, StepIndicatorStep } from "@trussworks/react-uswds";
+import { useContext } from "react";
+import { AppContext } from "../App";
 
 type ProgressBarProps = {
     stepNumber: number
 }
 
 const ProgressBar = ({stepNumber}: ProgressBarProps) => {
+    const [globalInfo, _] = useContext(AppContext);
 
     const getStatus = (currentStep: number, indicatorStep: number) => {
-        if (currentStep < indicatorStep) {
-            return 'incomplete';
-        } else if (currentStep === indicatorStep) {
+        if (currentStep === indicatorStep) {
             return 'current';
-        } else {
+        }
+        if (indicatorStep <= globalInfo.stepNumber) {
             return 'complete';
         }
+        return 'incomplete';
     }
 
     return ( 

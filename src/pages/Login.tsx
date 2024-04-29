@@ -1,11 +1,21 @@
 import { Grid, GridContainer, Form, Fieldset, Label, TextInput, Button} from '@trussworks/react-uswds'
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
+import { AppContext } from '../App';
 
 const Login = () => {
+    // Get global info
+    const [globalInfo, setGlobalInfo] = useContext(AppContext);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (globalInfo.isLoggedIn) {
+            navigate('/home');
+        }
+    }, [globalInfo]);
+
     const [showPassword, setShowPassword] = useState(false);
     const googleClientId= import.meta.env.VITE_GOOGLE_CLIENT_ID;
-    const navigate = useNavigate();
     type UserData = {
         email: string,
         password: string
@@ -29,7 +39,7 @@ const Login = () => {
             console.log(data);
             if (data.status === 200) {
                 console.log("User Accepted.");
-                navigate("/home")
+                setGlobalInfo({...globalInfo, isLoggedIn: true});
             }else{
                 console.log("user rejected")
             }
@@ -38,8 +48,7 @@ const Login = () => {
     };
     function handleCredentialResponse(response: any){
         console.log("Encoded JWT: ", response.credential)
-        navigate('/home')
-        
+        setGlobalInfo({...globalInfo, isLoggedIn: true})
     }
 
 

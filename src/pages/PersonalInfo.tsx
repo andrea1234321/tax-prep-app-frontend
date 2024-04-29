@@ -1,7 +1,20 @@
+import { useContext, useEffect } from "react";
 import ProgressBar from "../components/ProgressBar";
 import { Fieldset, RequiredMarker, Label, TextInput, Select, Form, Button, Grid, DatePicker, TextInputMask} from "@trussworks/react-uswds";
+import { AppContext } from "../App";
+import { useNavigate } from "react-router-dom";
+
 const PersonalInfo = () => {
-    return ( 
+    const [globalInfo, _] = useContext(AppContext);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!globalInfo.isLoggedIn) {
+            navigate('/');
+        }
+    }, [globalInfo]);
+    
+    return (
         <>
             <main id="main-content">
                 <ProgressBar stepNumber={1} />

@@ -4,7 +4,7 @@ const PersonalInfo = () => {
     return ( 
         <>
             <main id="main-content">
-                <ProgressBar />
+                <ProgressBar stepNumber={1} />
                 <Form onSubmit={()=> {}} large>
                     <Fieldset legend="Personal Information" legendStyle="large">
                     <p>

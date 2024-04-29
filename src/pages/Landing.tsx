@@ -1,11 +1,21 @@
 import { Button, GridContainer } from "@trussworks/react-uswds";
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { AppContext } from "../App";
 interface UserInfo {
     name: string;
   }
 
 const Landing = () => {
+    const [globalInfo, _] = useContext(AppContext);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!globalInfo.isLoggedIn) {
+            navigate('/');
+        }
+    }, [globalInfo]);
+
     const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
 
     useEffect(() => {

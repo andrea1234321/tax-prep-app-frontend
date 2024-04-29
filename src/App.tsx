@@ -18,24 +18,41 @@ import Results from './pages/Results';
 //services
 
 //stylesheets
-import './App.css' 
+import './App.css'
+import { createContext, useState } from 'react';
+
+// App context
+type GlobalInfo = {
+    isLoggedIn: boolean,
+    stepNumber: number
+}
+
+export const AppContext = createContext<[GlobalInfo, (g: GlobalInfo) => void]>([{isLoggedIn: false, stepNumber: 1}, () => {}]);
 
 function App() {
+
+    const [globalInfo, setGlobalInfo] = useState<GlobalInfo>({
+        isLoggedIn: false,
+        stepNumber: 1
+    });
+
     return (
         <>
-            {/* if signed in, add navbar */}
-            <NavBar />
-            <BrowserRouter basename='/'>
-                <Routes>
-                    <Route path='/' element={<Login />} />
-                    <Route path='/register' element={<Signup />} />
-                    <Route path='/home' element={<Landing />} />
-                    <Route path='/personalInformation' element={<PersonalInfo />} />
-                    <Route path='/financialInformation' element={<FinanceInfo />} />
-                    <Route path='/review' element={<Review />} />
-                    <Route path='/results' element={<Results />} />
-                </Routes>
-            </BrowserRouter>
+            <AppContext.Provider value={[globalInfo, setGlobalInfo]}>
+                {/* if signed in, add navbar */}
+                <NavBar />
+                <BrowserRouter basename='/'>
+                    <Routes>
+                        <Route path='/' element={<Login />} />
+                        <Route path='/register' element={<Signup />} />
+                        <Route path='/home' element={<Landing />} />
+                        <Route path='/personalInformation' element={<PersonalInfo />} />
+                        <Route path='/financialInformation' element={<FinanceInfo />} />
+                        <Route path='/review' element={<Review />} />
+                        <Route path='/results' element={<Results />} />
+                    </Routes>
+                </BrowserRouter>
+            </AppContext.Provider>
         </>
     )
 }

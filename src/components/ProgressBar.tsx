@@ -1,6 +1,20 @@
 import { StepIndicator, StepIndicatorStep } from "@trussworks/react-uswds";
 
-const ProgressBar = () => {
+type ProgressBarProps = {
+    stepNumber: number
+}
+
+const ProgressBar = ({stepNumber}: ProgressBarProps) => {
+
+    const getStatus = (currentStep: number, indicatorStep: number) => {
+        if (currentStep < indicatorStep) {
+            return 'incomplete';
+        } else if (currentStep === indicatorStep) {
+            return 'current';
+        } else {
+            return 'complete';
+        }
+    }
 
     return ( 
         <>
@@ -13,19 +27,19 @@ const ProgressBar = () => {
             >
                 <StepIndicatorStep
                     label="Personal information"
-                    status="current"
+                    status={getStatus(stepNumber, 1)}
                 />
                 <StepIndicatorStep
                     label="Financial information"
-                    // status=conditionally add 
+                    status={getStatus(stepNumber, 2)}
                 />
                 <StepIndicatorStep
                     label="Review"
-                    // status=conditionally add 
+                    status={getStatus(stepNumber, 3)}
                 />
                 <StepIndicatorStep 
                     label="Results" 
-                    // status=conditionally add 
+                    status={getStatus(stepNumber, 4)}
                 />
             </StepIndicator>
         </>

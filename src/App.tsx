@@ -11,12 +11,14 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Landing from './pages/Landing';
 import PersonalInfo from './pages/PersonalInfo';
+import FinanceInfo from './pages/FinanceInfo';
+import Review from './pages/Review';
+import Results from './pages/Results';
 
 //services
 
 //stylesheets
 import './App.css' 
-
 
 function App() {
     return (
@@ -29,6 +31,9 @@ function App() {
                     <Route path='/register' element={<Signup />} />
                     <Route path='/home' element={<Landing />} />
                     <Route path='/personalInformation' element={<PersonalInfo />} />
+                    <Route path='/financialInformation' element={<FinanceInfo />} />
+                    <Route path='/review' element={<Review />} />
+                    <Route path='/results' element={<Results />} />
                 </Routes>
             </BrowserRouter>
         </>

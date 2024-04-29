@@ -2,11 +2,15 @@ import { useState } from "react";
 import ProgressBar from "../components/ProgressBar";
 import { Fieldset, RequiredMarker, Label, TextInput, Form, Button, Radio, Checkbox, Grid, InputGroup, InputPrefix } from "@trussworks/react-uswds";
 
+import SpouseInfromation from "../components/SpouseInformation";
+
 const FinanceInfo = () => {
     const [otherIncome, setOtherIncome] = useState(false)
     const [businessWithheld, setBusinessWithheld] = useState(false)
     const [otherWithheld, setOtherWithheld] = useState(false)
     const [paidWithheld, setPaidWithheld] = useState(false)
+    
+    const [jointFilling, setJointFilling] = useState(false)
 
     return (
         <>
@@ -20,15 +24,16 @@ const FinanceInfo = () => {
                     <Label htmlFor="filling-status" requiredMarker>Filling Status: </Label>
                     <Grid row>
                         <Grid col={3} offset={1}>
-                            <Radio id="single" name="filing-status" label="Single" />
+                            <Radio id="single" name="filing-status" label="Single" onChange={() => setJointFilling(false)}/>
                         </Grid>
                         <Grid col={4}>
-                            <Radio id="married-jointly" name="filing-status" label="Married Filling Jointly" />
+                            <Radio id="married-jointly" name="filing-status" label="Married Filling Jointly" checked={jointFilling} onChange={() => setJointFilling(!jointFilling)}/>
                         </Grid>
                         <Grid col={4}>
-                            <Radio id="married-separately" name="filing-status" label="Married Filling Separately" />      
+                            <Radio id="married-separately" name="filing-status" label="Married Filling Separately" onChange={() => setJointFilling(false)}/>      
                         </Grid>
                     </Grid>
+                    {jointFilling && <SpouseInfromation/>}
                     <Label htmlFor="w2-income" requiredMarker>W2 Form(s) total income</Label>
                     <TextInput id="w2-income" name="w2-income" type="text" required/>
                     <Label htmlFor="other-income" >Other income</Label>

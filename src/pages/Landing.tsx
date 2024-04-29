@@ -2,7 +2,7 @@ import { Button, GridContainer } from "@trussworks/react-uswds";
 import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AppContext } from "../App";
-interface UserInfo {
+type UserInfo = {
     name: string;
   }
 

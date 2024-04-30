@@ -1,7 +1,7 @@
 import { Button, GridContainer } from "@trussworks/react-uswds";
 import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { AppContext } from "../App";
+import { AppContext, backendUrl } from "../App";
 type UserInfo = {
     name: string;
 };
@@ -19,7 +19,7 @@ const Landing = () => {
     const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
 
     useEffect(() => {
-        fetch("http://localhost:8080/userInfo", {
+        fetch(backendUrl + "/userInfo", {
             credentials: "include",
             method: "GET",
         })

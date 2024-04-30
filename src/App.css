@@ -1,17 +1,16 @@
-.usa-step-indicator{
-  display: flex;
-  flex-direction: column;
+.usa-step-indicator {
+    display: flex;
+    flex-direction: column;
 }
-.usa-step-indicator__segments{
-  justify-content: center;
+.usa-step-indicator__segments {
+    justify-content: center;
 }
-.usa-step-indicator__header{
-  justify-content: center;
+.usa-step-indicator__header {
+    justify-content: center;
 }
-.usa-form{
-  margin: 0 auto;
+.usa-form {
+    margin: 0 auto;
 }
-#spouse{
-  margin-top: 0;
+#spouse {
+    margin-top: 0;
 }
-

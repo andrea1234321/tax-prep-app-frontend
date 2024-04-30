@@ -3,23 +3,23 @@ import { useContext } from "react";
 import { AppContext } from "../App";
 
 type ProgressBarProps = {
-    stepNumber: number
-}
+    stepNumber: number;
+};
 
-const ProgressBar = ({stepNumber}: ProgressBarProps) => {
+const ProgressBar = ({ stepNumber }: ProgressBarProps) => {
     const [globalInfo, _] = useContext(AppContext);
 
     const getStatus = (currentStep: number, indicatorStep: number) => {
         if (currentStep === indicatorStep) {
-            return 'current';
+            return "current";
         }
         if (indicatorStep <= globalInfo.stepNumber) {
-            return 'complete';
+            return "complete";
         }
-        return 'incomplete';
-    }
+        return "incomplete";
+    };
 
-    return ( 
+    return (
         <>
             <StepIndicator
                 centered
@@ -40,13 +40,13 @@ const ProgressBar = ({stepNumber}: ProgressBarProps) => {
                     label="Review"
                     status={getStatus(stepNumber, 3)}
                 />
-                <StepIndicatorStep 
-                    label="Results" 
+                <StepIndicatorStep
+                    label="Results"
                     status={getStatus(stepNumber, 4)}
                 />
             </StepIndicator>
         </>
     );
-}
- 
+};
+
 export default ProgressBar;

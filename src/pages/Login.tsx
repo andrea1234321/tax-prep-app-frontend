@@ -82,6 +82,7 @@ const Login = ({ handleAddUserInfo }: { handleAddUserInfo: () => void }) => {
     function handleLogin() {
         window.location.replace("http://localhost:8080/signin");
         console.log("We signed in!");
+        handleAddUserInfo();
     }
     // function getUserInfo() {
     //     fetch('http://localhost:8080/userinfo', {credentials: 'include', method: 'GET'})

@@ -20,7 +20,7 @@ import Results from "./pages/Results";
 
 //stylesheets
 import "./App.css";
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 
 // App context
 type GlobalInfo = {
@@ -34,18 +34,34 @@ export type UserInfo = {
 };
 
 export const AppContext = createContext<[GlobalInfo, (g: GlobalInfo) => void]>([
-    { isLoggedIn: false, stepNumber: 1 },
+    { isLoggedIn: true, stepNumber: 1 },
     () => {},
 ]);
 
 function App() {
     const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
     const [globalInfo, setGlobalInfo] = useState<GlobalInfo>({
-        isLoggedIn: false,
+        isLoggedIn: true,
         stepNumber: 1,
     });
 
+    useEffect(() => {
+        fetch("http://localhost:8080/helloWorld", {
+            credentials: "include",
+            method: "GET",
+        })
+            .then(data => {
+                if (data.ok) {
+                    handleAddUserInfo();
+                } else {
+                    setGlobalInfo({...globalInfo, isLoggedIn: false});
+                }
+            })
+            .catch(error => setGlobalInfo({...globalInfo, isLoggedIn: false}));
+    }, []);
+
     console.log("global info: ", globalInfo)
+
     const handleAddUserInfo = (): void => {
         fetch("http://localhost:8080/userInfo", {
             credentials: "include",

@@ -13,6 +13,8 @@ import { AppContext } from "../App";
 
 const Login = ({ handleAddUserInfo }: { handleAddUserInfo: () => void }) => {
     // Get global info
+    const [accessToken, setAccessToken] = useState('');
+    const [userInfo, setUserInfo] = useState('');
     const [globalInfo, setGlobalInfo] = useContext(AppContext);
     const navigate = useNavigate();
 
@@ -23,7 +25,7 @@ const Login = ({ handleAddUserInfo }: { handleAddUserInfo: () => void }) => {
     }, [globalInfo]);
 
     const [showPassword, setShowPassword] = useState(false);
-    const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+    // const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
     type UserData = {
         email: string;
         password: string;
@@ -58,24 +60,43 @@ const Login = ({ handleAddUserInfo }: { handleAddUserInfo: () => void }) => {
             })
             .catch((error: Error) => console.error(error));
     };
-    function handleCredentialResponse(response: any) {
-        console.log("Encoded JWT: ", response.credential);
-        setGlobalInfo({ ...globalInfo, isLoggedIn: true });
-        handleAddUserInfo();
-    }
+    // function handleCredentialResponse(response: any) {
+    //     console.log("Encoded JWT: ", response.credential);
+    //     setGlobalInfo({ ...globalInfo, isLoggedIn: true });
+    //     handleAddUserInfo();
+    // }
 
     useEffect(() => {
         /* global google */
-        google.accounts.id.initialize({
-            client_id: googleClientId,
-            callback: handleCredentialResponse,
-        });
+        // google.accounts.id.initialize({
+        //     client_id: googleClientId,
+        //     callback: handleCredentialResponse,
+        // });
 
         google.accounts.id.renderButton(document.getElementById("signInDiv"), {
             theme: "outline",
             size: "large",
         });
     }, []);
+
+    function handleLogin() {
+        window.location.replace("http://localhost:8080/signin");
+        console.log("We signed in!");
+    }
+    // function getUserInfo() {
+    //     fetch('http://localhost:8080/userinfo', {credentials: 'include', method: 'GET'})
+    //         .then(data => data.text())      //converting to text
+    //         .then(userInfo => setUserInfo(userInfo))
+    //         .catch(() => {window.location.replace('http://localhost:8080/signin'); } );     //if an an error happens, redirect user to sign in 
+    // }
+
+    // function getAccessToken() {
+    //     fetch('http://localhost:8080/accessToken', {credentials: 'include', method: 'GET'})
+    //         .then(data => data.text())      //converting to text
+    //         .then(token => setAccessToken(token))
+    //         .catch(() => {window.location.replace('http://localhost:8080/signin'); } ); 
+    // }
+
 
     return (
         <>
@@ -150,7 +171,7 @@ const Login = ({ handleAddUserInfo }: { handleAddUserInfo: () => void }) => {
                                                 Sign in
                                             </Button>
                                             <p>or</p>
-                                            <div id="signInDiv"></div>
+                                            <button onClick={handleLogin}>Sign in with Google</button>
                                         </Fieldset>
                                     </Form>
                                 </div>

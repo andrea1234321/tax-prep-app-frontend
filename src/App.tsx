@@ -27,6 +27,8 @@ type GlobalInfo = {
     stepNumber: number;
 };
 
+export const backendUrl = "http://localhost:8080";
+
 export const AppContext = createContext<[GlobalInfo, (g: GlobalInfo) => void]>([
     { isLoggedIn: false, stepNumber: 1 },
     () => {},

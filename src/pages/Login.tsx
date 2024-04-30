@@ -9,7 +9,7 @@ import {
 } from "@trussworks/react-uswds";
 import { useState, useEffect, useContext } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { AppContext } from "../App";
+import { AppContext, backendUrl } from "../App";
 
 const Login = () => {
     // Get global info
@@ -30,7 +30,6 @@ const Login = () => {
     };
 
     const handleSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
-        const backendUrl = "http://localhost:8080";
         evt.preventDefault();
         const form = evt.target;
         const formData = new FormData(form as HTMLFormElement);

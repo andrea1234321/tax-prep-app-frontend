@@ -25,6 +25,9 @@ const PersonalInfo = () => {
         }
     }, [globalInfo]);
 
+    const handleSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
+    };
+
     return (
         <>
             <main id="main-content">

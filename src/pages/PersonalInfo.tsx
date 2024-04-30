@@ -49,17 +49,18 @@ const PersonalInfo = () => {
             firstName: formJson["first-name"],
             middleInitial: formJson["middle-initial"],
             lastName: formJson["Last-name"],
-            dateOfBirth: formJson.birthdate,
+            dateOfBirth: Number(formJson.birthdate.replace('-', '').replace('-', '')),
             address: formJson["mailing-address-1"],
             city: formJson.city,
             state: formJson.state,
             aptNumber: formJson["mailing-address-2"],
-            zipCode: formJson.zip,
-            ssn: formJson["input-type-ssn"],
+            zipCode: Number(formJson.zip),
+            ssn: Number(formJson["input-type-ssn"].replace('-', '').replace('-', '')),
         });
         console.log(body);
 
         fetch(backendUrl + "/profile", {
+            credentials: "include",
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -75,7 +76,7 @@ const PersonalInfo = () => {
             })
             .catch((error: Error) => console.error(error));
     };
-
+    
     return (
         <>
             <main id="main-content">

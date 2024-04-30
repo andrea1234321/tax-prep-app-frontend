@@ -43,9 +43,9 @@ function App() {
     return (
         <>
             <AppContext.Provider value={[globalInfo, setGlobalInfo]}>
-                {/* if signed in, add navbar */}
-                {globalInfo.isLoggedIn && <NavBar />}
                 <BrowserRouter basename="/">
+                    {/* if signed in, add navbar */}
+                    {globalInfo.isLoggedIn && <NavBar />}
                     <Routes>
                         <Route path="/" element={<Login />} />
                         <Route path="/register" element={<Signup />} />

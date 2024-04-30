@@ -9,9 +9,9 @@ import {
 } from "@trussworks/react-uswds";
 import { useState, useEffect, useContext } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { AppContext, backendUrl } from "../App";
+import { AppContext } from "../App";
 
-const Login = () => {
+const Login = ({ handleAddUserInfo }: { handleAddUserInfo: () => void }) => {
     // Get global info
     const [globalInfo, setGlobalInfo] = useContext(AppContext);
     const navigate = useNavigate();
@@ -30,6 +30,7 @@ const Login = () => {
     };
 
     const handleSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
+        const backendUrl = "http://localhost:8080";
         evt.preventDefault();
         const form = evt.target;
         const formData = new FormData(form as HTMLFormElement);
@@ -57,11 +58,11 @@ const Login = () => {
             })
             .catch((error: Error) => console.error(error));
     };
-
-    const handleCredentialResponse = (response: any) => {
+    function handleCredentialResponse(response: any) {
         console.log("Encoded JWT: ", response.credential);
         setGlobalInfo({ ...globalInfo, isLoggedIn: true });
-    };
+        handleAddUserInfo();
+    }
 
     useEffect(() => {
         /* global google */

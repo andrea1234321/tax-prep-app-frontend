@@ -1,12 +1,15 @@
 import { Button, GridContainer } from "@trussworks/react-uswds";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { AppContext, backendUrl } from "../App";
-type UserInfo = {
-    name: string;
+import { AppContext } from "../App";
+import { UserInfo } from "../App";
+
+type LandingProps = {
+    userInfo: UserInfo | null;
 };
 
-const Landing = () => {
+const Landing = (props: LandingProps) => {
+    const { userInfo } = props;
     const [globalInfo, _] = useContext(AppContext);
     const navigate = useNavigate();
 
@@ -15,20 +18,6 @@ const Landing = () => {
             navigate("/");
         }
     }, [globalInfo]);
-
-    const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
-
-    useEffect(() => {
-        fetch(backendUrl + "/userInfo", {
-            credentials: "include",
-            method: "GET",
-        })
-            .then((data) => data.json())
-            .then((userInfo) => setUserInfo(userInfo))
-            .catch(() => {
-                console.log("error fetching user info");
-            });
-    }, []);
 
     return (
         <>

@@ -12,7 +12,7 @@ import {
     DatePicker,
     TextInputMask,
 } from "@trussworks/react-uswds";
-import { AppContext, backendUrl } from "../App";
+import { AppContext } from "../App";
 import { useNavigate } from "react-router-dom";
 
 type PersonalInfoType = {
@@ -31,6 +31,7 @@ type PersonalInfoType = {
 const PersonalInfo = () => {
     const [globalInfo, _] = useContext(AppContext);
     const navigate = useNavigate();
+    const backendUrl = "http://localhost:8080";  
 
     useEffect(() => {
         if (!globalInfo.isLoggedIn) {
@@ -77,6 +78,7 @@ const PersonalInfo = () => {
             .catch((error: Error) => console.error(error));
     };
     
+
     return (
         <>
             <main id="main-content">

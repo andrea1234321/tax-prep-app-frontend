@@ -1,6 +1,7 @@
 //npm modules
 import "@trussworks/react-uswds/lib/index.css";
 import "@trussworks/react-uswds/lib/uswds.css";
+
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 //components
@@ -27,7 +28,10 @@ type GlobalInfo = {
     stepNumber: number;
 };
 
-export const backendUrl = "http://localhost:8080";
+export type UserInfo = {
+    name: string;
+    picture: string;
+};
 
 export const AppContext = createContext<[GlobalInfo, (g: GlobalInfo) => void]>([
     { isLoggedIn: false, stepNumber: 1 },
@@ -35,21 +39,45 @@ export const AppContext = createContext<[GlobalInfo, (g: GlobalInfo) => void]>([
 ]);
 
 function App() {
+    const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
     const [globalInfo, setGlobalInfo] = useState<GlobalInfo>({
         isLoggedIn: false,
         stepNumber: 1,
     });
 
+    console.log("global info: ", globalInfo)
+    const handleAddUserInfo = (): void => {
+        fetch("http://localhost:8080/userInfo", {
+            credentials: "include",
+            method: "GET",
+        })
+            .then((data) => data.json())
+            .then((userInfo) =>
+                setUserInfo({ name: userInfo.name, picture: userInfo.picture }),
+            )
+            .catch(() => {
+                console.log("error fetching user info");
+            });
+    };
+
     return (
         <>
             <AppContext.Provider value={[globalInfo, setGlobalInfo]}>
+                {/* if signed in, add navbar */}
+                {globalInfo.isLoggedIn && <NavBar userInfo={userInfo} />}
                 <BrowserRouter basename="/">
-                    {/* if signed in, add navbar */}
-                    {globalInfo.isLoggedIn && <NavBar />}
                     <Routes>
-                        <Route path="/" element={<Login />} />
+                        <Route
+                            path="/"
+                            element={
+                                <Login handleAddUserInfo={handleAddUserInfo} />
+                            }
+                        />
                         <Route path="/register" element={<Signup />} />
-                        <Route path="/home" element={<Landing />} />
+                        <Route
+                            path="/home"
+                            element={<Landing userInfo={userInfo} />}
+                        />
                         <Route
                             path="/personalInformation"
                             element={<PersonalInfo />}

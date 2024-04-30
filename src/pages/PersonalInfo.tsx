@@ -15,9 +15,23 @@ import {
 import { AppContext } from "../App";
 import { useNavigate } from "react-router-dom";
 
+type PersonalInfoType = {
+    "first-name": string;
+    "middle-initial": string;
+    "Last-name": string;
+    birthdate: string;
+    "mailing-address-1": string;
+    "mailing-address-2": string;
+    city: string;
+    state: string;
+    zip: string;
+    "input-type-ssn": string;
+};
+
 const PersonalInfo = () => {
     const [globalInfo, _] = useContext(AppContext);
     const navigate = useNavigate();
+    const backendUrl = "http://localhost:8080";  
 
     useEffect(() => {
         if (!globalInfo.isLoggedIn) {
@@ -25,11 +39,51 @@ const PersonalInfo = () => {
         }
     }, [globalInfo]);
 
+    const handleSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
+        evt.preventDefault();
+        const form = evt.target;
+        const formData = new FormData(form as HTMLFormElement);
+        const formJson = Object.fromEntries(
+            formData.entries(),
+        ) as PersonalInfoType;
+        const body = JSON.stringify({
+            firstName: formJson["first-name"],
+            middleInitial: formJson["middle-initial"],
+            lastName: formJson["Last-name"],
+            dateOfBirth: Number(formJson.birthdate.replace('-', '').replace('-', '')),
+            address: formJson["mailing-address-1"],
+            city: formJson.city,
+            state: formJson.state,
+            aptNumber: formJson["mailing-address-2"],
+            zipCode: Number(formJson.zip),
+            ssn: Number(formJson["input-type-ssn"].replace('-', '').replace('-', '')),
+        });
+        console.log(body);
+
+        fetch(backendUrl + "/profile", {
+            credentials: "include",
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: body,
+        })
+            .then((data: Response) => {
+                if (data.ok) {
+                    console.log("Post successful!");
+                } else {
+                    console.log("Post failed.");
+                }
+            })
+            .catch((error: Error) => console.error(error));
+    };
+    
+
     return (
         <>
             <main id="main-content">
                 <ProgressBar stepNumber={1} />
-                <Form onSubmit={() => {}} large>
+                <Form onSubmit={handleSubmit} large>
                     <Fieldset legend="Personal Information" legendStyle="large">
                         <p>
                             Required fields are marked with an asterisk (
@@ -188,7 +242,7 @@ const PersonalInfo = () => {
                             name="input-type-ssn"
                             type="text"
                             mask="___-__-____"
-                            pattern="^(?!(000|666|9))\d{3} (?!00)\d{2} (?!0000)\d{4}$"
+                            pattern="^(?!(000|666|9))\d{3}-(?!00)\d{2}-(?!0000)\d{4}$"
                         />
                         <Button type="submit">Financial Information</Button>
                     </Fieldset>

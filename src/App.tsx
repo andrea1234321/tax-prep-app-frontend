@@ -27,6 +27,7 @@ type GlobalInfo = {
     isLoggedIn: boolean;
     stepNumber: number;
 };
+
 export type UserInfo = {
     name: string;
     picture: string;

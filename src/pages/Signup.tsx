@@ -18,9 +18,9 @@ type UserData = {
 
 const Signup = () => {
     const backendUrl = "http://localhost:8080";
-
+  
     const [showPassword, setShowPassword] = useState(false);
-
+  
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const form = event.target;

@@ -6,7 +6,7 @@ import {
     TextInputMask,
 } from "@trussworks/react-uswds";
 
-const SpouseInfromation = () => {
+const SpouseInformation = () => {
     return (
         <>
             <h3>Spouse Information: </h3>
@@ -27,12 +27,12 @@ const SpouseInfromation = () => {
                     />
                 </Grid>
                 <Grid col={4} offset={2}>
-                    <Label htmlFor="spouse-middle-initital" id="spouse">
+                    <Label htmlFor="spouse-middle-initial" id="spouse">
                         Middle Initial
                     </Label>
                     <TextInput
-                        id="spouse-middle-initital"
-                        name="spouse-middle-initital"
+                        id="spouse-middle-initial"
+                        name="spouse-middle-initial"
                         type="text"
                     />
                 </Grid>
@@ -66,7 +66,7 @@ const SpouseInfromation = () => {
                 name="input-type-ssn"
                 type="text"
                 mask="___-__-____"
-                pattern="^(?!(000|666|9))\d{3} (?!00)\d{2} (?!0000)\d{4}$"
+                pattern="^(?!(000|666|9))\d{3}-(?!00)\d{2}-(?!0000)\d{4}$"
             />
             <br />
             <h3>Joint Financial information: </h3>
@@ -74,4 +74,4 @@ const SpouseInfromation = () => {
     );
 };
 
-export default SpouseInfromation;
+export default SpouseInformation;

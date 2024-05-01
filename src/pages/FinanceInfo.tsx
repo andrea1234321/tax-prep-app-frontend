@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import ProgressBar from "../components/ProgressBar";
 import {
     Fieldset,
@@ -15,20 +15,87 @@ import {
 } from "@trussworks/react-uswds";
 
 import SpouseInfromation from "../components/SpouseInformation";
+import { AppContext } from "../App";
+import { useNavigate } from "react-router-dom";
+
+type FinanceInfoType = {
+    "filing-status": string;
+    "spouse-first-name": string | undefined;
+    "spouse-middle-initial": string | undefined;
+    "spouse-last-name": string | undefined;
+    "spouse-date-of-birth": string | undefined;
+    "input-type-ssn": string | undefined;
+    "w2-income": string;
+    "other-income": string;
+    "w2-tax-withheld": string;
+    "tax-withheld-1099": string;
+    "other-tax-withheld": string;
+    "paid-taxes-withheld": string;
+};
 
 const FinanceInfo = () => {
+    const backendUrl = "http://localhost:8080";
+
+    const [globalInfo, setGlobalInfo] = useContext(AppContext);
     const [otherIncome, setOtherIncome] = useState(false);
     const [businessWithheld, setBusinessWithheld] = useState(false);
     const [otherWithheld, setOtherWithheld] = useState(false);
     const [paidWithheld, setPaidWithheld] = useState(false);
 
-    const [jointFilling, setJointFilling] = useState(false);
+    const [jointFiling, setJointFiling] = useState(false);
+
+    const navigate = useNavigate();
+
+    const handleSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
+        evt.preventDefault();
+        const form = evt.target;
+        const formData = new FormData(form as HTMLFormElement);
+        const formJson = Object.fromEntries(formData.entries()) as FinanceInfoType;
+
+        const body = JSON.stringify({
+            filingStatus: formJson["filing-status"],
+            spouseFirstName: formJson["spouse-first-name"],
+            spouseMiddleInitial: formJson["spouse-middle-initial"],
+            spouseLastName: formJson["spouse-last-name"],
+            spouseSsn: Number(formJson["input-type-ssn"]?.replace("-", "").replace("-", "")),
+            spouseDateOfBirth:  Number(formJson["spouse-date-of-birth"]?.replace('-', '').replace('-', '')),
+            w2Income: Number(formJson["w2-income"]) * 100,
+            otherIncome: Number(formJson["other-income"]) * 100,
+            taxWithheldW2: Number(formJson["w2-tax-withheld"]) * 100,
+            taxWithheld1099: Number(formJson["tax-withheld-1099"]) * 100,
+            taxWithheldOther: Number(formJson["other-tax-withheld"]) * 100,
+            prevTaxesPaid: Number(formJson["paid-taxes-withheld"]) * 100,
+        });
+
+        console.log(body);
+        
+        fetch(backendUrl + "/finances", {
+            credentials: "include",
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: body,
+        })
+            .then((data: Response) => {
+                if (data.ok) {
+                    console.log("Post successful!");
+                    if (globalInfo.stepNumber < 3) {
+                        setGlobalInfo({...globalInfo, stepNumber: 3});
+                    }
+                    navigate("/review");
+                } else {
+                    console.log("Post failed.");
+                }
+            })
+            .catch((error: Error) => console.error(error));
+    };
 
     return (
         <>
             <main id="main-content">
                 <ProgressBar stepNumber={2} />
-                <Form onSubmit={() => {}} large>
+                <Form onSubmit={handleSubmit} large>
                     <Fieldset
                         legend="Financial Information"
                         legendStyle="large"
@@ -38,8 +105,8 @@ const FinanceInfo = () => {
                             <RequiredMarker />
                             ).
                         </p>
-                        <Label htmlFor="filling-status" requiredMarker>
-                            Filling Status:{" "}
+                        <Label htmlFor="filing-status" requiredMarker>
+                            Filing Status:{" "}
                         </Label>
                         <Grid row>
                             <Grid col={3} offset={1}>
@@ -47,17 +114,19 @@ const FinanceInfo = () => {
                                     id="single"
                                     name="filing-status"
                                     label="Single"
-                                    onChange={() => setJointFilling(false)}
+                                    value="Single"
+                                    onChange={() => setJointFiling(false)}
                                 />
                             </Grid>
                             <Grid col={4}>
                                 <Radio
                                     id="married-jointly"
                                     name="filing-status"
-                                    label="Married Filling Jointly"
-                                    checked={jointFilling}
+                                    label="Married Filing Jointly"
+                                    value="Married Filing Jointly"
+                                    checked={jointFiling}
                                     onChange={() =>
-                                        setJointFilling(!jointFilling)
+                                        setJointFiling(!jointFiling)
                                     }
                                 />
                             </Grid>
@@ -65,12 +134,13 @@ const FinanceInfo = () => {
                                 <Radio
                                     id="married-separately"
                                     name="filing-status"
-                                    label="Married Filling Separately"
-                                    onChange={() => setJointFilling(false)}
+                                    label="Married Filing Separately"
+                                    value="Married Filing Separately"
+                                    onChange={() => setJointFiling(false)}
                                 />
                             </Grid>
                         </Grid>
-                        {jointFilling && <SpouseInfromation />}
+                        {jointFiling && <SpouseInfromation />}
                         <Label htmlFor="w2-income" requiredMarker>
                             W2 Form(s) total income
                         </Label>

@@ -1,17 +1,15 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import ProgressBar from "../components/ProgressBar";
-import {
-    Fieldset,
-    RequiredMarker,
-    Form,
-    Button,
-} from "@trussworks/react-uswds";
 import { AppContext } from "../App";
 import { useNavigate } from "react-router-dom";
 
 const Results = () => {
+    const backendUrl = "http://localhost:8080";
+
     const [globalInfo, _] = useContext(AppContext);
     const navigate = useNavigate();
+
+    const [tax, setTax] = useState(0);
 
     useEffect(() => {
         if (!globalInfo.isLoggedIn || globalInfo.stepNumber < 4) {
@@ -19,20 +17,21 @@ const Results = () => {
         }
     }, [globalInfo]);
 
+    useEffect(() => {
+        fetch(backendUrl + "/calculate_taxes", {
+            credentials: "include",
+            method: "GET",
+        })
+            .then(data => data.json())
+            .then(dataJson => setTax(Number(dataJson) / 100))
+            .catch(err => console.error(err));
+    });
+
     return (
         <>
             <main id="main-content">
                 <ProgressBar stepNumber={4} />
-                <Form onSubmit={() => {}} large>
-                    <Fieldset legend="Results" legendStyle="large">
-                        <p>
-                            Required fields are marked with an asterisk (
-                            <RequiredMarker />
-                            ).
-                        </p>
-                        <Button type="submit">Results</Button>
-                    </Fieldset>
-                </Form>
+                <p>You owe ${tax} in taxes.</p>
             </main>
         </>
     );

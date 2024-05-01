@@ -29,9 +29,9 @@ type PersonalInfoType = {
 };
 
 const PersonalInfo = () => {
-    const [globalInfo, _] = useContext(AppContext);
+    const [globalInfo, setGlobalInfo] = useContext(AppContext);
     const navigate = useNavigate();
-    const backendUrl = "http://localhost:8080";  
+    const backendUrl = "http://localhost:8080";
 
     useEffect(() => {
         if (!globalInfo.isLoggedIn) {
@@ -71,6 +71,10 @@ const PersonalInfo = () => {
             .then((data: Response) => {
                 if (data.ok) {
                     console.log("Post successful!");
+                    if (globalInfo.stepNumber < 2) {
+                        setGlobalInfo({...globalInfo, stepNumber: 2});
+                    }
+                    navigate("/financialInformation");
                 } else {
                     console.log("Post failed.");
                 }

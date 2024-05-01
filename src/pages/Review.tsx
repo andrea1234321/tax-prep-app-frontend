@@ -10,7 +10,7 @@ import { AppContext } from "../App";
 import { useNavigate } from "react-router-dom";
 
 const Review = () => {
-    const [globalInfo, _] = useContext(AppContext);
+    const [globalInfo, setGlobalInfo] = useContext(AppContext);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -19,11 +19,19 @@ const Review = () => {
         }
     }, [globalInfo]);
 
+    const handleSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
+        evt.preventDefault();
+        if (globalInfo.stepNumber < 4) {
+            setGlobalInfo({...globalInfo, stepNumber: 4});
+        }
+        navigate("/results");
+    };
+
     return (
         <>
             <main id="main-content">
                 <ProgressBar stepNumber={3} />
-                <Form onSubmit={() => {}} large>
+                <Form onSubmit={handleSubmit} large>
                     <Fieldset legend="Review" legendStyle="large">
                         <p>
                             Required fields are marked with an asterisk (

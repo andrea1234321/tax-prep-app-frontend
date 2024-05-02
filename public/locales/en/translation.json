@@ -3,5 +3,56 @@
     "header": "Welcome",
     "description" : "It's time to file taxes",
     "button": "File Tax Return"
+  },
+  "personal": {
+    "title": "Personal Information",
+    "description": "Required fields are marked with an asterisk",
+    "first-name": "First Name",
+    "middle-initial": "Middle Initial",
+    "last-name": "Last Name",
+    "dob": "Date of Birth",
+    "address": "Street Address",
+    "address2": "Street Address line 2",
+    "city": "City",
+    "state": "State",
+    "zip": "Zip Code",
+    "ssn": "Social Security No.",
+    "select": "select",
+    "button": "Financial Information"
+  },
+  "progress": {
+    "personal": "Personal Information",
+    "financial": "Financial Information",
+    "review": "Review",
+    "results": "Results",
+    "of": "of"
+  },
+  "finance": {
+    "title": "Financial Information",
+    "description": "Required fields are marked with an asterisk",
+    "status": "Filing Status",
+    "single": "Single",
+    "married-joint": "Married Filing Jointly",
+    "married-separate": "Married Filing Separately",
+    "w2-total": "W2 Form(s) total income",
+    "other-income": "Other income",
+    "w2-withheld": "W2 Form(s) total income tax withheld",
+    "1099-withheld": "1099 Form(s) total income tax withheld",
+    "other-withheld": "Other tax withheld",
+    "paid-taxes": "Paid taxes from 2022",
+    "na": "N/a",
+    "button": "Review"
+  },
+  "review": {
+    "title": "Review",
+    "description": "Required fields are marked with an asterisk",
+    "button": "Results"
+  },
+  "results": {
+    "taxes": "You owe ${{tax}} in taxes."
+  },
+  "spouse": {
+    "info": "Spouse Information:",
+    "joint-info": "Joint Financial information:"
   }
 }

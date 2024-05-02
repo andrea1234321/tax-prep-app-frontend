@@ -3,5 +3,51 @@
     "header": "Bienvenido",
     "description" : "Es hora de declarar impuestos",
     "button": "Declarar Impuestos"
+  },
+    "personal": {
+      "title": "Información Personal",
+      "description": "Los campos obligatorios están marcados con un asterisco",
+      "first-name": "Nombre",
+      "middle-initial": "Inicial del Segundo Nombre",
+      "last-name": "Apellido",
+      "dob": "Fecha de Nacimiento",
+      "address": "Dirección",
+      "address2": "Dirección línea 2",
+      "city": "Ciudad",
+      "state": "Estado",
+      "zip": "Código Postal",
+      "ssn": "Número de Seguro Social",
+      "select": "seleccionar",
+      "button": "Información Financiera"
+  },
+    "progress": {
+      "personal": "Información Personal",
+      "financial": "Información Financiera",
+      "review": "Revisión",
+      "results": "Resultados",
+      "of": "de"
+  },
+    "finance": {
+      "title": "Información Financiera",
+      "description": "Los campos obligatorios están marcados con un asterisco",
+      "status": "Estado de Declaración",
+      "single": "Soltero",
+      "married-joint": "Casado presentando conjuntamente",
+      "married-separate": "Casado presentando por separado",
+      "w2-total": "Ingresos totales del formulario W2",
+      "other-income": "Otros ingresos",
+      "w2-withheld": "Impuesto retenido total del formulario W2",
+      "1099-withheld": "Impuesto retenido total del formulario 1099",
+      "other-withheld": "Otros impuestos retenidos",
+      "paid-taxes": "Impuestos pagados del 2022",
+      "na": "N/a",
+      "button": "Revisión"
+  },
+    "results": {
+      "taxes": "Debes ${{tax}} en impuestos."
+  },
+    "spouse": {
+      "info": "Información del cónyuge:",
+      "joint-info": "Información Financiera Conjunta:"
   }
 }

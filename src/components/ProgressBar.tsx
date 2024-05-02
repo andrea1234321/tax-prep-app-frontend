@@ -1,12 +1,14 @@
 import { StepIndicator, StepIndicatorStep } from "@trussworks/react-uswds";
 import { useContext } from "react";
 import { AppContext } from "../App";
+import { useTranslation } from "react-i18next";
 
 type ProgressBarProps = {
     stepNumber: number;
 };
 
 const ProgressBar = ({ stepNumber }: ProgressBarProps) => {
+    const {t} = useTranslation();
     const [globalInfo, _] = useContext(AppContext);
 
     const getStatus = (currentStep: number, indicatorStep: number) => {
@@ -25,23 +27,23 @@ const ProgressBar = ({ stepNumber }: ProgressBarProps) => {
                 centered
                 counters="default"
                 headingLevel="h4"
-                ofText="of"
+                ofText={t('progress.of')}
                 stepText="Step"
             >
                 <StepIndicatorStep
-                    label="Personal information"
+                    label={t('progress.personal')}
                     status={getStatus(stepNumber, 1)}
                 />
                 <StepIndicatorStep
-                    label="Financial information"
+                    label={t('progress.financial')}
                     status={getStatus(stepNumber, 2)}
                 />
                 <StepIndicatorStep
-                    label="Review"
+                    label={t('progress.review')}
                     status={getStatus(stepNumber, 3)}
                 />
                 <StepIndicatorStep
-                    label="Results"
+                    label={t('progress.results')}
                     status={getStatus(stepNumber, 4)}
                 />
             </StepIndicator>

@@ -1,12 +1,12 @@
 import { Button, Header, Title } from "@trussworks/react-uswds";
 import { UserInfo } from "../App";
-import { useTranslation, Trans } from "react-i18next";
+import { useTranslation } from "react-i18next";
 type NavBarProps = {
     userInfo: UserInfo | null;
 };
 const lngs: Record<string, { nativeName: string }> = {
     en: { nativeName: 'English' },
-    sp: { nativeName: 'Spanish' }
+    sp: { nativeName: 'Español' }
   };
   
 const NavBar = (props: NavBarProps) => {

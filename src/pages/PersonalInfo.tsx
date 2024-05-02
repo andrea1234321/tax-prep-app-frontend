@@ -14,6 +14,8 @@ import {
 } from "@trussworks/react-uswds";
 import { AppContext } from "../App";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+
 
 type PersonalInfoType = {
     "first-name": string;
@@ -32,6 +34,7 @@ const PersonalInfo = () => {
     const [globalInfo, setGlobalInfo] = useContext(AppContext);
     const navigate = useNavigate();
     const backendUrl = "http://localhost:8080";
+    const {t} = useTranslation();
 
     useEffect(() => {
         if (!globalInfo.isLoggedIn) {
@@ -88,16 +91,15 @@ const PersonalInfo = () => {
             <main id="main-content">
                 <ProgressBar stepNumber={1} />
                 <Form onSubmit={handleSubmit} large>
-                    <Fieldset legend="Personal Information" legendStyle="large">
-                        <p>
-                            Required fields are marked with an asterisk (
+                    <Fieldset legend={t('personal.title')} legendStyle="large">
+                        <p>{t('personal.description')}(
                             <RequiredMarker />
-                            ).
+                            )
                         </p>
                         <Grid row>
                             <Grid col={6}>
                                 <Label htmlFor="first-name" requiredMarker>
-                                    First Name
+                                    {t('personal.first-name')}
                                 </Label>
                                 <TextInput
                                     id="first-name"
@@ -108,7 +110,7 @@ const PersonalInfo = () => {
                             </Grid>
                             <Grid col={4} offset={2}>
                                 <Label htmlFor="middle-initital">
-                                    Middle Initial
+                                    {t('personal.middle-initial')}
                                 </Label>
                                 <TextInput
                                     id="middle-initital"
@@ -118,7 +120,7 @@ const PersonalInfo = () => {
                             </Grid>
                         </Grid>
                         <Label htmlFor="Last-name" requiredMarker>
-                            Last Name
+                            {t('personal.last-name')}
                         </Label>
                         <TextInput
                             id="Last-name"
@@ -131,11 +133,11 @@ const PersonalInfo = () => {
                             id="date-of-birth"
                             requiredMarker
                         >
-                            Date of Birth
+                            {t('personal.dob')}
                         </Label>
                         <DatePicker id="birthdate" name="birthdate" required />
                         <Label htmlFor="mailing-address-1" requiredMarker>
-                            Street address
+                            {t('personal.address')}
                         </Label>
                         <TextInput
                             id="mailing-address-1"
@@ -145,7 +147,7 @@ const PersonalInfo = () => {
                         />
 
                         <Label htmlFor="mailing-address-2">
-                            Street address line 2
+                            {t('personal.address2')}
                         </Label>
                         <TextInput
                             id="mailing-address-2"
@@ -155,7 +157,7 @@ const PersonalInfo = () => {
                         <Grid row>
                             <Grid col={6}>
                                 <Label htmlFor="city" requiredMarker>
-                                    City
+                                    {t('personal.city')}
                                 </Label>
                                 <TextInput
                                     id="city"
@@ -166,10 +168,10 @@ const PersonalInfo = () => {
                             </Grid>
                             <Grid col={4} offset={2}>
                                 <Label htmlFor="state" requiredMarker>
-                                    State
+                                    {t('personal.state')}
                                 </Label>
                                 <Select id="state" name="state" required>
-                                    <option>- Select -</option>
+                                    <option>- {t('personal.select')} -</option>
                                     <option value="AL">Alabama</option>
                                     <option value="AK">Alaska</option>
                                     <option value="AZ">Arizona</option>
@@ -227,7 +229,7 @@ const PersonalInfo = () => {
                             </Grid>
                         </Grid>
                         <Label htmlFor="zip" requiredMarker>
-                            ZIP Code
+                            {t('personal.zip')}
                         </Label>
                         <TextInput
                             id="zip"
@@ -239,7 +241,7 @@ const PersonalInfo = () => {
                         />
 
                         <Label htmlFor="ssn" requiredMarker>
-                            Social Security No.
+                            {t('personal.ssn')}
                         </Label>
                         <TextInputMask
                             id="input-type-ssn"
@@ -248,7 +250,7 @@ const PersonalInfo = () => {
                             mask="___-__-____"
                             pattern="^(?!(000|666|9))\d{3}-(?!00)\d{2}-(?!0000)\d{4}$"
                         />
-                        <Button type="submit">Financial Information</Button>
+                        <Button type="submit">{t('personal.button')}</Button>
                     </Fieldset>
                 </Form>
             </main>

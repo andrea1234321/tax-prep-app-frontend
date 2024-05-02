@@ -8,10 +8,12 @@ import {
 } from "@trussworks/react-uswds";
 import { AppContext } from "../App";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const Review = () => {
     const [globalInfo, setGlobalInfo] = useContext(AppContext);
     const navigate = useNavigate();
+    const {t} = useTranslation();
 
     useEffect(() => {
         if (!globalInfo.isLoggedIn || globalInfo.stepNumber < 3) {
@@ -32,13 +34,13 @@ const Review = () => {
             <main id="main-content">
                 <ProgressBar stepNumber={3} />
                 <Form onSubmit={handleSubmit} large>
-                    <Fieldset legend="Review" legendStyle="large">
+                    <Fieldset legend={t('review.title')} legendStyle="large">
                         <p>
-                            Required fields are marked with an asterisk (
+                            {t('review.description')} (
                             <RequiredMarker />
-                            ).
+                            )
                         </p>
-                        <Button type="submit">Results</Button>
+                        <Button type="submit">{t('review.button')}</Button>
                     </Fieldset>
                 </Form>
             </main>

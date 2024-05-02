@@ -8,6 +8,7 @@ import {
 } from "@trussworks/react-uswds";
 import { AppContext } from "../App";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 type Profile = {
     "id": null;
@@ -46,6 +47,7 @@ const Review = () => {
 
     const [globalInfo, setGlobalInfo] = useContext(AppContext);
     const navigate = useNavigate();
+    const {t} = useTranslation();
 
     const [profile, setProfile] = useState<Profile | null>(null);
     const [finances, setFinances] = useState<Finances | null>(null);
@@ -90,6 +92,7 @@ const Review = () => {
             <main id="main-content">
                 <ProgressBar stepNumber={3} />
                 <Form onSubmit={handleSubmit} large>
+<<<<<<< HEAD
                     <Fieldset legend="Review" legendStyle="large">
                         <h1>Profile</h1>
                         <ul>
@@ -120,6 +123,15 @@ const Review = () => {
                             <li>Previous taxes paid: {finances?.prevTaxesPaid as number / 100}</li>
                         </ul>
                         <Button type="submit">Results</Button>
+=======
+                    <Fieldset legend={t('review.title')} legendStyle="large">
+                        <p>
+                            {t('review.description')} (
+                            <RequiredMarker />
+                            )
+                        </p>
+                        <Button type="submit">{t('review.button')}</Button>
+>>>>>>> a8510cc2e477c65d846e9afac337f096f5d93321
                     </Fieldset>
                 </Form>
             </main>

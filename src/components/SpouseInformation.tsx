@@ -5,11 +5,13 @@ import {
     DatePicker,
     TextInputMask,
 } from "@trussworks/react-uswds";
+import { useTranslation } from "react-i18next";
 
 const SpouseInformation = () => {
+    const {t}= useTranslation();
     return (
         <>
-            <h3>Spouse Information: </h3>
+            <h3>{t('spouse.info')}</h3>
             <Grid row>
                 <Grid col={6}>
                     <Label
@@ -17,7 +19,7 @@ const SpouseInformation = () => {
                         requiredMarker
                         id="spouse"
                     >
-                        First Name
+                        {t('personal.first-name')}
                     </Label>
                     <TextInput
                         id="spouse-first-name"
@@ -28,7 +30,7 @@ const SpouseInformation = () => {
                 </Grid>
                 <Grid col={4} offset={2}>
                     <Label htmlFor="spouse-middle-initial" id="spouse">
-                        Middle Initial
+                        {t('personal.middle-initial')}
                     </Label>
                     <TextInput
                         id="spouse-middle-initial"
@@ -38,7 +40,7 @@ const SpouseInformation = () => {
                 </Grid>
             </Grid>
             <Label htmlFor="spouse-last-name" requiredMarker>
-                Last Name
+                {t('personal.last-name')}
             </Label>
             <TextInput
                 id="spouse-last-name"
@@ -51,7 +53,7 @@ const SpouseInformation = () => {
                 id="spouse-date-of-birth"
                 requiredMarker
             >
-                Date of Birth
+                {t('personal.dob')}
             </Label>
             <DatePicker
                 id="spouse-date-of-birth"
@@ -59,7 +61,7 @@ const SpouseInformation = () => {
                 required
             />
             <Label htmlFor="ssn" requiredMarker>
-                Social Security No.
+                {t('personal.ssn')}
             </Label>
             <TextInputMask
                 id="input-type-ssn"
@@ -69,7 +71,7 @@ const SpouseInformation = () => {
                 pattern="^(?!(000|666|9))\d{3}-(?!00)\d{2}-(?!0000)\d{4}$"
             />
             <br />
-            <h3>Joint Financial information: </h3>
+            <h3>{t('spouse.joint-info')}</h3>
         </>
     );
 };

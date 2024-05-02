@@ -17,6 +17,7 @@ import {
 import SpouseInfromation from "../components/SpouseInformation";
 import { AppContext } from "../App";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 type FinanceInfoType = {
     "filing-status": string;
@@ -41,6 +42,7 @@ const FinanceInfo = () => {
     const [businessWithheld, setBusinessWithheld] = useState(false);
     const [otherWithheld, setOtherWithheld] = useState(false);
     const [paidWithheld, setPaidWithheld] = useState(false);
+    const {t} = useTranslation();
 
     const [jointFiling, setJointFiling] = useState(false);
 
@@ -97,24 +99,24 @@ const FinanceInfo = () => {
                 <ProgressBar stepNumber={2} />
                 <Form onSubmit={handleSubmit} large>
                     <Fieldset
-                        legend="Financial Information"
+                        legend={t('finance.title')}
                         legendStyle="large"
                     >
                         <p>
-                            Required fields are marked with an asterisk (
+                            {t('finance.description')} (
                             <RequiredMarker />
                             ).
                         </p>
                         <Label htmlFor="filing-status" requiredMarker>
-                            Filing Status:{" "}
+                            {t('finance.status')}{" "}
                         </Label>
                         <Grid row>
                             <Grid col={3} offset={1}>
                                 <Radio
                                     id="single"
                                     name="filing-status"
-                                    label="Single"
-                                    value="Single"
+                                    label={t('finance.single')}
+                                    value="single"
                                     onChange={() => setJointFiling(false)}
                                 />
                             </Grid>
@@ -122,7 +124,7 @@ const FinanceInfo = () => {
                                 <Radio
                                     id="married-jointly"
                                     name="filing-status"
-                                    label="Married Filing Jointly"
+                                    label={t('finance.married-joint')}
                                     value="Married Filing Jointly"
                                     checked={jointFiling}
                                     onChange={() =>
@@ -134,7 +136,7 @@ const FinanceInfo = () => {
                                 <Radio
                                     id="married-separately"
                                     name="filing-status"
-                                    label="Married Filing Separately"
+                                    label={t('finance.married-separate')}
                                     value="Married Filing Separately"
                                     onChange={() => setJointFiling(false)}
                                 />
@@ -142,7 +144,7 @@ const FinanceInfo = () => {
                         </Grid>
                         {jointFiling && <SpouseInfromation />}
                         <Label htmlFor="w2-income" requiredMarker>
-                            W2 Form(s) total income
+                            {t('finance.w2-total')}
                         </Label>
                         <TextInput
                             id="w2-income"
@@ -150,7 +152,7 @@ const FinanceInfo = () => {
                             type="text"
                             required
                         />
-                        <Label htmlFor="other-income">Other income</Label>
+                        <Label htmlFor="other-income">{t('finance.other-income')}</Label>
                         <Grid row>
                             <Grid col={6}>
                                 <InputGroup>
@@ -159,6 +161,7 @@ const FinanceInfo = () => {
                                         id="other-income"
                                         name="other-income"
                                         type="number"
+                                        min={0}
                                         disabled={otherIncome}
                                     />
                                 </InputGroup>
@@ -167,7 +170,7 @@ const FinanceInfo = () => {
                                 <Checkbox
                                     id="na other-income"
                                     name="other-income"
-                                    label="N/a"
+                                    label={t('finance.na')}
                                     checked={otherIncome}
                                     onChange={() =>
                                         setOtherIncome(!otherIncome)
@@ -176,7 +179,7 @@ const FinanceInfo = () => {
                             </Grid>
                         </Grid>
                         <Label htmlFor="w2-tax-withheld" requiredMarker>
-                            W2 Form(s) total income tax withheld
+                            {t('finance.w2-withheld')}
                         </Label>
                         <InputGroup>
                             <InputPrefix>$</InputPrefix>
@@ -184,11 +187,12 @@ const FinanceInfo = () => {
                                 id="w2-tax-withheld"
                                 name="w2-tax-withheld"
                                 type="number"
+                                min={0}
                                 required
                             />
                         </InputGroup>
                         <Label htmlFor="tax-withheld-1099">
-                            1099 Form(s) total income tax withheld
+                            {t('finance.1099-withheld')}
                         </Label>
                         <Grid row>
                             <Grid col={6}>
@@ -198,6 +202,7 @@ const FinanceInfo = () => {
                                         id="tax-withheld-1099"
                                         name="tax-withheld-1099"
                                         type="number"
+                                        min={0}
                                         disabled={businessWithheld}
                                     />
                                 </InputGroup>
@@ -206,7 +211,7 @@ const FinanceInfo = () => {
                                 <Checkbox
                                     id="na tax-withheld-1099"
                                     name="tax-withheld-1099"
-                                    label="N/a"
+                                    label={t('finance.na')}
                                     checked={businessWithheld}
                                     onChange={() =>
                                         setBusinessWithheld(!businessWithheld)
@@ -215,7 +220,7 @@ const FinanceInfo = () => {
                             </Grid>
                         </Grid>
                         <Label htmlFor="other-tax-withheld">
-                            Other tax withheld
+                            {t('finance.other-withheld')}
                         </Label>
                         <Grid row>
                             <Grid col={6}>
@@ -225,6 +230,7 @@ const FinanceInfo = () => {
                                         id="other-tax-withheld"
                                         name="other-tax-withheld"
                                         type="number"
+                                        min={0}
                                         disabled={otherWithheld}
                                     />
                                 </InputGroup>
@@ -233,7 +239,7 @@ const FinanceInfo = () => {
                                 <Checkbox
                                     id="na other-tax-withheld"
                                     name="other-tax-withheld"
-                                    label="N/a"
+                                    label={t('finance.na')}
                                     checked={otherWithheld}
                                     onChange={() =>
                                         setOtherWithheld(!otherWithheld)
@@ -242,7 +248,7 @@ const FinanceInfo = () => {
                             </Grid>
                         </Grid>
                         <Label htmlFor="paid-taxes-withheld">
-                            Paid taxes from 2022
+                            {t('finance.paid-withheld')}
                         </Label>
                         <Grid row>
                             <Grid col={6}>
@@ -252,6 +258,7 @@ const FinanceInfo = () => {
                                         id="paid-taxes-withheld"
                                         name="paid-taxes-withheld"
                                         type="number"
+                                        min={0}
                                         disabled={paidWithheld}
                                     />
                                 </InputGroup>
@@ -260,7 +267,7 @@ const FinanceInfo = () => {
                                 <Checkbox
                                     id="na paid-taxes-withheld"
                                     name="paid-taxes-withheld"
-                                    label="N/a"
+                                    label={t('finance.na')}
                                     checked={paidWithheld}
                                     onChange={() =>
                                         setPaidWithheld(!paidWithheld)
@@ -268,7 +275,7 @@ const FinanceInfo = () => {
                                 />
                             </Grid>
                         </Grid>
-                        <Button type="submit">Review</Button>
+                        <Button type="submit">{t('finance.button')}</Button>
                     </Fieldset>
                 </Form>
             </main>

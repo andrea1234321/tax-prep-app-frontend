@@ -3,6 +3,8 @@ import "@trussworks/react-uswds/lib/index.css";
 import "@trussworks/react-uswds/lib/uswds.css";
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { createContext, useEffect, useState } from "react";
+
 
 //components
 import NavBar from "./components/NavBar";
@@ -16,11 +18,9 @@ import FinanceInfo from "./pages/FinanceInfo";
 import Review from "./pages/Review";
 import Results from "./pages/Results";
 
-//services
-
 //stylesheets
 import "./App.css";
-import { createContext, useEffect, useState } from "react";
+
 
 // App context
 type GlobalInfo = {
@@ -57,7 +57,7 @@ function App() {
                     setGlobalInfo({...globalInfo, isLoggedIn: false});
                 }
             })
-            .catch(error => setGlobalInfo({...globalInfo, isLoggedIn: false}));
+            .catch(() => setGlobalInfo({...globalInfo, isLoggedIn: false}));
     }, []);
 
     console.log("global info: ", globalInfo)

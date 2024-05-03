@@ -32,3 +32,6 @@
     /* background-color: red; */
     width: fit-content !important;
 }
+.navLogoutButton{
+    color: white !important;
+}

@@ -51,9 +51,8 @@ const NavBar = (props: NavBarProps) => {
     //         }
     //     ]}
     // />,
-        <a href="#linkOne" key="one">
-            LogOut
-        </a>,]
+        <button className="navLogoutButton" onClick={handleLogout}>LogOut</button>
+        ]
 
     const profileItemsMenu = [
         <>
@@ -73,7 +72,9 @@ const NavBar = (props: NavBarProps) => {
     const handleExpand =() => {
         setExpanded(!expanded)
     }
-
+    function handleLogout() {
+        window.location.replace("http://localhost:8080/logout");
+    }
     return (
         <>
             <Header basic={true}>

@@ -28,7 +28,7 @@ const NavBar = (props: NavBarProps) => {
         </Button>, 
         <Button id="navLangButton" style={{ fontWeight: i18n.resolvedLanguage === "sp" ? 'bold' : 'normal' }} type="submit" onClick={() => i18n.changeLanguage("sp")}>
         {lngs.sp.nativeName}
-    </Button>,
+        </Button>,
     // <LanguageSelector
     //     displayLang={language}
     //     langs={[

@@ -70,10 +70,10 @@ const Signup = () => {
                                 }}
                             >
                                 <div className="bg-white padding-y-3 padding-x-5 border border-base-lighter">
-                                    <h1 className="margin-bottom-0">
-                                        Create account
-                                    </h1>
                                     <Form onSubmit={handleSubmit}>
+                                        <h1 className="margin-bottom-0">
+                                            Create account
+                                        </h1>
                                         <Fieldset legend="Get started with an account.">
                                             <p>
                                                 <abbr

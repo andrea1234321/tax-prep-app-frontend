@@ -57,11 +57,11 @@ const Review = () => {
     const [profile, setProfile] = useState<Profile | null>(null);
     const [finances, setFinances] = useState<Finances | null>(null);
 
-    // useEffect(() => {
-    //     if (!globalInfo.isLoggedIn || globalInfo.stepNumber < 3) {
-    //         navigate("/");
-    //     }
-    // }, [globalInfo]);
+    useEffect(() => {
+        if (!globalInfo.isLoggedIn || globalInfo.stepNumber < 3) {
+            navigate("/");
+        }
+    }, [globalInfo]);
 
     useEffect(() => {
         fetch(backendUrl + "/profile", {
@@ -84,8 +84,7 @@ const Review = () => {
             .catch(err => console.error(err));
     }, [])
 
-    const handleSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
-        evt.preventDefault();
+    const handleSubmit = (): void => {
         if (globalInfo.stepNumber < 4) {
             setGlobalInfo({...globalInfo, stepNumber: 4});
         }
@@ -189,7 +188,7 @@ const Review = () => {
                                 <p>${finances?.prevTaxesPaid as number / 100}</p>
                             </div>
                         </CardBody>
-                        <Button type="submit">{t('review.button')}</Button>
+                        <Button onClick={handleSubmit} type="submit">{t('review.button')}</Button>
                     </Card>
                 </CardGroup>
             </main>

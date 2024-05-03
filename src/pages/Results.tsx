@@ -3,6 +3,7 @@ import ProgressBar from "../components/ProgressBar";
 import { AppContext } from "../App";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { CardGroup, Card, CardHeader, CardBody, Button } from "@trussworks/react-uswds";
 const Results = () => {
     const backendUrl = "http://localhost:8080";
 
@@ -30,10 +31,19 @@ const Results = () => {
 
     return (
         <>
-            <main id="main-content">
+            <main id="main-content " >
                 <ProgressBar stepNumber={4} />
-                {/* <p>You owe ${tax} in taxes.</p> */}
-                <p>{t('results.taxes', {tax})}</p>
+                <CardGroup>
+                    <Card>
+                        <CardBody>
+                            <p>{t('results.description')}</p>
+                        </CardBody>
+                        <CardHeader>
+                            {tax > 0 ? <h1>{t('results.taxOwed', {tax})}</h1> : <h1>{t('results.taxReturn', {tax})}</h1>}
+                        </CardHeader>
+                        {/* <Button>Return</Button> */}
+                    </Card>
+                </CardGroup>
             </main>
         </>
     );

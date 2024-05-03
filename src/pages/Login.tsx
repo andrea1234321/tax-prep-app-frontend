@@ -79,10 +79,10 @@ const Login = () => {
                                 }}
                             >
                                 <div className="bg-white padding-y-3 padding-x-5 border border-base-lighter">
-                                    <h1 className="margin-bottom-0">
-                                        Sign in to
-                                    </h1>
                                     <Form onSubmit={handleSubmit}>
+                                        <h1 className="margin-bottom-0">
+                                            Sign in to
+                                        </h1>
                                         <Fieldset
                                             legend="Access your account"
                                             legendStyle="large"
@@ -136,7 +136,7 @@ const Login = () => {
                                                 Sign in
                                             </Button>
                                             <p>or</p>
-                                            <button onClick={handleLogin}>Sign in with Google</button>
+                                            <Button onClick={handleLogin} type="button" outline={true} className="width-full">Sign in with Google</Button>
                                         </Fieldset>
                                     </Form>
                                 </div>

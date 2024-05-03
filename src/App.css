@@ -1,3 +1,6 @@
+.usa-header{
+    padding: 0 30px 15px 30px;
+}
 .usa-step-indicator {
     display: flex;
     flex-direction: column;
@@ -13,4 +16,19 @@
 }
 #spouse {
     margin-top: 0;
+}
+.profile-picture{
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+}
+/* .usa-nav__submenu-item > .usa-nav{
+    background-color: red;
+} */
+#navLangButton{
+    color: white;
+}
+.usa-nav{
+    /* background-color: red; */
+    width: fit-content !important;
 }

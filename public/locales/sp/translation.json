@@ -10,7 +10,7 @@
       "first-name": "Nombre",
       "middle-initial": "Inicial del Segundo Nombre",
       "last-name": "Apellido",
-      "dob": "Fecha de Nacimiento",
+      "dob": "Fecha de Nacimiento (MM/DD/AAAA)",
       "address": "Dirección",
       "address2": "Dirección línea 2",
       "city": "Ciudad",
@@ -42,6 +42,14 @@
       "paid-taxes": "Impuestos pagados del 2022",
       "na": "N/a",
       "button": "Revisión"
+  },
+  "review": {
+    "title": "Revisión",
+    "description": "Por favor, revisa la información a continuación y verifica que sea correcta antes de enviar.",
+    "button": "Resultados",
+    "full-name": "Nombre completo",
+    "address": "Dirección",
+    "spouse-name": "Nombre completo del cónyuge"
   },
     "results": {
       "taxes": "Debes ${{tax}} en impuestos."

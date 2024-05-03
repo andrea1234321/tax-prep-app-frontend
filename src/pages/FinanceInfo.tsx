@@ -248,7 +248,7 @@ const FinanceInfo = () => {
                             </Grid>
                         </Grid>
                         <Label htmlFor="paid-taxes-withheld">
-                            {t('finance.paid-withheld')}
+                            {t('finance.paid-taxes')}
                         </Label>
                         <Grid row>
                             <Grid col={6}>

@@ -35,3 +35,15 @@
 .navLogoutButton{
     color: white !important;
 }
+/* #main-content{
+    min-height: 100vh;
+} */
+.usa-card-group{
+    justify-content: center;
+}
+.usa-card__container{
+    align-items: center;
+}
+.usa-card__container > div{
+    width: 80%;
+}

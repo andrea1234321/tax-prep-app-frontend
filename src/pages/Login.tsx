@@ -11,7 +11,7 @@ import { useState, useEffect, useContext } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { AppContext } from "../App";
 
-const Login = ({ handleAddUserInfo }: { handleAddUserInfo: () => void }) => {
+const Login = () => {
     const [globalInfo, setGlobalInfo] = useContext(AppContext);
     const navigate = useNavigate();
 

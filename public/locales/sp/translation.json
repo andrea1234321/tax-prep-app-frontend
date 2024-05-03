@@ -49,5 +49,8 @@
     "spouse": {
       "info": "Información del cónyuge:",
       "joint-info": "Información Financiera Conjunta:"
-  }
+  },
+    "nav": {
+      "title": "Declaración de Impuestos"
+    } 
 }

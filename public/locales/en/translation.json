@@ -54,5 +54,8 @@
   "spouse": {
     "info": "Spouse Information:",
     "joint-info": "Joint Financial information:"
+  },
+  "nav": {
+    "title": "Tax Return"
   }
 }

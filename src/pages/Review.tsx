@@ -1,10 +1,15 @@
 import { useContext, useEffect, useState } from "react";
 import ProgressBar from "../components/ProgressBar";
 import {
-    Fieldset,
-    RequiredMarker,
-    Form,
+    Card,
+    CardHeader,
+    CardBody,
     Button,
+    CardGroup,
+    Alert,
+    Fieldset,
+    ValidationItem,
+    ValidationChecklist
 } from "@trussworks/react-uswds";
 import { AppContext } from "../App";
 import { useNavigate } from "react-router-dom";
@@ -52,11 +57,11 @@ const Review = () => {
     const [profile, setProfile] = useState<Profile | null>(null);
     const [finances, setFinances] = useState<Finances | null>(null);
 
-    useEffect(() => {
-        if (!globalInfo.isLoggedIn || globalInfo.stepNumber < 3) {
-            navigate("/");
-        }
-    }, [globalInfo]);
+    // useEffect(() => {
+    //     if (!globalInfo.isLoggedIn || globalInfo.stepNumber < 3) {
+    //         navigate("/");
+    //     }
+    // }, [globalInfo]);
 
     useEffect(() => {
         fetch(backendUrl + "/profile", {
@@ -91,39 +96,102 @@ const Review = () => {
         <>
             <main id="main-content">
                 <ProgressBar stepNumber={3} />
-                <Form onSubmit={handleSubmit} large>
-                    <Fieldset legend="Review" legendStyle="large">
-                        <h1>Profile</h1>
-                        <ul>
-                            <li>First Name: {profile?.firstName}</li>
-                            <li>Middle Initial: {profile?.middleInitial}</li>
-                            <li>Last Name: {profile?.lastName}</li>
-                            <li>Date of Birth: {profile?.dateOfBirth}</li>
-                            <li>Address: {profile?.address}</li>
-                            <li>City: {profile?.city}</li>
-                            <li>State: {profile?.state}</li>
-                            <li>Apartment number: {profile?.aptNumber}</li>
-                            <li>Zip code: {profile?.zipCode}</li>
-                            <li>SSN: {profile?.ssn}</li>
-                        </ul>
-                        <h1>Finances</h1>
-                        <ul>
-                            <li>Filing Status: {finances?.filingStatus}</li>
-                            <li>Spouse First Name: {finances?.spouseFirstName}</li>
-                            <li>Spouse Middle Initial: {finances?.spouseMiddleInitial}</li>
-                            <li>Spouse Last Name: {finances?.spouseLastName}</li>
-                            <li>Spouse SSN: {finances?.spouseSsn}</li>
-                            <li>Spouse Date of Birth: {finances?.spouseDateOfBirth}</li>
-                            <li>W2 Income: {finances?.w2Income as number / 100}</li>
-                            <li>Other Income: {finances?.otherIncome as number / 100}</li>
-                            <li>Tax withheld by W2: {finances?.taxWithheldW2 as number / 100}</li>
-                            <li>Tax withheld by 1099: {finances?.taxWithheld1099 as number / 100}</li>
-                            <li>Tax withheld by other: {finances?.taxWithheldOther as number / 100}</li>
-                            <li>Previous taxes paid: {finances?.prevTaxesPaid as number / 100}</li>
-                        </ul>
-                        <Button type="submit">Results</Button>
-                    </Fieldset>
-                </Form>
+                <CardGroup>
+                    <Card headerFirst gridLayout={{tablet: {col: 6}}}>
+                        <CardHeader>
+                            <h1 className="usa-card__heading">{t('review.title')}</h1>
+                        </CardHeader>
+                        <CardBody>
+                        <Fieldset>
+                            <Alert type="info" headingLevel="h4">
+                                <ValidationChecklist id="review">
+                                    <ValidationItem id="review" isValid={true}>{t('review.description')}</ValidationItem>
+                                </ValidationChecklist>
+                            </Alert>
+                        </Fieldset>
+                        </CardBody>
+                        <CardHeader>
+                            <h1 className="usa-card__heading">{t('personal.title')}:</h1>
+                        </CardHeader>
+                        <CardBody> 
+                            <div className="grid-row flex-wrap flex-justify">
+                                <p>{t('review.full-name')}: </p>
+                                <p>{profile?.firstName} {profile?.middleInitial} {profile?.lastName}</p>
+                            </div>                
+                            <div className="grid-row flex-wrap flex-justify ">
+                                <p>{t('personal.dob')}: </p>
+                                <p>{profile?.dateOfBirth.toString().slice(4,6)}/{profile?.dateOfBirth.toString().slice(6,8)}/{profile?.dateOfBirth.toString().slice(0,4)}</p>
+                            </div>                
+                            <div className="grid-row flex-wrap flex-justify">
+                                <p>{t('personal.ssn')}: </p>
+                                <p>{profile?.ssn.toString().slice(0,3)}-{profile?.ssn.toString().slice(3,5)}-{profile?.ssn.toString().slice(5,9)}</p>
+                            </div>                
+                            <div className="grid-row flex-wrap flex-justify">
+                                <p>{t('review.address')}: </p>
+                                <p>{profile?.address} {profile?.aptNumber} {profile?.city}, {profile?.state} {profile?.zipCode}</p>
+                            </div>
+                        </CardBody>
+                        {finances?.spouseFirstName && 
+                        <>
+                            <CardHeader>
+                                <h1 className="usa-card__heading">{t('spouse.info')}</h1>
+                            </CardHeader>
+                            <CardBody>
+                                <div className="grid-row flex-wrap flex-justify">
+                                    <p>{t('review.spouse-name')}: </p>
+                                    <p>{finances?.spouseFirstName} {finances?.spouseMiddleInitial} {finances?.spouseLastName}</p>
+                                </div>
+                                <div className="grid-row flex-wrap flex-justify">
+                                    <p>{t('personal.dob')}: </p>
+                                    {finances?.spouseDateOfBirth &&
+                                        <p>{finances?.spouseDateOfBirth.toString().slice(4,6)}/{finances?.spouseDateOfBirth.toString().slice(6,8)}/{finances?.spouseDateOfBirth.toString().slice(0,4)}</p>
+                                    }
+                                </div>
+                                <div className="grid-row flex-wrap flex-justify">
+                                    <p>{t('personal.ssn')}: </p>
+                                    {finances?.spouseSsn &&
+                                        <p>{finances?.spouseSsn.toString().slice(0,3)}-{finances?.spouseSsn.toString().slice(3,5)}-{finances?.spouseSsn.toString().slice(5,9)}</p>
+                                    }
+                                </div>
+                            </CardBody>
+                        </>
+                        }
+                        <CardHeader>
+                            <h1 className="usa-card__heading">{t('finance.title')}:</h1>
+                        </CardHeader>
+                        <CardBody>
+                            <div className="grid-row flex-wrap flex-justify">
+                                <p>{t('finance.status')}: </p>
+                                <p>{finances?.filingStatus}</p>
+                            </div>
+                            <div className="grid-row flex-wrap flex-justify">
+                                <p>{t('finance.w2-total')}: </p>
+                                <p>${finances?.w2Income as number / 100}</p>
+                            </div>
+                            <div className="grid-row flex-wrap flex-justify">
+                                <p>{t('finance.other-income')}: </p>
+                                <p>${finances?.otherIncome as number / 100}</p>
+                            </div>
+                            <div className="grid-row flex-wrap flex-justify">
+                                <p>{t('finance.w2-withheld')}: </p>
+                                <p>${finances?.taxWithheldW2 as number / 100}</p>
+                            </div>
+                            <div className="grid-row flex-wrap flex-justify">
+                                <p>{t('finance.1099-withheld')}: </p>
+                                <p>${finances?.taxWithheld1099 as number / 100}</p>
+                            </div>
+                            <div className="grid-row flex-wrap flex-justify">
+                                <p>{t('finance.other-withheld')}: </p>
+                                <p>${finances?.taxWithheldOther as number / 100}</p>
+                            </div>
+                            <div className="grid-row flex-wrap flex-justify">
+                                <p>{t('finance.paid-taxes')}: </p>
+                                <p>${finances?.prevTaxesPaid as number / 100}</p>
+                            </div>
+                        </CardBody>
+                        <Button type="submit">{t('review.button')}</Button>
+                    </Card>
+                </CardGroup>
             </main>
         </>
     );

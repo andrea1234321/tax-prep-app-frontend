@@ -10,7 +10,7 @@
     "first-name": "First Name",
     "middle-initial": "Middle Initial",
     "last-name": "Last Name",
-    "dob": "Date of Birth",
+    "dob": "Date of Birth (MM/DD/YYYY)",
     "address": "Street Address",
     "address2": "Street Address line 2",
     "city": "City",
@@ -45,7 +45,10 @@
   },
   "review": {
     "title": "Review",
-    "description": "Required fields are marked with an asterisk",
+    "description": "Please review the information below and verify it is correct before submitting.",
+    "full-name": "Full Name",
+    "address": "Address",
+    "spouse-name": "Spouse Full Name",
     "button": "Results"
   },
   "results": {

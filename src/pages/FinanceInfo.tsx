@@ -21,6 +21,7 @@ import { useTranslation } from "react-i18next";
 
 type FinanceInfoType = {
     "filing-status": string;
+    "tax-year": string;
     "spouse-first-name": string | undefined;
     "spouse-middle-initial": string | undefined;
     "spouse-last-name": string | undefined;
@@ -56,6 +57,7 @@ const FinanceInfo = () => {
 
         const body = JSON.stringify({
             filingStatus: formJson["filing-status"],
+            taxYear: formJson["tax-year"],
             spouseFirstName: formJson["spouse-first-name"],
             spouseMiddleInitial: formJson["spouse-middle-initial"],
             spouseLastName: formJson["spouse-last-name"],
@@ -92,6 +94,7 @@ const FinanceInfo = () => {
             })
             .catch((error: Error) => console.error(error));
     };
+   
 
     return (
         <>
@@ -143,6 +146,16 @@ const FinanceInfo = () => {
                             </Grid>
                         </Grid>
                         {jointFiling && <SpouseInfromation />}
+                        <Label htmlFor="tax-year" requiredMarker>
+                            {t('personal.tax-year')}
+                        </Label>
+                        <TextInput
+                            id="tax-year"
+                            name="tax-year"
+                            type="number"
+                            min={2000}
+                            required
+                        />
                         <Label htmlFor="w2-income" requiredMarker>
                             {t('finance.w2-total')}
                         </Label>

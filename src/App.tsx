@@ -60,8 +60,6 @@ function App() {
             .catch(() => setGlobalInfo({...globalInfo, isLoggedIn: false}));
     }, []);
 
-    console.log("global info: ", globalInfo)
-
     const handleAddUserInfo = (): void => {
         fetch("http://localhost:8080/userInfo", {
             credentials: "include",

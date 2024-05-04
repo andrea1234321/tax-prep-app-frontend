@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import ProgressBar from "../components/ProgressBar";
 import {
     Fieldset,
@@ -16,25 +16,33 @@ import { AppContext } from "../App";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
-
-type PersonalInfoType = {
-    "first-name": string;
-    "middle-initial": string;
-    "Last-name": string;
-    birthdate: string;
-    "mailing-address-1": string;
-    "mailing-address-2": string;
-    city: string;
-    state: string;
-    zip: string;
-    "input-type-ssn": string;
-};
-
 const PersonalInfo = () => {
     const [globalInfo, setGlobalInfo] = useContext(AppContext);
     const navigate = useNavigate();
     const backendUrl = "http://localhost:8080";
     const {t} = useTranslation();
+    const [profile, setProfile] = useState({
+        firstName: '',
+        middleInitial: '',
+        lastName: '',
+        dateOfBirth: '',
+        address: '',
+        city: '',
+        state: '',
+        aptNumber: '',
+        zipCode: '',
+        ssn: '',
+    });
+
+    const handleChange = (evt: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement> ) => {
+        evt.preventDefault()
+        const { name, value } = evt.target
+        setProfile({ ...profile, [name]: value })
+    }
+
+    const handleChangeDate = (newDate: string | undefined) => {
+        newDate && setProfile({ ...profile, dateOfBirth: newDate })
+    }
 
     useEffect(() => {
         if (!globalInfo.isLoggedIn) {
@@ -42,27 +50,13 @@ const PersonalInfo = () => {
         }
     }, [globalInfo]);
 
-    const handleSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = (evt: React.FormEvent<HTMLFormElement> ) => {
         evt.preventDefault();
-        const form = evt.target;
-        const formData = new FormData(form as HTMLFormElement);
-        const formJson = Object.fromEntries(
-            formData.entries(),
-        ) as PersonalInfoType;
-        const body = JSON.stringify({
-            firstName: formJson["first-name"],
-            middleInitial: formJson["middle-initial"],
-            lastName: formJson["Last-name"],
-            dateOfBirth: Number(formJson.birthdate.replace('-', '').replace('-', '')),
-            address: formJson["mailing-address-1"],
-            city: formJson.city,
-            state: formJson.state,
-            aptNumber: formJson["mailing-address-2"],
-            zipCode: Number(formJson.zip),
-            ssn: Number(formJson["input-type-ssn"].replace('-', '').replace('-', '')),
+        const body = JSON.stringify({...profile, 
+            dateOfBirth: Number(profile.dateOfBirth.replace('/', '').replace('/', '')),
+            zipCode: Number(profile.zipCode),
+            ssn: Number(profile.ssn),
         });
-        console.log(body);
-
         fetch(backendUrl + "/profile", {
             credentials: "include",
             method: "POST",
@@ -85,6 +79,29 @@ const PersonalInfo = () => {
             .catch((error: Error) => console.error(error));
     };
     
+    useEffect(() => {
+        fetch(backendUrl + "/profile", {
+            credentials: "include",
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+        .then(data => {
+            if (data.ok) {
+                return data.json();
+            } 
+        }).then((returnedData) => {
+            //if returned value is null change to empty string
+            const month= returnedData.dateOfBirth.toString().slice(4,6)
+            const day= returnedData.dateOfBirth.toString().slice(6,8)
+            const year= returnedData.dateOfBirth.toString().slice(0,4)
+            const formattedDOB = `${month}/${day}/${year}`
+            setProfile({...returnedData, dateOfBirth: formattedDOB});
+            
+        })
+        .catch(() => console.log("No existing personal information"));
+    }, []);
 
     return (
         <>
@@ -98,61 +115,71 @@ const PersonalInfo = () => {
                         </p>
                         <Grid row>
                             <Grid col={6}>
-                                <Label htmlFor="first-name" requiredMarker>
+                                <Label htmlFor="firstName" requiredMarker>
                                     {t('personal.first-name')}
                                 </Label>
                                 <TextInput
-                                    id="first-name"
-                                    name="first-name"
+                                    id="firstName"
+                                    name="firstName"
                                     type="text"
                                     required
+                                    value={profile && profile?.firstName}
+                                    onChange={handleChange}
                                 />
                             </Grid>
                             <Grid col={4} offset={2}>
-                                <Label htmlFor="middle-initital">
+                                <Label htmlFor="middleInitial">
                                     {t('personal.middle-initial')}
                                 </Label>
                                 <TextInput
-                                    id="middle-initital"
-                                    name="middle-initital"
+                                    id="middleInitial"
+                                    name="middleInitial"
                                     type="text"
+                                    value={profile && profile?.middleInitial}
+                                    onChange={handleChange}
                                 />
                             </Grid>
                         </Grid>
-                        <Label htmlFor="Last-name" requiredMarker>
+                        <Label htmlFor="lastName" requiredMarker>
                             {t('personal.last-name')}
                         </Label>
                         <TextInput
-                            id="Last-name"
-                            name="Last-name"
+                            id="lastName"
+                            name="lastName"
                             type="text"
                             required
+                            value={profile && profile?.lastName}
+                            onChange={handleChange}
                         />
                         <Label
-                            htmlFor="date-of-birth"
-                            id="date-of-birth"
+                            htmlFor="dateOfBirth"
+                            id="dateOfBirth"
                             requiredMarker
                         >
                             {t('personal.dob')}
                         </Label>
-                        <DatePicker id="birthdate" name="birthdate" required />
-                        <Label htmlFor="mailing-address-1" requiredMarker>
+                        <DatePicker id="dateOfBirth" name="dateOfBirth" required onChange={handleChangeDate} value={profile && profile?.dateOfBirth}/>
+                        <Label htmlFor="address" requiredMarker>
                             {t('personal.address')}
                         </Label>
                         <TextInput
-                            id="mailing-address-1"
-                            name="mailing-address-1"
+                            id="address"
+                            name="address"
                             type="text"
                             required
+                            value={profile && profile?.address}
+                            onChange={handleChange}
                         />
 
-                        <Label htmlFor="mailing-address-2">
-                            {t('personal.address2')}
+                        <Label htmlFor="aptNumber">
+                            {t('personal.apt')}
                         </Label>
                         <TextInput
-                            id="mailing-address-2"
-                            name="mailing-address-2"
+                            id="aptNumber"
+                            name="aptNumber"
                             type="text"
+                            value={profile && profile?.aptNumber}
+                            onChange={handleChange}
                         />
                         <Grid row>
                             <Grid col={6}>
@@ -164,13 +191,15 @@ const PersonalInfo = () => {
                                     name="city"
                                     type="text"
                                     required
+                                    value={profile && profile?.city}
+                                    onChange={handleChange}
                                 />
                             </Grid>
                             <Grid col={4} offset={2}>
                                 <Label htmlFor="state" requiredMarker>
                                     {t('personal.state')}
                                 </Label>
-                                <Select id="state" name="state" required>
+                                <Select id="state" name="state" required value={profile && profile?.state} onChange={handleChange}>
                                     <option>- {t('personal.select')} -</option>
                                     <option value="AL">Alabama</option>
                                     <option value="AK">Alaska</option>
@@ -228,28 +257,39 @@ const PersonalInfo = () => {
                                 </Select>
                             </Grid>
                         </Grid>
-                        <Label htmlFor="zip" requiredMarker>
+                        <Label htmlFor="zipCode" requiredMarker>
                             {t('personal.zip')}
                         </Label>
                         <TextInput
-                            id="zip"
-                            name="zip"
+                            id="zipCode"
+                            name="zipCode"
                             type="text"
                             inputSize="medium"
                             pattern="[\d]{5}(-[\d]{4})?"
                             required
+                            value={profile && profile?.zipCode}
+                            onChange={handleChange}
                         />
 
                         <Label htmlFor="ssn" requiredMarker>
                             {t('personal.ssn')}
                         </Label>
-                        <TextInputMask
-                            id="input-type-ssn"
-                            name="input-type-ssn"
+                        <TextInput
+                            id="ssn"
+                            name="ssn"
+                            type="number"
+                            onChange={handleChange}
+                            value={profile && profile?.ssn}
+                        />
+                        {/* <TextInputMask
+                            id="ssn"
+                            name="ssn"
                             type="text"
                             mask="___-__-____"
                             pattern="^(?!(000|666|9))\d{3}-(?!00)\d{2}-(?!0000)\d{4}$"
-                        />
+                            onChange={handleChange}
+                            value={profile && profile?.ssn}
+                        /> */}
                         <Button type="submit">{t('personal.button')}</Button>
                     </Fieldset>
                 </Form>

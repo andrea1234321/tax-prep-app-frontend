@@ -21,6 +21,7 @@ import { useTranslation } from "react-i18next";
 
 type FinanceInfoType = {
     "filing-status": string;
+    "tax-year": string;
     "spouse-first-name": string | undefined;
     "spouse-middle-initial": string | undefined;
     "spouse-last-name": string | undefined;
@@ -56,6 +57,7 @@ const FinanceInfo = () => {
 
         const body = JSON.stringify({
             filingStatus: formJson["filing-status"],
+            taxYear: formJson["tax-year"],
             spouseFirstName: formJson["spouse-first-name"],
             spouseMiddleInitial: formJson["spouse-middle-initial"],
             spouseLastName: formJson["spouse-last-name"],
@@ -92,6 +94,7 @@ const FinanceInfo = () => {
             })
             .catch((error: Error) => console.error(error));
     };
+   
 
     return (
         <>

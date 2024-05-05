@@ -119,7 +119,7 @@ const Review = () => {
                             </div>                
                             <div className="grid-row flex-wrap flex-justify ">
                                 <p>{t('personal.dob')}: </p>
-                                <p>{profile?.dateOfBirth.toString().slice(4,6)}/{profile?.dateOfBirth.toString().slice(6,8)}/{profile?.dateOfBirth.toString().slice(0,4)}</p>
+                                <p>{profile?.dateOfBirth.toString().slice(0,2)}/{profile?.dateOfBirth.toString().slice(2,4)}/{profile?.dateOfBirth.toString().slice(4,10)}</p>
                             </div>                
                             <div className="grid-row flex-wrap flex-justify">
                                 <p>{t('personal.ssn')}: </p>

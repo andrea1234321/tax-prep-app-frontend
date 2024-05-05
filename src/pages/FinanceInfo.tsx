@@ -146,16 +146,6 @@ const FinanceInfo = () => {
                             </Grid>
                         </Grid>
                         {jointFiling && <SpouseInfromation />}
-                        <Label htmlFor="tax-year" requiredMarker>
-                            {t('personal.tax-year')}
-                        </Label>
-                        <TextInput
-                            id="tax-year"
-                            name="tax-year"
-                            type="number"
-                            min={2000}
-                            required
-                        />
                         <Label htmlFor="w2-income" requiredMarker>
                             {t('finance.w2-total')}
                         </Label>

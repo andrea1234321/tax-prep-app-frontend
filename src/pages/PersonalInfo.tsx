@@ -33,6 +33,7 @@ const PersonalInfo = () => {
         zipCode: '',
         ssn: '',
     });
+    const [update, setUpdate] = useState(false)
 
     const handleChange = (evt: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement> ) => {
         evt.preventDefault()
@@ -79,6 +80,35 @@ const PersonalInfo = () => {
             .catch((error: Error) => console.error(error));
     };
     
+    const handleUpdate = (evt: React.FormEvent<HTMLFormElement> ) => {
+        evt.preventDefault();
+        const body = JSON.stringify({...profile, 
+            dateOfBirth: Number(profile.dateOfBirth.replace('/', '').replace('/', '')),
+            zipCode: Number(profile.zipCode),
+            ssn: Number(profile.ssn),
+        });
+        fetch(backendUrl + "/profile", {
+            credentials: "include",
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: body,
+        })
+            .then((data: Response) => {
+                if (data.ok) {
+                    console.log("Update successful!");
+                    if (globalInfo.stepNumber < 2) {
+                        setGlobalInfo({...globalInfo, stepNumber: 2});
+                    }
+                    navigate("/financialInformation");
+                } else {
+                    console.log("Update failed.");
+                }
+            })
+            .catch((error: Error) => console.error(error));
+    };
+    
     useEffect(() => {
         fetch(backendUrl + "/profile", {
             credentials: "include",
@@ -93,12 +123,20 @@ const PersonalInfo = () => {
             } 
         }).then((returnedData) => {
             //if returned value is null change to empty string
-            const month= returnedData.dateOfBirth.toString().slice(4,6)
-            const day= returnedData.dateOfBirth.toString().slice(6,8)
-            const year= returnedData.dateOfBirth.toString().slice(0,4)
-            const formattedDOB = `${month}/${day}/${year}`
+            let formattedDOB
+            if(returnedData.dateOfBirth.toString().length === 7){
+                const month= returnedData.dateOfBirth.toString().slice(4,5)
+                const day= returnedData.dateOfBirth.toString().slice(5,7)
+                const year= returnedData.dateOfBirth.toString().slice(0,4)
+                formattedDOB = `0${month}/${day}/${year}`
+            }else{
+                const month= returnedData.dateOfBirth.toString().slice(4,6)
+                const day= returnedData.dateOfBirth.toString().slice(6,8)
+                const year= returnedData.dateOfBirth.toString().slice(0,4)
+                formattedDOB = `${month}/${day}/${year}`
+            }
             setProfile({...returnedData, dateOfBirth: formattedDOB});
-            
+            setUpdate(true)
         })
         .catch(() => console.log("No existing personal information"));
     }, []);
@@ -107,7 +145,7 @@ const PersonalInfo = () => {
         <>
             <main id="main-content">
                 <ProgressBar stepNumber={1} />
-                <Form onSubmit={handleSubmit} large>
+                <Form onSubmit={update ? handleUpdate : handleSubmit} large>
                     <Fieldset legend={t('personal.title')} legendStyle="large">
                         <p>{t('personal.description')}(
                             <RequiredMarker />

@@ -19,58 +19,71 @@ import { AppContext } from "../App";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
-type FinanceInfoType = {
-    "filing-status": string;
-    "tax-year": string;
-    "spouse-first-name": string | undefined;
-    "spouse-middle-initial": string | undefined;
-    "spouse-last-name": string | undefined;
-    "spouse-date-of-birth": string | undefined;
-    "input-type-ssn": string | undefined;
-    "w2-income": string;
-    "other-income": string;
-    "w2-tax-withheld": string;
-    "tax-withheld-1099": string;
-    "other-tax-withheld": string;
-    "paid-taxes-withheld": string;
-};
-
 const FinanceInfo = () => {
     const backendUrl = "http://localhost:8080";
 
+    const {t} = useTranslation();
     const [globalInfo, setGlobalInfo] = useContext(AppContext);
+    const navigate = useNavigate();
     const [otherIncome, setOtherIncome] = useState(false);
     const [businessWithheld, setBusinessWithheld] = useState(false);
     const [otherWithheld, setOtherWithheld] = useState(false);
-    const [paidWithheld, setPaidWithheld] = useState(false);
-    const {t} = useTranslation();
-
+    const [paidTaxes, setPaidTaxes] = useState(false);
     const [jointFiling, setJointFiling] = useState(false);
+    const [financeInfo, setFinanaceInfo] = useState({
+        filingStatus: '',
+        spouseFirstName: '',
+        spouseMiddleInitial: '',
+        spouseLastName: '',
+        spouseDateOfBirth: '',
+        spouseSsn: '',
+        w2Income: '',
+        otherIncome: '',
+        taxWithheldW2: '',
+        taxWithheld1099: '',
+        taxWithheldOther: '',
+        prevTaxesPaid: ''
+    })
+console.log(financeInfo)
+    const handleChange = (evt: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement> ) => {
+        evt.preventDefault()
+        const { name, value } = evt.target
+        setFinanaceInfo({ ...financeInfo, [name]: value })
+    }
+    const handleChangeRadioBtn = (evt: React.ChangeEvent<HTMLInputElement> ) => {
+        const { name, value } = evt.target
+        if (value === "Married Filing Jointly"){
+            setJointFiling(true)
+            setFinanaceInfo({ ...financeInfo, [name]: value })
+        }else{
+            setJointFiling(false)
+            setFinanaceInfo({...financeInfo,
+                [name]: value,
+                spouseFirstName: '',
+                spouseMiddleInitial: '',
+                spouseLastName: '',
+                spouseDateOfBirth: '',
+                spouseSsn: '',
+            })
+        }
+    }
 
-    const navigate = useNavigate();
+    const handleChangeDate = (newDate: string | undefined) => {
+        newDate && setFinanaceInfo({ ...financeInfo, spouseDateOfBirth: newDate })
+    }
 
     const handleSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
         evt.preventDefault();
-        const form = evt.target;
-        const formData = new FormData(form as HTMLFormElement);
-        const formJson = Object.fromEntries(formData.entries()) as FinanceInfoType;
-
-        const body = JSON.stringify({
-            filingStatus: formJson["filing-status"],
-            taxYear: formJson["tax-year"],
-            spouseFirstName: formJson["spouse-first-name"],
-            spouseMiddleInitial: formJson["spouse-middle-initial"],
-            spouseLastName: formJson["spouse-last-name"],
-            spouseSsn: Number(formJson["input-type-ssn"]?.replace("-", "").replace("-", "")),
-            spouseDateOfBirth:  Number(formJson["spouse-date-of-birth"]?.replace('-', '').replace('-', '')),
-            w2Income: Number(formJson["w2-income"]) * 100,
-            otherIncome: Number(formJson["other-income"]) * 100,
-            taxWithheldW2: Number(formJson["w2-tax-withheld"]) * 100,
-            taxWithheld1099: Number(formJson["tax-withheld-1099"]) * 100,
-            taxWithheldOther: Number(formJson["other-tax-withheld"]) * 100,
-            prevTaxesPaid: Number(formJson["paid-taxes-withheld"]) * 100,
+        const body = JSON.stringify({...financeInfo, 
+            spouseSsn: Number(financeInfo.spouseSsn.replace("-", "").replace("-", "")),
+            spouseDateOfBirth:  Number(financeInfo.spouseDateOfBirth.replace('/', '').replace('/', '')),
+            w2Income: Number(financeInfo.w2Income) * 100,
+            otherIncome: Number(financeInfo.otherIncome) * 100,
+            taxWithheldW2: Number(financeInfo.taxWithheldW2) * 100,
+            taxWithheld1099: Number(financeInfo.taxWithheld1099) * 100,
+            taxWithheldOther: Number(financeInfo.taxWithheldOther) * 100,
+            prevTaxesPaid: Number(financeInfo.prevTaxesPaid) * 100,
         });
-
         console.log(body);
         
         fetch(backendUrl + "/finances", {
@@ -95,7 +108,6 @@ const FinanceInfo = () => {
             .catch((error: Error) => console.error(error));
     };
    
-
     return (
         <>
             <main id="main-content">
@@ -110,69 +122,74 @@ const FinanceInfo = () => {
                             <RequiredMarker />
                             ).
                         </p>
-                        <Label htmlFor="filing-status" requiredMarker>
-                            {t('finance.status')}{" "}
+                        <Label htmlFor="filingStatus" requiredMarker>
+                            {t('finance.status')}
                         </Label>
                         <Grid row>
                             <Grid col={3} offset={1}>
                                 <Radio
                                     id="single"
-                                    name="filing-status"
+                                    name="filingStatus"
                                     label={t('finance.single')}
                                     value="single"
-                                    onChange={() => setJointFiling(false)}
+                                    onChange={handleChangeRadioBtn}
                                 />
                             </Grid>
                             <Grid col={4}>
                                 <Radio
                                     id="married-jointly"
-                                    name="filing-status"
+                                    name="filingStatus"
                                     label={t('finance.married-joint')}
                                     value="Married Filing Jointly"
-                                    checked={jointFiling}
-                                    onChange={() =>
-                                        setJointFiling(!jointFiling)
-                                    }
+                                    onChange={handleChangeRadioBtn}
                                 />
                             </Grid>
                             <Grid col={4}>
                                 <Radio
                                     id="married-separately"
-                                    name="filing-status"
+                                    name="filingStatus"
                                     label={t('finance.married-separate')}
                                     value="Married Filing Separately"
-                                    onChange={() => setJointFiling(false)}
+                                    onChange={handleChangeRadioBtn}
                                 />
                             </Grid>
                         </Grid>
-                        {jointFiling && <SpouseInfromation />}
-                        <Label htmlFor="w2-income" requiredMarker>
+                        {jointFiling && <SpouseInfromation handleChange={handleChange} handleChangeDate={handleChangeDate}/>}
+                        <Label htmlFor="w2Income" requiredMarker>
                             {t('finance.w2-total')}
                         </Label>
-                        <TextInput
-                            id="w2-income"
-                            name="w2-income"
-                            type="text"
-                            required
-                        />
-                        <Label htmlFor="other-income">{t('finance.other-income')}</Label>
+                        <InputGroup>
+                            <InputPrefix>$</InputPrefix>
+                            <TextInput
+                                id="w2Income"
+                                name="w2Income"
+                                type="number"
+                                min={0}
+                                required
+                                value={financeInfo.w2Income}
+                                onChange={handleChange}
+                            />
+                        </InputGroup>
+                        <Label htmlFor="otherIncome">{t('finance.other-income')}</Label>
                         <Grid row>
                             <Grid col={6}>
                                 <InputGroup>
                                     <InputPrefix>$</InputPrefix>
                                     <TextInput
-                                        id="other-income"
-                                        name="other-income"
+                                        id="otherIncome"
+                                        name="otherIncome"
                                         type="number"
                                         min={0}
                                         disabled={otherIncome}
+                                        value={financeInfo.otherIncome}
+                                        onChange={handleChange}
                                     />
                                 </InputGroup>
                             </Grid>
                             <Grid col={4} offset={2}>
                                 <Checkbox
-                                    id="na other-income"
-                                    name="other-income"
+                                    id="na otherIncome"
+                                    name="otherIncome"
                                     label={t('finance.na')}
                                     checked={otherIncome}
                                     onChange={() =>
@@ -181,20 +198,22 @@ const FinanceInfo = () => {
                                 />
                             </Grid>
                         </Grid>
-                        <Label htmlFor="w2-tax-withheld" requiredMarker>
+                        <Label htmlFor="taxWithheldW2" requiredMarker>
                             {t('finance.w2-withheld')}
                         </Label>
                         <InputGroup>
                             <InputPrefix>$</InputPrefix>
                             <TextInput
-                                id="w2-tax-withheld"
-                                name="w2-tax-withheld"
+                                id="taxWithheldW2"
+                                name="taxWithheldW2"
                                 type="number"
                                 min={0}
                                 required
+                                value={financeInfo.taxWithheldW2}
+                                onChange={handleChange}
                             />
                         </InputGroup>
-                        <Label htmlFor="tax-withheld-1099">
+                        <Label htmlFor="taxWithheld1099">
                             {t('finance.1099-withheld')}
                         </Label>
                         <Grid row>
@@ -202,18 +221,20 @@ const FinanceInfo = () => {
                                 <InputGroup>
                                     <InputPrefix>$</InputPrefix>
                                     <TextInput
-                                        id="tax-withheld-1099"
-                                        name="tax-withheld-1099"
+                                        id="taxWithheld1099"
+                                        name="taxWithheld1099"
                                         type="number"
                                         min={0}
                                         disabled={businessWithheld}
+                                        value={financeInfo.taxWithheld1099}
+                                        onChange={handleChange}
                                     />
                                 </InputGroup>
                             </Grid>
                             <Grid col={4} offset={2}>
                                 <Checkbox
-                                    id="na tax-withheld-1099"
-                                    name="tax-withheld-1099"
+                                    id="na taxWithheld1099"
+                                    name="taxWithheld1099"
                                     label={t('finance.na')}
                                     checked={businessWithheld}
                                     onChange={() =>
@@ -222,7 +243,7 @@ const FinanceInfo = () => {
                                 />
                             </Grid>
                         </Grid>
-                        <Label htmlFor="other-tax-withheld">
+                        <Label htmlFor="taxWithheldOther">
                             {t('finance.other-withheld')}
                         </Label>
                         <Grid row>
@@ -230,18 +251,20 @@ const FinanceInfo = () => {
                                 <InputGroup>
                                     <InputPrefix>$</InputPrefix>
                                     <TextInput
-                                        id="other-tax-withheld"
-                                        name="other-tax-withheld"
+                                        id="taxWithheldOther"
+                                        name="taxWithheldOther"
                                         type="number"
                                         min={0}
                                         disabled={otherWithheld}
+                                        value={financeInfo.taxWithheldOther}
+                                        onChange={handleChange}
                                     />
                                 </InputGroup>
                             </Grid>
                             <Grid col={4} offset={2}>
                                 <Checkbox
-                                    id="na other-tax-withheld"
-                                    name="other-tax-withheld"
+                                    id="na taxWithheldOther"
+                                    name="taxWithheldOther"
                                     label={t('finance.na')}
                                     checked={otherWithheld}
                                     onChange={() =>
@@ -250,7 +273,7 @@ const FinanceInfo = () => {
                                 />
                             </Grid>
                         </Grid>
-                        <Label htmlFor="paid-taxes-withheld">
+                        <Label htmlFor="prevTaxesPaid">
                             {t('finance.paid-taxes')}
                         </Label>
                         <Grid row>
@@ -258,22 +281,24 @@ const FinanceInfo = () => {
                                 <InputGroup>
                                     <InputPrefix>$</InputPrefix>
                                     <TextInput
-                                        id="paid-taxes-withheld"
-                                        name="paid-taxes-withheld"
+                                        id="prevTaxesPaid"
+                                        name="prevTaxesPaid"
                                         type="number"
                                         min={0}
-                                        disabled={paidWithheld}
+                                        disabled={paidTaxes}
+                                        value={financeInfo.prevTaxesPaid}
+                                        onChange={handleChange}
                                     />
                                 </InputGroup>
                             </Grid>
                             <Grid col={4} offset={2}>
                                 <Checkbox
-                                    id="na paid-taxes-withheld"
-                                    name="paid-taxes-withheld"
+                                    id="na prevTaxesPaid"
+                                    name="prevTaxesPaid"
                                     label={t('finance.na')}
-                                    checked={paidWithheld}
+                                    checked={paidTaxes}
                                     onChange={() =>
-                                        setPaidWithheld(!paidWithheld)
+                                        setPaidTaxes(!paidTaxes)
                                     }
                                 />
                             </Grid>

@@ -19,21 +19,6 @@ import { AppContext } from "../App";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
-type FinanceInfoType = {
-    "filing-status": string;
-    "spouse-first-name": string | undefined;
-    "spouse-middle-initial": string | undefined;
-    "spouse-last-name": string | undefined;
-    "spouse-date-of-birth": string | undefined;
-    "input-type-ssn": string | undefined;
-    "w2-income": string;
-    "other-income": string;
-    "w2-tax-withheld": string;
-    "tax-withheld-1099": string;
-    "other-tax-withheld": string;
-    "paid-taxes-withheld": string;
-};
-
 const FinanceInfo = () => {
     const backendUrl = "http://localhost:8080";
 
@@ -59,7 +44,7 @@ const FinanceInfo = () => {
         taxWithheldOther: '',
         prevTaxesPaid: ''
     })
-
+console.log(financeInfo)
     const handleChange = (evt: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement> ) => {
         evt.preventDefault()
         const { name, value } = evt.target
@@ -67,8 +52,24 @@ const FinanceInfo = () => {
     }
     const handleChangeRadioBtn = (evt: React.ChangeEvent<HTMLInputElement> ) => {
         const { name, value } = evt.target
-        {value === "Married Filing Jointly" ? setJointFiling(true) : setJointFiling(false)}
-        setFinanaceInfo({ ...financeInfo, [name]: value })
+        if (value === "Married Filing Jointly"){
+            setJointFiling(true)
+            setFinanaceInfo({ ...financeInfo, [name]: value })
+        }else{
+            setJointFiling(false)
+            setFinanaceInfo({...financeInfo,
+                [name]: value,
+                spouseFirstName: '',
+                spouseMiddleInitial: '',
+                spouseLastName: '',
+                spouseDateOfBirth: '',
+                spouseSsn: '',
+            })
+        }
+    }
+
+    const handleChangeDate = (newDate: string | undefined) => {
+        newDate && setFinanaceInfo({ ...financeInfo, spouseDateOfBirth: newDate })
     }
 
     const handleSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
@@ -153,7 +154,7 @@ const FinanceInfo = () => {
                                 />
                             </Grid>
                         </Grid>
-                        {jointFiling && <SpouseInfromation />}
+                        {jointFiling && <SpouseInfromation handleChange={handleChange} handleChangeDate={handleChangeDate}/>}
                         <Label htmlFor="w2Income" requiredMarker>
                             {t('finance.w2-total')}
                         </Label>

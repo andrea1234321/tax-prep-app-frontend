@@ -7,7 +7,11 @@ import {
 } from "@trussworks/react-uswds";
 import { useTranslation } from "react-i18next";
 
-const SpouseInformation = () => {
+const SpouseInformation = (props: {
+    handleChange: (evt: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => void,
+    handleChangeDate: (newDate: string | undefined) => void
+}) => {
+    const {handleChange, handleChangeDate} = props
     const {t}= useTranslation();
     return (
         <>
@@ -15,60 +19,65 @@ const SpouseInformation = () => {
             <Grid row>
                 <Grid col={6}>
                     <Label
-                        htmlFor="spouse-first-name"
+                        htmlFor="spouseFirstName"
                         requiredMarker
                         id="spouse"
                     >
                         {t('personal.first-name')}
                     </Label>
                     <TextInput
-                        id="spouse-first-name"
-                        name="spouse-first-name"
+                        id="spouseFirstName"
+                        name="spouseFirstName"
                         type="text"
                         required
+                        onChange={handleChange}
                     />
                 </Grid>
                 <Grid col={4} offset={2}>
-                    <Label htmlFor="spouse-middle-initial" id="spouse">
+                    <Label htmlFor="spouseMiddleInitial" id="spouse">
                         {t('personal.middle-initial')}
                     </Label>
                     <TextInput
-                        id="spouse-middle-initial"
-                        name="spouse-middle-initial"
+                        id="spouseMiddleInitial"
+                        name="spouseMiddleInitial"
                         type="text"
+                        onChange={handleChange}
                     />
                 </Grid>
             </Grid>
-            <Label htmlFor="spouse-last-name" requiredMarker>
+            <Label htmlFor="spouseLastName" requiredMarker>
                 {t('personal.last-name')}
             </Label>
             <TextInput
-                id="spouse-last-name"
-                name="spouse-last-name"
+                id="spouseLastName"
+                name="spouseLastName"
                 type="text"
                 required
+                onChange={handleChange}
             />
             <Label
-                htmlFor="spouse-date-of-birth"
-                id="spouse-date-of-birth"
+                htmlFor="spouseDateOfBirth"
+                id="spouseDateOfBirth"
                 requiredMarker
             >
                 {t('personal.dob')}
             </Label>
             <DatePicker
-                id="spouse-date-of-birth"
-                name="spouse-date-of-birth"
+                id="spouseDateOfBirth"
+                name="spouseDateOfBirth"
                 required
+                onChange={handleChangeDate}
             />
-            <Label htmlFor="ssn" requiredMarker>
+            <Label htmlFor="spouseSsn" requiredMarker>
                 {t('personal.ssn')}
             </Label>
             <TextInputMask
-                id="input-type-ssn"
-                name="input-type-ssn"
+                id="spouseSsn"
+                name="spouseSsn"
                 type="text"
                 mask="___-__-____"
                 pattern="^(?!(000|666|9))\d{3}-(?!00)\d{2}-(?!0000)\d{4}$"
+                onChange={handleChange}
             />
             <br />
             <h3>{t('spouse.joint-info')}</h3>

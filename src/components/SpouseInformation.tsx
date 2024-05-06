@@ -6,12 +6,29 @@ import {
     TextInputMask,
 } from "@trussworks/react-uswds";
 import { useTranslation } from "react-i18next";
+type FinanceInfoType = {
+    "filingStatus": string;
+    "spouseFirstName": string | undefined;
+    "spouseMiddleInitial": string | undefined;
+    "spouseLastName": string | undefined;
+    "spouseDateOfBirth": string | undefined;
+    "spouseSsn": string | undefined;
+    "w2Income": string | Number;
+    "otherIncome": string | Number;
+    "taxWithheldW2": string | Number;
+    "taxWithheld1099": string | Number;
+    "taxWithheldOther": string | Number;
+    "prevTaxesPaid": string| Number
+};
+
+
 
 const SpouseInformation = (props: {
     handleChange: (evt: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => void,
-    handleChangeDate: (newDate: string | undefined) => void
+    handleChangeDate: (newDate: string | undefined) => void,
+    financeInfo: FinanceInfoType
 }) => {
-    const {handleChange, handleChangeDate} = props
+    const {handleChange, handleChangeDate, financeInfo} = props
     const {t}= useTranslation();
     return (
         <>
@@ -30,6 +47,7 @@ const SpouseInformation = (props: {
                         name="spouseFirstName"
                         type="text"
                         required
+                        value={financeInfo.spouseFirstName}
                         onChange={handleChange}
                     />
                 </Grid>
@@ -41,6 +59,7 @@ const SpouseInformation = (props: {
                         id="spouseMiddleInitial"
                         name="spouseMiddleInitial"
                         type="text"
+                        value={financeInfo.spouseMiddleInitial}
                         onChange={handleChange}
                     />
                 </Grid>
@@ -53,6 +72,7 @@ const SpouseInformation = (props: {
                 name="spouseLastName"
                 type="text"
                 required
+                value={financeInfo.spouseLastName}
                 onChange={handleChange}
             />
             <Label
@@ -66,6 +86,7 @@ const SpouseInformation = (props: {
                 id="spouseDateOfBirth"
                 name="spouseDateOfBirth"
                 required
+                value={financeInfo.spouseDateOfBirth}
                 onChange={handleChangeDate}
             />
             <Label htmlFor="spouseSsn" requiredMarker>
@@ -77,6 +98,7 @@ const SpouseInformation = (props: {
                 type="text"
                 mask="___-__-____"
                 pattern="^(?!(000|666|9))\d{3}-(?!00)\d{2}-(?!0000)\d{4}$"
+                // value={financeInfo.spouseSsn}
                 onChange={handleChange}
             />
             <br />

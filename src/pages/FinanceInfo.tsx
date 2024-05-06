@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import ProgressBar from "../components/ProgressBar";
 import {
     Fieldset,
@@ -26,10 +26,11 @@ const FinanceInfo = () => {
     const [globalInfo, setGlobalInfo] = useContext(AppContext);
     const navigate = useNavigate();
     const [otherIncome, setOtherIncome] = useState(false);
-    const [businessWithheld, setBusinessWithheld] = useState(false);
-    const [otherWithheld, setOtherWithheld] = useState(false);
-    const [paidTaxes, setPaidTaxes] = useState(false);
+    const [taxWithheld1099, setTaxWithheld1099] = useState(false);
+    const [taxWithheldOther, setTaxWithheldOther] = useState(false);
+    const [prevTaxesPaid, setPrevTaxesPaid] = useState(false);
     const [jointFiling, setJointFiling] = useState(false);
+    const [update, setUpdate] = useState(false)
     const [financeInfo, setFinanaceInfo] = useState({
         filingStatus: '',
         spouseFirstName: '',
@@ -107,6 +108,49 @@ console.log(financeInfo)
             })
             .catch((error: Error) => console.error(error));
     };
+
+
+    useEffect(() => {
+        fetch(backendUrl + "/finances", {
+            credentials: "include",
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+        .then(data => {
+            if (data.ok) {
+                return data.json();
+            } 
+        }).then((returnedData) => {
+            let formattedDOB
+            if(returnedData.spouseDateOfBirth.toString().length === 7){
+                const month= returnedData.spouseDateOfBirth.toString().slice(4,5)
+                const day= returnedData.spouseDateOfBirth.toString().slice(5,7)
+                const year= returnedData.spouseDateOfBirth.toString().slice(0,4)
+                formattedDOB = `0${month}/${day}/${year}`
+            }else{
+                const month= returnedData.spouseDateOfBirth.toString().slice(4,6)
+                const day= returnedData.spouseDateOfBirth.toString().slice(6,8)
+                const year= returnedData.spouseDateOfBirth.toString().slice(0,4)
+                formattedDOB = `${month}/${day}/${year}`
+            }if(returnedData.filingStatus === "Married Filing Jointly"){
+                setJointFiling(true)
+            }if(returnedData.otherIncome === 0){
+                setOtherIncome(!otherIncome)
+            }if(returnedData.taxWithheld1099 === 0){
+                setTaxWithheld1099(!taxWithheld1099)
+            }if(returnedData.taxWithheldOther === 0){
+                setTaxWithheldOther(!taxWithheldOther)
+            }if(returnedData.prevTaxesPaid === 0){
+                setPrevTaxesPaid(!prevTaxesPaid)
+            }
+            setFinanaceInfo({...returnedData, dateOfBirth: formattedDOB});
+            setUpdate(true)
+        })
+        .catch(() => console.log("No existing financial information"));
+    }, []);
+
    
     return (
         <>
@@ -132,6 +176,7 @@ console.log(financeInfo)
                                     name="filingStatus"
                                     label={t('finance.single')}
                                     value="single"
+                                    checked={financeInfo.filingStatus === "single"}
                                     onChange={handleChangeRadioBtn}
                                 />
                             </Grid>
@@ -141,6 +186,7 @@ console.log(financeInfo)
                                     name="filingStatus"
                                     label={t('finance.married-joint')}
                                     value="Married Filing Jointly"
+                                    checked={financeInfo.filingStatus === "Married Filing Jointly"}
                                     onChange={handleChangeRadioBtn}
                                 />
                             </Grid>
@@ -150,11 +196,12 @@ console.log(financeInfo)
                                     name="filingStatus"
                                     label={t('finance.married-separate')}
                                     value="Married Filing Separately"
+                                    checked={financeInfo.filingStatus === "Married Filing Separately"}
                                     onChange={handleChangeRadioBtn}
                                 />
                             </Grid>
                         </Grid>
-                        {jointFiling && <SpouseInfromation handleChange={handleChange} handleChangeDate={handleChangeDate}/>}
+                        {jointFiling && <SpouseInfromation handleChange={handleChange} handleChangeDate={handleChangeDate} financeInfo={financeInfo}/>}
                         <Label htmlFor="w2Income" requiredMarker>
                             {t('finance.w2-total')}
                         </Label>
@@ -181,7 +228,7 @@ console.log(financeInfo)
                                         type="number"
                                         min={0}
                                         disabled={otherIncome}
-                                        value={financeInfo.otherIncome}
+                                        value={otherIncome ? 0 : financeInfo.otherIncome}
                                         onChange={handleChange}
                                     />
                                 </InputGroup>
@@ -225,8 +272,8 @@ console.log(financeInfo)
                                         name="taxWithheld1099"
                                         type="number"
                                         min={0}
-                                        disabled={businessWithheld}
-                                        value={financeInfo.taxWithheld1099}
+                                        disabled={taxWithheld1099}
+                                        value={taxWithheld1099 ? 0 : financeInfo.taxWithheld1099}
                                         onChange={handleChange}
                                     />
                                 </InputGroup>
@@ -236,9 +283,9 @@ console.log(financeInfo)
                                     id="na taxWithheld1099"
                                     name="taxWithheld1099"
                                     label={t('finance.na')}
-                                    checked={businessWithheld}
+                                    checked={taxWithheld1099}
                                     onChange={() =>
-                                        setBusinessWithheld(!businessWithheld)
+                                        setTaxWithheld1099(!taxWithheld1099)
                                     }
                                 />
                             </Grid>
@@ -255,8 +302,8 @@ console.log(financeInfo)
                                         name="taxWithheldOther"
                                         type="number"
                                         min={0}
-                                        disabled={otherWithheld}
-                                        value={financeInfo.taxWithheldOther}
+                                        disabled={taxWithheldOther}
+                                        value={taxWithheldOther ? 0 : financeInfo.taxWithheldOther}
                                         onChange={handleChange}
                                     />
                                 </InputGroup>
@@ -266,9 +313,9 @@ console.log(financeInfo)
                                     id="na taxWithheldOther"
                                     name="taxWithheldOther"
                                     label={t('finance.na')}
-                                    checked={otherWithheld}
+                                    checked={taxWithheldOther}
                                     onChange={() =>
-                                        setOtherWithheld(!otherWithheld)
+                                        setTaxWithheldOther(!taxWithheldOther)
                                     }
                                 />
                             </Grid>
@@ -285,8 +332,8 @@ console.log(financeInfo)
                                         name="prevTaxesPaid"
                                         type="number"
                                         min={0}
-                                        disabled={paidTaxes}
-                                        value={financeInfo.prevTaxesPaid}
+                                        disabled={prevTaxesPaid}
+                                        value={prevTaxesPaid ? 0 : financeInfo.prevTaxesPaid}
                                         onChange={handleChange}
                                     />
                                 </InputGroup>
@@ -296,9 +343,9 @@ console.log(financeInfo)
                                     id="na prevTaxesPaid"
                                     name="prevTaxesPaid"
                                     label={t('finance.na')}
-                                    checked={paidTaxes}
+                                    checked={prevTaxesPaid}
                                     onChange={() =>
-                                        setPaidTaxes(!paidTaxes)
+                                        setPrevTaxesPaid(!prevTaxesPaid)
                                     }
                                 />
                             </Grid>

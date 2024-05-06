@@ -85,8 +85,6 @@ console.log(financeInfo)
             taxWithheldOther: Number(financeInfo.taxWithheldOther) * 100,
             prevTaxesPaid: Number(financeInfo.prevTaxesPaid) * 100,
         });
-        console.log(body);
-        
         fetch(backendUrl + "/finances", {
             credentials: "include",
             method: "POST",
@@ -104,6 +102,39 @@ console.log(financeInfo)
                     navigate("/review");
                 } else {
                     console.log("Post failed.");
+                }
+            })
+            .catch((error: Error) => console.error(error));
+    };
+    const handleUpdate = (evt: React.FormEvent<HTMLFormElement>) => {
+        evt.preventDefault();
+        const body = JSON.stringify({...financeInfo, 
+            spouseSsn: Number(financeInfo.spouseSsn.replace("-", "").replace("-", "")),
+            spouseDateOfBirth:  Number(financeInfo.spouseDateOfBirth.replace('/', '').replace('/', '')),
+            w2Income: Number(financeInfo.w2Income) * 100,
+            otherIncome: Number(financeInfo.otherIncome) * 100,
+            taxWithheldW2: Number(financeInfo.taxWithheldW2) * 100,
+            taxWithheld1099: Number(financeInfo.taxWithheld1099) * 100,
+            taxWithheldOther: Number(financeInfo.taxWithheldOther) * 100,
+            prevTaxesPaid: Number(financeInfo.prevTaxesPaid) * 100,
+        });
+        fetch(backendUrl + "/finances", {
+            credentials: "include",
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: body,
+        })
+            .then((data: Response) => {
+                if (data.ok) {
+                    console.log("Update successful!");
+                    if (globalInfo.stepNumber < 3) {
+                        setGlobalInfo({...globalInfo, stepNumber: 3});
+                    }
+                    navigate("/review");
+                } else {
+                    console.log("Update failed.");
                 }
             })
             .catch((error: Error) => console.error(error));
@@ -156,7 +187,7 @@ console.log(financeInfo)
         <>
             <main id="main-content">
                 <ProgressBar stepNumber={2} />
-                <Form onSubmit={handleSubmit} large>
+                <Form onSubmit={update ? handleUpdate : handleSubmit} large>
                     <Fieldset
                         legend={t('finance.title')}
                         legendStyle="large"

@@ -26,7 +26,11 @@ const Admin = ({analytics}: {analytics: AdminAnalytics}) => {
                              .map((key, i) => ({
                                  id: i,
                                  value: analytics.filingStatusFrequencies[key],
-                                 label: key,
+                                 label: {
+                                     "single": t("finance.single"),
+                                     "separately": t("finance.married-separate"),
+                                     "jointly": t("finance.married-joint")
+                                 }[key],
                              }));
 
     const incomeKeys = Object.keys(analytics.incomeFrequencies).sort((range1, range2) => {
@@ -43,22 +47,29 @@ const Admin = ({analytics}: {analytics: AdminAnalytics}) => {
 
     const incomeData = incomeKeys.map(key => analytics.incomeFrequencies[key]);
 
+    const incomeLabels = incomeKeys.map(key =>
+        key.split("-").map(number => "$" + (Number(number) / 100).toLocaleString()).join(" to ")
+    );
+
+    const elementWidth = 1000;
+    const elementHeight = 400;
+
     return (
         <>
             <center>
                 {/* State Frequencies chart */}
                 <h2>{t("admin.stateFrequencies")}</h2>
-                <PieChart series={[{data: stateData}]} width={1000} height={500}/>
+                <PieChart series={[{data: stateData}]} width={elementWidth} height={elementHeight}/>
                 {/* Filing Status Frequencies chart */}
                 <h2>{t("admin.filingStatusFrequencies")}</h2>
-                <PieChart series={[{data: filingData}]} width={1000} height={500}/>
+                <PieChart series={[{data: filingData}]} width={elementWidth} height={elementHeight}/>
                 {/* Income Data chart */}
                 <h2>{t("admin.incomeFrequencies")}</h2>
                 <BarChart
-                    xAxis={[{ scaleType: 'band', data: incomeKeys }]}
+                    xAxis={[{ scaleType: 'band', data: incomeLabels }]}
                     series={[{ data: incomeData }]}
-                    width={1000}
-                    height={500}
+                    width={elementWidth}
+                    height={elementHeight}
                 />
             </center>
         </>

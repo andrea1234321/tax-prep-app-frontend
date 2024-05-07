@@ -9,15 +9,19 @@ import {
 } from "@trussworks/react-uswds";
 import { useState, useEffect, useContext } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { AppContext } from "../App";
+import { AppContext, backendUrl } from "../App";
 
 const Login = () => {
     const [globalInfo, setGlobalInfo] = useContext(AppContext);
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (globalInfo.isLoggedIn) {
-            navigate("/home");
+        if (!globalInfo.isChanging) {
+            if (globalInfo.isAdmin) {
+                navigate("/admin");
+            } else if (globalInfo.isLoggedIn) {
+                navigate("/home");
+            }
         }
     }, [globalInfo]);
 
@@ -29,7 +33,6 @@ const Login = () => {
     };
 
     const handleSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
-        const backendUrl = "http://localhost:8080";
         evt.preventDefault();
         const form = evt.target;
         const formData = new FormData(form as HTMLFormElement);
@@ -50,7 +53,7 @@ const Login = () => {
                 console.log(data);
                 if (data.status === 200) {
                     console.log("User Accepted.");
-                    setGlobalInfo({ ...globalInfo, isLoggedIn: true });
+                    setGlobalInfo(globalInfo => ({ ...globalInfo, isLoggedIn: true }));
                 } else {
                     console.log("user rejected");
                 }
@@ -60,7 +63,7 @@ const Login = () => {
 
 
     function handleLogin() {
-        window.location.replace("http://localhost:8080/signin");
+        window.location.replace(backendUrl + "/signin");
     }
 
     return (

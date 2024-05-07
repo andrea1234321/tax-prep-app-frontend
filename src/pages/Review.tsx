@@ -9,9 +9,11 @@ import {
     Alert,
     Fieldset,
     ValidationItem,
-    ValidationChecklist
+    ValidationChecklist,
+    ButtonGroup,
+    Link
 } from "@trussworks/react-uswds";
-import { AppContext } from "../App";
+import { AppContext, backendUrl } from "../App";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
@@ -48,8 +50,6 @@ type Finances = {
 }
 
 const Review = () => {
-    const backendUrl = "http://localhost:8080";
-
     const [globalInfo, setGlobalInfo] = useContext(AppContext);
     const navigate = useNavigate();
     const {t} = useTranslation();
@@ -86,7 +86,7 @@ const Review = () => {
 
     const handleSubmit = (): void => {
         if (globalInfo.stepNumber < 4) {
-            setGlobalInfo({...globalInfo, stepNumber: 4});
+            setGlobalInfo(globalInfo => ({...globalInfo, stepNumber: 4}));
         }
         navigate("/results");
     };
@@ -188,7 +188,12 @@ const Review = () => {
                                 <p>${finances?.prevTaxesPaid as number / 100}</p>
                             </div>
                         </CardBody>
-                        <Button onClick={handleSubmit} type="submit">{t('review.button')}</Button>
+                        <ButtonGroup>
+                            <Link href="#" className="usa-button usa-button--outline" onClick={() => navigate("/financialInformation")}>
+                                Back
+                            </Link>
+                            <Button onClick={handleSubmit} type="submit">{t('review.button')}</Button>
+                        </ButtonGroup>
                     </Card>
                 </CardGroup>
             </main>

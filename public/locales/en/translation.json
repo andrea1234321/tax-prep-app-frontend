@@ -63,5 +63,10 @@
   },
   "nav": {
     "title": "Tax Return"
+  },
+  "admin": {
+    "stateFrequencies": "State Frequencies",
+    "filingStatusFrequencies": "Filing Status Frequencies",
+    "incomeFrequencies": "W2 Income Distribution"
   }
 }

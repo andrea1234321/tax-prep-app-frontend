@@ -11,15 +11,16 @@ import {
     Grid,
     DatePicker,
     TextInputMask,
+    ButtonGroup,
+    Link,
 } from "@trussworks/react-uswds";
-import { AppContext } from "../App";
+import { AppContext, backendUrl } from "../App";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 const PersonalInfo = () => {
     const [globalInfo, setGlobalInfo] = useContext(AppContext);
     const navigate = useNavigate();
-    const backendUrl = "http://localhost:8080";
     const {t} = useTranslation();
     const [profile, setProfile] = useState({
         firstName: '',
@@ -70,7 +71,7 @@ const PersonalInfo = () => {
                 if (data.ok) {
                     console.log("Post successful!");
                     if (globalInfo.stepNumber < 2) {
-                        setGlobalInfo({...globalInfo, stepNumber: 2});
+                        setGlobalInfo(globalInfo => ({...globalInfo, stepNumber: 2}));
                     }
                     navigate("/financialInformation");
                 } else {
@@ -99,7 +100,7 @@ const PersonalInfo = () => {
                 if (data.ok) {
                     console.log("Update successful!");
                     if (globalInfo.stepNumber < 2) {
-                        setGlobalInfo({...globalInfo, stepNumber: 2});
+                        setGlobalInfo(globalInfo => ({...globalInfo, stepNumber: 2}));
                     }
                     navigate("/financialInformation");
                 } else {
@@ -328,7 +329,12 @@ const PersonalInfo = () => {
                             onChange={handleChange}
                             value={profile && profile?.ssn}
                         /> */}
-                        <Button type="submit">{t('personal.button')}</Button>
+                        <ButtonGroup>
+                            <Link href="#" className="usa-button usa-button--outline" onClick={() => navigate("/home")}>
+                                Back
+                            </Link>
+                            <Button type="submit">{t('personal.button')}</Button>
+                        </ButtonGroup>
                     </Fieldset>
                 </Form>
             </main>

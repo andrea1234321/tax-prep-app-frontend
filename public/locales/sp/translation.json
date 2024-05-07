@@ -62,5 +62,10 @@
   },
     "nav": {
       "title": "Declaración de Impuestos"
-    } 
+    },
+    "admin": {
+      "stateFrequencies": "Frecuencias del Estados",
+      "filingStatusFrequencies": "Frecuencias del Estados de Declaración",
+      "incomeFrequencies": "La Distribución de Ingresos del Formulario W2"
+    }
 }

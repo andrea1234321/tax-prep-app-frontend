@@ -20,11 +20,14 @@ import Results from "./pages/Results";
 
 //stylesheets
 import "./App.css";
+import Admin from "./pages/Admin";
 
 
 // App context
-type GlobalInfo = {
+export type GlobalInfo = {
     isLoggedIn: boolean;
+    isAdmin: boolean;
+    isChanging: boolean;
     stepNumber: number;
 };
 
@@ -33,8 +36,16 @@ export type UserInfo = {
     picture: string;
 };
 
-export const AppContext = createContext<[GlobalInfo, (g: GlobalInfo) => void]>([
-    { isLoggedIn: true, stepNumber: 1 },
+export type AdminAnalytics = {
+    stateFrequencies: Record<string, number>;
+    filingStatusFrequencies: Record<string, number>;
+    incomeFrequencies: Record<string, number>;
+};
+
+export const backendUrl = "http://localhost:8080";
+
+export const AppContext = createContext<[GlobalInfo, (g: (g: GlobalInfo) => GlobalInfo) => void]>([
+    { isLoggedIn: true, isAdmin: true, isChanging: true, stepNumber: 1 },
     () => {},
 ]);
 
@@ -42,44 +53,46 @@ function App() {
     const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
     const [globalInfo, setGlobalInfo] = useState<GlobalInfo>({
         isLoggedIn: true,
+        isAdmin: true,
+        isChanging: true,
         stepNumber: 1,
+    });
+    const [adminAnalytics, setAdminAnalytics] = useState<AdminAnalytics>({
+        stateFrequencies: {},
+        filingStatusFrequencies: {},
+        incomeFrequencies: {},
     });
 
     useEffect(() => {
-        fetch("http://localhost:8080/helloWorld", {
-            credentials: "include",
-            method: "GET",
-        })
-            .then(data => {
-                if (data.ok) {
-                    handleAddUserInfo();
-                } else {
-                    setGlobalInfo({...globalInfo, isLoggedIn: false});
-                }
-            })
-            .catch(() => setGlobalInfo({...globalInfo, isLoggedIn: false}));
-    }, []);
-
-    const handleAddUserInfo = (): void => {
-        fetch("http://localhost:8080/userInfo", {
+        fetch(backendUrl + "/userInfo", {
             credentials: "include",
             method: "GET",
         })
             .then((data) => data.json())
-            .then((userInfo) =>
-                setUserInfo({ name: userInfo.name, picture: userInfo.picture }),
-            )
+            .then((userInfo) => {
+                setUserInfo({ name: userInfo.name, picture: userInfo.picture });
+                fetch(backendUrl + "/admin/analytics", {
+                    credentials: "include",
+                    method: "GET",
+                })
+                    .then(data => data.json())
+                    .then(dataJson => setAdminAnalytics(dataJson))
+                    .catch(() => {
+                        setGlobalInfo(globalInfo => ({ ...globalInfo, isAdmin: false }));
+                    });
+            })
             .catch(() => {
-                console.log("error fetching user info");
-            });
-    };
+                setGlobalInfo(globalInfo => ({ ...globalInfo, isLoggedIn: false, isAdmin: false }));
+            })
+            .finally(() => setGlobalInfo(globalInfo => ({ ...globalInfo, isChanging: false })));
+    }, []);
 
     return (
         <>
             <AppContext.Provider value={[globalInfo, setGlobalInfo]}>
                 {/* if signed in, add navbar */}
                 <BrowserRouter basename="/">
-                {globalInfo.isLoggedIn && <NavBar userInfo={userInfo} />}
+                {!globalInfo.isChanging && globalInfo.isLoggedIn && <NavBar userInfo={userInfo} />}
                     <Routes>
                         <Route
                             path="/"
@@ -102,6 +115,7 @@ function App() {
                         />
                         <Route path="/review" element={<Review />} />
                         <Route path="/results" element={<Results />} />
+                        <Route path="/admin" element={<Admin analytics={adminAnalytics}/>} />
                     </Routes>
                 </BrowserRouter>
             </AppContext.Provider>

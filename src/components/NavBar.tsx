@@ -1,5 +1,5 @@
 import { Button, Header, Title, NavDropDownButton, Menu, PrimaryNav} from "@trussworks/react-uswds";
-import { UserInfo } from "../App";
+import { UserInfo, backendUrl } from "../App";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { useState } from "react";
@@ -73,7 +73,7 @@ const NavBar = (props: NavBarProps) => {
         setExpanded(!expanded)
     }
     function handleLogout() {
-        window.location.replace("http://localhost:8080/logout");
+        window.location.replace(backendUrl + "/logout");
     }
     return (
         <>

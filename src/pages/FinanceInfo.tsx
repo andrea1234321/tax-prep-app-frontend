@@ -12,16 +12,16 @@ import {
     Grid,
     InputGroup,
     InputPrefix,
+    ButtonGroup,
+    Link,
 } from "@trussworks/react-uswds";
 
 import SpouseInfromation from "../components/SpouseInformation";
-import { AppContext } from "../App";
+import { AppContext, backendUrl } from "../App";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 const FinanceInfo = () => {
-    const backendUrl = "http://localhost:8080";
-
     const {t} = useTranslation();
     const [globalInfo, setGlobalInfo] = useContext(AppContext);
     const navigate = useNavigate();
@@ -30,7 +30,7 @@ const FinanceInfo = () => {
     const [taxWithheldOther, setTaxWithheldOther] = useState(false);
     const [prevTaxesPaid, setPrevTaxesPaid] = useState(false);
     const [jointFiling, setJointFiling] = useState(false);
-    const [update, setUpdate] = useState(false)
+    const [update, setUpdate] = useState(false);
     const [financeInfo, setFinanaceInfo] = useState({
         filingStatus: '',
         spouseFirstName: '',
@@ -44,8 +44,16 @@ const FinanceInfo = () => {
         taxWithheld1099: '',
         taxWithheldOther: '',
         prevTaxesPaid: ''
-    })
-console.log(financeInfo)
+    });
+
+    useEffect(() => {
+        if (!globalInfo.isLoggedIn) {
+            navigate("/");
+        }
+    }, [globalInfo]);
+
+    console.log(financeInfo)
+
     const handleChange = (evt: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement> ) => {
         evt.preventDefault()
         const { name, value } = evt.target
@@ -97,7 +105,7 @@ console.log(financeInfo)
                 if (data.ok) {
                     console.log("Post successful!");
                     if (globalInfo.stepNumber < 3) {
-                        setGlobalInfo({...globalInfo, stepNumber: 3});
+                        setGlobalInfo(globalInfo => ({...globalInfo, stepNumber: 3}));
                     }
                     navigate("/review");
                 } else {
@@ -130,7 +138,7 @@ console.log(financeInfo)
                 if (data.ok) {
                     console.log("Update successful!");
                     if (globalInfo.stepNumber < 3) {
-                        setGlobalInfo({...globalInfo, stepNumber: 3});
+                        setGlobalInfo(globalInfo => ({...globalInfo, stepNumber: 3}));
                     }
                     navigate("/review");
                 } else {
@@ -176,7 +184,7 @@ console.log(financeInfo)
             }if(returnedData.prevTaxesPaid === 0){
                 setPrevTaxesPaid(!prevTaxesPaid)
             }
-            setFinanaceInfo({...returnedData, dateOfBirth: formattedDOB});
+            setFinanaceInfo({...returnedData, spouseSsn: String(returnedData.spouseSsn), spouseDateOfBirth: formattedDOB});
             setUpdate(true)
         })
         .catch(() => console.log("No existing financial information"));
@@ -381,7 +389,12 @@ console.log(financeInfo)
                                 />
                             </Grid>
                         </Grid>
-                        <Button type="submit">{t('finance.button')}</Button>
+                        <ButtonGroup>
+                            <Link href="#" className="usa-button usa-button--outline" onClick={() => navigate("/personalInformation")}>
+                                Back
+                            </Link>
+                            <Button type="submit">{t('finance.button')}</Button>
+                        </ButtonGroup>
                     </Fieldset>
                 </Form>
             </main>

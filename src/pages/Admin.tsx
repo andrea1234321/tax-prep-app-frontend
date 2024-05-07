@@ -2,10 +2,12 @@ import { BarChart, PieChart } from "@mui/x-charts";
 import { useContext, useEffect } from "react";
 import { AdminAnalytics, AppContext } from "../App";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const Admin = ({analytics}: {analytics: AdminAnalytics}) => {
     const [globalInfo, _] = useContext(AppContext);
     const navigate = useNavigate();
+    const {t} = useTranslation();
 
     useEffect(() => {
         if (!globalInfo.isAdmin) {
@@ -43,20 +45,22 @@ const Admin = ({analytics}: {analytics: AdminAnalytics}) => {
 
     return (
         <>
-            {/* State Frequencies chart */}
-            State Frequencies
-            <PieChart series={[{data: stateData}]} width={1000} height={500}/>
-            {/* Filing Status Frequencies chart */}
-            Filing Status Frequencies
-            <PieChart series={[{data: filingData}]} width={1000} height={500}/>
-            {/* Income Data chart */}
-            W2 Income Distribution
-            <BarChart
-                xAxis={[{ scaleType: 'band', data: incomeKeys }]}
-                series={[{ data: incomeData }]}
-                width={1000}
-                height={500}
-            />
+            <center>
+                {/* State Frequencies chart */}
+                <h2>{t("admin.stateFrequencies")}</h2>
+                <PieChart series={[{data: stateData}]} width={1000} height={500}/>
+                {/* Filing Status Frequencies chart */}
+                <h2>{t("admin.filingStatusFrequencies")}</h2>
+                <PieChart series={[{data: filingData}]} width={1000} height={500}/>
+                {/* Income Data chart */}
+                <h2>{t("admin.incomeFrequencies")}</h2>
+                <BarChart
+                    xAxis={[{ scaleType: 'band', data: incomeKeys }]}
+                    series={[{ data: incomeData }]}
+                    width={1000}
+                    height={500}
+                />
+            </center>
         </>
     );
 };

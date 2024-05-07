@@ -12,14 +12,13 @@ import {
     DatePicker,
     TextInputMask,
 } from "@trussworks/react-uswds";
-import { AppContext } from "../App";
+import { AppContext, backendUrl } from "../App";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 const PersonalInfo = () => {
     const [globalInfo, setGlobalInfo] = useContext(AppContext);
     const navigate = useNavigate();
-    const backendUrl = "http://localhost:8080";
     const {t} = useTranslation();
     const [profile, setProfile] = useState({
         firstName: '',

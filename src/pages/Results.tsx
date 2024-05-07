@@ -1,12 +1,10 @@
 import { useContext, useEffect, useState } from "react";
 import ProgressBar from "../components/ProgressBar";
-import { AppContext } from "../App";
+import { AppContext, backendUrl } from "../App";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { CardGroup, Card, CardHeader, CardBody, Button } from "@trussworks/react-uswds";
 const Results = () => {
-    const backendUrl = "http://localhost:8080";
-
     const [globalInfo, _] = useContext(AppContext);
     const navigate = useNavigate();
     const {t} = useTranslation();

@@ -42,14 +42,14 @@ export type AdminAnalytics = {
     incomeFrequencies: Record<string, number>;
 };
 
+export const backendUrl = "http://localhost:8080";
+
 export const AppContext = createContext<[GlobalInfo, (g: (g: GlobalInfo) => GlobalInfo) => void]>([
     { isLoggedIn: true, isAdmin: true, isChanging: true, stepNumber: 1 },
     () => {},
 ]);
 
 function App() {
-    const backendUrl = "http://localhost:8080";
-
     const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
     const [globalInfo, setGlobalInfo] = useState<GlobalInfo>({
         isLoggedIn: true,

@@ -28,7 +28,7 @@ const FinanceInfo = () => {
     const [taxWithheldOther, setTaxWithheldOther] = useState(false);
     const [prevTaxesPaid, setPrevTaxesPaid] = useState(false);
     const [jointFiling, setJointFiling] = useState(false);
-    const [update, setUpdate] = useState(false)
+    const [update, setUpdate] = useState(false);
     const [financeInfo, setFinanaceInfo] = useState({
         filingStatus: '',
         spouseFirstName: '',
@@ -42,8 +42,16 @@ const FinanceInfo = () => {
         taxWithheld1099: '',
         taxWithheldOther: '',
         prevTaxesPaid: ''
-    })
-console.log(financeInfo)
+    });
+
+    useEffect(() => {
+        if (!globalInfo.isLoggedIn) {
+            navigate("/");
+        }
+    }, [globalInfo]);
+
+    console.log(financeInfo)
+
     const handleChange = (evt: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement> ) => {
         evt.preventDefault()
         const { name, value } = evt.target

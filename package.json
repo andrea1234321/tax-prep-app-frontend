@@ -10,6 +10,8 @@
         "preview": "vite preview"
     },
     "dependencies": {
+        "@emotion/styled": "^11.11.5",
+        "@mui/x-charts": "^7.3.2",
         "@trussworks/react-uswds": "^9.0.0",
         "i18next": "^23.11.3",
         "i18next-browser-languagedetector": "^7.2.1",

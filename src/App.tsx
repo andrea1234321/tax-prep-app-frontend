@@ -20,6 +20,7 @@ import Results from "./pages/Results";
 
 //stylesheets
 import "./App.css";
+import Admin from "./pages/Admin";
 
 
 // App context
@@ -102,6 +103,7 @@ function App() {
                         />
                         <Route path="/review" element={<Review />} />
                         <Route path="/results" element={<Results />} />
+                        <Route path="/admin" element={<Admin />} />
                     </Routes>
                 </BrowserRouter>
             </AppContext.Provider>

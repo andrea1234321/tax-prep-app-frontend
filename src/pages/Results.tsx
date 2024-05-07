@@ -27,7 +27,7 @@ const Results = () => {
             .then(data => data.json())
             .then(dataJson => setTax(Number(dataJson) / 100))
             .catch(err => console.error(err));
-    });
+    }, []);
 
     return (
         <>

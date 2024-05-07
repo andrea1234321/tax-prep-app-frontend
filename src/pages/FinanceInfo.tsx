@@ -184,7 +184,7 @@ const FinanceInfo = () => {
             }if(returnedData.prevTaxesPaid === 0){
                 setPrevTaxesPaid(!prevTaxesPaid)
             }
-            setFinanaceInfo({...returnedData, spouseSsn: String(returnedData.spouseSsn), spouseDateOfBirth: formattedDOB});
+            setFinanaceInfo({...returnedData, dateOfBirth: formattedDOB});
             setUpdate(true)
         })
         .catch(() => console.log("No existing financial information"));

@@ -1,20 +1,17 @@
 import { BarChart, PieChart } from "@mui/x-charts";
-import { useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
+import { AdminAnalytics, AppContext } from "../App";
+import { useNavigate } from "react-router-dom";
 
-type Analytics = {
-    stateFrequencies: Record<string, number>;
-    filingStatusFrequencies: Record<string, number>;
-    incomeFrequencies: Record<string, number>;
-};
+const Admin = ({analytics}: {analytics: AdminAnalytics}) => {
+    const [globalInfo, _] = useContext(AppContext);
+    const navigate = useNavigate();
 
-const Admin = () => {
-    const backendUrl = "http://localhost:8080";
-
-    const [analytics, setAnalytics] = useState<Analytics>({
-        stateFrequencies: {},
-        filingStatusFrequencies: {},
-        incomeFrequencies: {},
-    });
+    useEffect(() => {
+        if (!globalInfo.isAdmin) {
+            navigate("/home");
+        }
+    }, [globalInfo]);
 
     const stateData = Object.keys(analytics.stateFrequencies)
                             .map((key, i) => ({
@@ -43,16 +40,6 @@ const Admin = () => {
     });
 
     const incomeData = incomeKeys.map(key => analytics.incomeFrequencies[key]);
-
-    useEffect(() => {
-        fetch(backendUrl + "/admin/analytics", {
-            credentials: "include",
-            method: "GET",
-        })
-            .then(data => data.json())
-            .then(dataJson => setAnalytics(dataJson))
-            .catch(err => console.error(err));
-    }, []);
 
     return (
         <>

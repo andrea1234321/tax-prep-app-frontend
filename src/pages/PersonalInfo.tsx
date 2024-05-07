@@ -70,7 +70,7 @@ const PersonalInfo = () => {
                 if (data.ok) {
                     console.log("Post successful!");
                     if (globalInfo.stepNumber < 2) {
-                        setGlobalInfo({...globalInfo, stepNumber: 2});
+                        setGlobalInfo(globalInfo => ({...globalInfo, stepNumber: 2}));
                     }
                     navigate("/financialInformation");
                 } else {
@@ -99,7 +99,7 @@ const PersonalInfo = () => {
                 if (data.ok) {
                     console.log("Update successful!");
                     if (globalInfo.stepNumber < 2) {
-                        setGlobalInfo({...globalInfo, stepNumber: 2});
+                        setGlobalInfo(globalInfo => ({...globalInfo, stepNumber: 2}));
                     }
                     navigate("/financialInformation");
                 } else {

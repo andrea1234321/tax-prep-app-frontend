@@ -16,8 +16,12 @@ const Login = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (globalInfo.isLoggedIn) {
-            navigate("/home");
+        if (!globalInfo.isChanging) {
+            if (globalInfo.isAdmin) {
+                navigate("/admin");
+            } else if (globalInfo.isLoggedIn) {
+                navigate("/home");
+            }
         }
     }, [globalInfo]);
 
@@ -50,7 +54,7 @@ const Login = () => {
                 console.log(data);
                 if (data.status === 200) {
                     console.log("User Accepted.");
-                    setGlobalInfo({ ...globalInfo, isLoggedIn: true });
+                    setGlobalInfo(globalInfo => ({ ...globalInfo, isLoggedIn: true }));
                 } else {
                     console.log("user rejected");
                 }

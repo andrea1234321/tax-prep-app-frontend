@@ -86,7 +86,7 @@ const Review = () => {
 
     const handleSubmit = (): void => {
         if (globalInfo.stepNumber < 4) {
-            setGlobalInfo({...globalInfo, stepNumber: 4});
+            setGlobalInfo(globalInfo => ({...globalInfo, stepNumber: 4}));
         }
         navigate("/results");
     };

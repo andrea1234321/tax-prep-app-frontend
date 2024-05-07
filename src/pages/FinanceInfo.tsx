@@ -97,7 +97,7 @@ console.log(financeInfo)
                 if (data.ok) {
                     console.log("Post successful!");
                     if (globalInfo.stepNumber < 3) {
-                        setGlobalInfo({...globalInfo, stepNumber: 3});
+                        setGlobalInfo(globalInfo => ({...globalInfo, stepNumber: 3}));
                     }
                     navigate("/review");
                 } else {
@@ -130,7 +130,7 @@ console.log(financeInfo)
                 if (data.ok) {
                     console.log("Update successful!");
                     if (globalInfo.stepNumber < 3) {
-                        setGlobalInfo({...globalInfo, stepNumber: 3});
+                        setGlobalInfo(globalInfo => ({...globalInfo, stepNumber: 3}));
                     }
                     navigate("/review");
                 } else {

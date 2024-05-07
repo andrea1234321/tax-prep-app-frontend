@@ -31,7 +31,7 @@ const FinanceInfo = () => {
     const [prevTaxesPaid, setPrevTaxesPaid] = useState(false);
     const [jointFiling, setJointFiling] = useState(false);
     const [update, setUpdate] = useState(false);
-    const [financeInfo, setFinanaceInfo] = useState({
+    const [financeInfo, setFinanceInfo] = useState({
         filingStatus: '',
         spouseFirstName: '',
         spouseMiddleInitial: '',
@@ -57,16 +57,17 @@ const FinanceInfo = () => {
     const handleChange = (evt: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement> ) => {
         evt.preventDefault()
         const { name, value } = evt.target
-        setFinanaceInfo({ ...financeInfo, [name]: value })
+        setFinanceInfo({ ...financeInfo, [name]: value })
     }
+  
     const handleChangeRadioBtn = (evt: React.ChangeEvent<HTMLInputElement> ) => {
         const { name, value } = evt.target
         if (value === "Married Filing Jointly"){
             setJointFiling(true)
-            setFinanaceInfo({ ...financeInfo, [name]: value })
+            setFinanceInfo({ ...financeInfo, [name]: value })
         }else{
             setJointFiling(false)
-            setFinanaceInfo({...financeInfo,
+            setFinanceInfo({...financeInfo,
                 [name]: value,
                 spouseFirstName: '',
                 spouseMiddleInitial: '',
@@ -78,7 +79,24 @@ const FinanceInfo = () => {
     }
 
     const handleChangeDate = (newDate: string | undefined) => {
-        newDate && setFinanaceInfo({ ...financeInfo, spouseDateOfBirth: newDate })
+        newDate && setFinanceInfo({ ...financeInfo, spouseDateOfBirth: newDate })
+    }
+
+    const handleOtherIncome = () => {
+        setOtherIncome(!otherIncome)
+        setFinanceInfo({ ...financeInfo, otherIncome: "0" })
+    }
+    const handleTaxWithheld1099 = () => {
+        setTaxWithheld1099(!taxWithheld1099)
+        setFinanceInfo({ ...financeInfo, taxWithheld1099: "0" })
+    }
+    const handleTaxWithheldOther = () => {
+        setTaxWithheldOther(!taxWithheldOther)
+        setFinanceInfo({ ...financeInfo, taxWithheldOther: "0" })
+    }
+    const handlePrevTaxesPaid = () => {
+        setPrevTaxesPaid(!prevTaxesPaid)
+        setFinanceInfo({ ...financeInfo, prevTaxesPaid: "0" })
     }
 
     const handleSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
@@ -184,7 +202,16 @@ const FinanceInfo = () => {
             }if(returnedData.prevTaxesPaid === 0){
                 setPrevTaxesPaid(!prevTaxesPaid)
             }
-            setFinanaceInfo({...returnedData, dateOfBirth: formattedDOB});
+            setFinanceInfo({
+                ...returnedData, 
+                dateOfBirth: formattedDOB,
+                w2Income: returnedData.w2Income / 100,
+                otherIncome: returnedData.otherIncome / 100,
+                taxWithheldW2: returnedData.taxWithheldW2 / 100,
+                taxWithheld1099: returnedData.taxWithheld1099 / 100,
+                taxWithheldOther: returnedData.taxWithheldOther / 100,
+                prevTaxesPaid: returnedData.prevTaxesPaid / 100,
+            });
             setUpdate(true)
         })
         .catch(() => console.log("No existing financial information"));
@@ -267,7 +294,7 @@ const FinanceInfo = () => {
                                         type="number"
                                         min={0}
                                         disabled={otherIncome}
-                                        value={otherIncome ? 0 : financeInfo.otherIncome}
+                                        value={financeInfo.otherIncome}
                                         onChange={handleChange}
                                     />
                                 </InputGroup>
@@ -278,9 +305,7 @@ const FinanceInfo = () => {
                                     name="otherIncome"
                                     label={t('finance.na')}
                                     checked={otherIncome}
-                                    onChange={() =>
-                                        setOtherIncome(!otherIncome)
-                                    }
+                                    onChange={handleOtherIncome}
                                 />
                             </Grid>
                         </Grid>
@@ -312,7 +337,7 @@ const FinanceInfo = () => {
                                         type="number"
                                         min={0}
                                         disabled={taxWithheld1099}
-                                        value={taxWithheld1099 ? 0 : financeInfo.taxWithheld1099}
+                                        value={financeInfo.taxWithheld1099}
                                         onChange={handleChange}
                                     />
                                 </InputGroup>
@@ -323,9 +348,7 @@ const FinanceInfo = () => {
                                     name="taxWithheld1099"
                                     label={t('finance.na')}
                                     checked={taxWithheld1099}
-                                    onChange={() =>
-                                        setTaxWithheld1099(!taxWithheld1099)
-                                    }
+                                    onChange={handleTaxWithheld1099}
                                 />
                             </Grid>
                         </Grid>
@@ -342,7 +365,7 @@ const FinanceInfo = () => {
                                         type="number"
                                         min={0}
                                         disabled={taxWithheldOther}
-                                        value={taxWithheldOther ? 0 : financeInfo.taxWithheldOther}
+                                        value={financeInfo.taxWithheldOther}
                                         onChange={handleChange}
                                     />
                                 </InputGroup>
@@ -353,9 +376,7 @@ const FinanceInfo = () => {
                                     name="taxWithheldOther"
                                     label={t('finance.na')}
                                     checked={taxWithheldOther}
-                                    onChange={() =>
-                                        setTaxWithheldOther(!taxWithheldOther)
-                                    }
+                                    onChange={handleTaxWithheldOther}
                                 />
                             </Grid>
                         </Grid>
@@ -372,7 +393,7 @@ const FinanceInfo = () => {
                                         type="number"
                                         min={0}
                                         disabled={prevTaxesPaid}
-                                        value={prevTaxesPaid ? 0 : financeInfo.prevTaxesPaid}
+                                        value={financeInfo.prevTaxesPaid}
                                         onChange={handleChange}
                                     />
                                 </InputGroup>
@@ -383,9 +404,7 @@ const FinanceInfo = () => {
                                     name="prevTaxesPaid"
                                     label={t('finance.na')}
                                     checked={prevTaxesPaid}
-                                    onChange={() =>
-                                        setPrevTaxesPaid(!prevTaxesPaid)
-                                    }
+                                    onChange={handlePrevTaxesPaid}
                                 />
                             </Grid>
                         </Grid>

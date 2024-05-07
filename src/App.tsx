@@ -68,14 +68,24 @@ function App() {
             credentials: "include",
             method: "GET",
         })
-            .then((data) => data.json())
+            .then((data) => {
+                if (data.ok) {
+                    return data.json();
+                }
+                throw new Error();
+            })
             .then((userInfo) => {
                 setUserInfo({ name: userInfo.name, picture: userInfo.picture });
                 fetch(backendUrl + "/admin/analytics", {
                     credentials: "include",
                     method: "GET",
                 })
-                    .then(data => data.json())
+                    .then(data => {
+                        if (data.ok) {
+                            return data.json();
+                        }
+                        throw new Error();
+                    })
                     .then(dataJson => setAdminAnalytics(dataJson))
                     .catch(() => {
                         setGlobalInfo(globalInfo => ({ ...globalInfo, isAdmin: false }));

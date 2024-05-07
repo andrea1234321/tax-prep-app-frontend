@@ -181,12 +181,13 @@ const FinanceInfo = () => {
             } 
         }).then((returnedData) => {
             let formattedDOB
+            let newSpouseSsn
             if(returnedData.spouseDateOfBirth.toString().length === 7){
                 const month= returnedData.spouseDateOfBirth.toString().slice(4,5)
                 const day= returnedData.spouseDateOfBirth.toString().slice(5,7)
                 const year= returnedData.spouseDateOfBirth.toString().slice(0,4)
                 formattedDOB = `0${month}/${day}/${year}`
-            }else{
+            }if (returnedData.spouseDateOfBirth.toString().length === 8){
                 const month= returnedData.spouseDateOfBirth.toString().slice(4,6)
                 const day= returnedData.spouseDateOfBirth.toString().slice(6,8)
                 const year= returnedData.spouseDateOfBirth.toString().slice(0,4)
@@ -201,10 +202,15 @@ const FinanceInfo = () => {
                 setTaxWithheldOther(!taxWithheldOther)
             }if(returnedData.prevTaxesPaid === 0){
                 setPrevTaxesPaid(!prevTaxesPaid)
+            }if (returnedData.spouseSsn === 0){
+                newSpouseSsn = ""
+            }if (returnedData.spouseDateOfBirth === 0){
+                formattedDOB = ""
             }
             setFinanceInfo({
                 ...returnedData, 
-                dateOfBirth: formattedDOB,
+                spouseDateOfBirth: formattedDOB,
+                spouseSsn: newSpouseSsn,
                 w2Income: returnedData.w2Income / 100,
                 otherIncome: returnedData.otherIncome / 100,
                 taxWithheldW2: returnedData.taxWithheldW2 / 100,

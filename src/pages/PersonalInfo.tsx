@@ -11,6 +11,8 @@ import {
     Grid,
     DatePicker,
     TextInputMask,
+    ButtonGroup,
+    Link,
 } from "@trussworks/react-uswds";
 import { AppContext, backendUrl } from "../App";
 import { useNavigate } from "react-router-dom";
@@ -327,7 +329,12 @@ const PersonalInfo = () => {
                             onChange={handleChange}
                             value={profile && profile?.ssn}
                         /> */}
-                        <Button type="submit">{t('personal.button')}</Button>
+                        <ButtonGroup>
+                            <Link href="#" className="usa-button usa-button--outline" onClick={() => navigate("/home")}>
+                                Back
+                            </Link>
+                            <Button type="submit">{t('personal.button')}</Button>
+                        </ButtonGroup>
                     </Fieldset>
                 </Form>
             </main>

@@ -12,6 +12,8 @@ import {
     Grid,
     InputGroup,
     InputPrefix,
+    ButtonGroup,
+    Link,
 } from "@trussworks/react-uswds";
 
 import SpouseInfromation from "../components/SpouseInformation";
@@ -182,7 +184,7 @@ const FinanceInfo = () => {
             }if(returnedData.prevTaxesPaid === 0){
                 setPrevTaxesPaid(!prevTaxesPaid)
             }
-            setFinanaceInfo({...returnedData, dateOfBirth: formattedDOB});
+            setFinanaceInfo({...returnedData, spouseSsn: String(returnedData.spouseSsn), spouseDateOfBirth: formattedDOB});
             setUpdate(true)
         })
         .catch(() => console.log("No existing financial information"));
@@ -387,7 +389,12 @@ const FinanceInfo = () => {
                                 />
                             </Grid>
                         </Grid>
-                        <Button type="submit">{t('finance.button')}</Button>
+                        <ButtonGroup>
+                            <Link href="#" className="usa-button usa-button--outline" onClick={() => navigate("/personalInformation")}>
+                                Back
+                            </Link>
+                            <Button type="submit">{t('finance.button')}</Button>
+                        </ButtonGroup>
                     </Fieldset>
                 </Form>
             </main>

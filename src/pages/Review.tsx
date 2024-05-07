@@ -9,7 +9,9 @@ import {
     Alert,
     Fieldset,
     ValidationItem,
-    ValidationChecklist
+    ValidationChecklist,
+    ButtonGroup,
+    Link
 } from "@trussworks/react-uswds";
 import { AppContext, backendUrl } from "../App";
 import { useNavigate } from "react-router-dom";
@@ -186,7 +188,12 @@ const Review = () => {
                                 <p>${finances?.prevTaxesPaid as number / 100}</p>
                             </div>
                         </CardBody>
-                        <Button onClick={handleSubmit} type="submit">{t('review.button')}</Button>
+                        <ButtonGroup>
+                            <Link href="#" className="usa-button usa-button--outline" onClick={() => navigate("/financialInformation")}>
+                                Back
+                            </Link>
+                            <Button onClick={handleSubmit} type="submit">{t('review.button')}</Button>
+                        </ButtonGroup>
                     </Card>
                 </CardGroup>
             </main>

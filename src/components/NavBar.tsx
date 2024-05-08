@@ -18,7 +18,7 @@ const NavBar = (props: NavBarProps) => {
     const { userInfo } = props;
     const [expanded, setExpanded] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
-    const [globalInfo, setGlobalInfo] = useContext(AppContext);
+    const [_, setGlobalInfo] = useContext(AppContext);
 
 
     const profileMenu =

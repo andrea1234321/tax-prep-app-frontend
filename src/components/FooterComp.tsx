@@ -3,8 +3,6 @@ const FooterComp = () => {
     return ( 
         <>
         <div className="footer-container">
-
-
             <Footer 
             className="footer"
               size="medium"

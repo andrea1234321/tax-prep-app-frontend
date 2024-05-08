@@ -29,7 +29,7 @@
       "last-name": "Apellido",
       "dob": "Fecha de Nacimiento (MM/DD/AAAA)",
       "address": "Dirección",
-      "apt": "Dirección línea 2",
+      "apt": "Apartamento, Suite, etc.",
       "city": "Ciudad",
       "state": "Estado",
       "zip": "Código Postal",
@@ -71,7 +71,7 @@
     "results": {
       "description": "Basado en la información que has ingresado",
       "taxOwed": "Se estima que debes: ${{tax}} en impuestos.",
-      "taxReturn": "Tu reembolso de impuestos estimado es: ${{tax}}",
+      "taxReturn": "Tu reembolso de impuestos estimado es: ${{absTax}}",
       "back": "Atrás",
       "done": "Finalizar"
   },

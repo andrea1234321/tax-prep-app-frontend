@@ -72,3 +72,7 @@
     flex-direction: column;
     justify-content: center;
 }
+.usa-button-group{
+    display: flex;
+    justify-content: center;
+}

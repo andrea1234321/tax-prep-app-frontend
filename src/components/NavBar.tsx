@@ -15,8 +15,6 @@ const lngs: Record<string, { nativeName: string }> = {
 const NavBar = (props: NavBarProps) => {
     const {i18n} = useTranslation();
     const {t} = useTranslation();
-    // const nextLanguage = i18n.languages[(i18n.languages.indexOf(i18n.language) + 1) % i18n.languages.length]
-    // const [language, setLanguage] = useState(nextLanguage);
     const { userInfo } = props;
     const [expanded, setExpanded] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
@@ -29,28 +27,6 @@ const NavBar = (props: NavBarProps) => {
         <Button id="navLangButton" style={{ fontWeight: i18n.resolvedLanguage === "sp" ? 'bold' : 'normal' }} type="submit" onClick={() => i18n.changeLanguage("sp")}>
         {lngs.sp.nativeName}
         </Button>,
-    // <LanguageSelector
-    //     displayLang={language}
-    //     langs={[
-    //         {
-    //         attr: 'sp',
-    //         label: 'Español',
-    //         label_local: 'Spanish',
-    //         on_click: () => {
-    //             i18n.changeLanguage('sp')
-    //             setLanguage("en")
-    //         }
-    //         },
-    //         {
-    //         attr: 'en',
-    //         label: 'English',
-    //         on_click: () => {
-    //             i18n.changeLanguage('en');
-    //             setLanguage("sp")
-    //         }
-    //         }
-    //     ]}
-    // />,
         <button className="navLogoutButton" onClick={handleLogout}>LogOut</button>
         ]
 

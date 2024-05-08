@@ -1,4 +1,21 @@
 {
+  "login": {
+    "signin": "Impuesto Express",
+    "signinDescription": " Puedes acceder a tu cuenta iniciando sesión con una de las opciones a continuación.",
+    "signinGoogle": "Iniciar sesión con Google",
+    "signinMicrosoft": "Iniciar sesión con Microsoft (próximamente)",
+    "noAccount": "¿No tienes una cuenta?",
+    "noAccountDescription": "Si aún no tienes una cuenta, regístrate aquí:",
+    "createAccountBtn": "Crear cuenta (próximamente)",
+    "appDescription": "¡Inicia sesión en Impuesto Express hoy para ver tu reembolso de impuestos estimado!",
+    "appDescriptionTwo": "Bienvenido a Impuesto Express, donde la precisión se encuentra con la conveniencia. Inicia sesión ahora para acceder a nuestra potente plataforma de estimación de impuestos, que ofrece cálculos ultrarrápidos para tu posible reembolso o responsabilidad fiscal.",
+    "quickEstimation": "Estimación rápida:",
+    "quickEstimationDescription": "Con Impuesto Express, los usuarios pueden obtener una estimación instantánea de su reembolso de impuestos sin tener que esperar la temporada de impuestos o consultar a un profesional.",
+    "accuracy": "Precisión:",
+    "accuracyDescription": "Con nuestros algoritmos de última generación, puedes estar seguro de que tus estimaciones no solo son rápidas, sino increíblemente precisas.",
+    "private": "Seguro y Privado:",
+    "privateDescription": "Tu privacidad es primordial; nuestro inicio de sesión seguro garantiza que tus datos financieros permanezcan estrictamente confidenciales."
+  },
   "landing": {
     "header": "Bienvenido",
     "description" : "Es hora de declarar impuestos",
@@ -63,7 +80,7 @@
       "joint-info": "Información Financiera Conjunta:"
   },
     "nav": {
-      "title": "Declaración de Impuestos"
+      "title": "Impuesto Express"
     },
     "admin": {
       "stateFrequencies": "Frecuencias del Estados",

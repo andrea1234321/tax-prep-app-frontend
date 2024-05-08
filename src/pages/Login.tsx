@@ -5,15 +5,21 @@ import {
     Header,
     Title,
     Button,
+    LanguageSelector
 } from "@trussworks/react-uswds";
-import { useEffect, useContext } from "react";
+import { useEffect, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AppContext, backendUrl } from "../App";
+import { useTranslation } from "react-i18next";
 
 const Login = () => {
     const [globalInfo, setGlobalInfo] = useContext(AppContext);
     const navigate = useNavigate();
+    const {t} = useTranslation();
+    const {i18n} = useTranslation();
+    const [language, setLanguage] = useState("");
 
+    console.log(i18n.language)
     useEffect(() => {
         if (!globalInfo.isChanging) {
             if (globalInfo.isAdmin) {
@@ -32,11 +38,33 @@ const Login = () => {
         <>
             <Header extended>
                 <div className="usa-navbar">
-                <Title id="extended-logo">
-                    <a href="/" title="Home" aria-label="Home">
-                    Express Tax
-                    </a>
-                </Title>
+                    <Title id="extended-logo">
+                        <a href="/" title="Home" aria-label="Home">
+                        {t('nav.title')}
+                        </a>
+                    </Title>
+                    <LanguageSelector
+                        displayLang={language}
+                        langs={[
+                            {
+                            attr: 'sp',
+                            label: 'Español',
+                            label_local: 'Spanish',
+                            on_click: () => {
+                                i18n.changeLanguage('sp')
+                                setLanguage("en")
+                            }
+                            },
+                            {
+                            attr: 'en',
+                            label: 'English',
+                            on_click: () => {
+                                i18n.changeLanguage('en');
+                                setLanguage("sp")
+                            }
+                            }
+                        ]}
+                    />
                 </div>
             </Header>
             <main id="main-content">
@@ -50,42 +78,31 @@ const Login = () => {
                     }} desktop={{
                     col: 6
                     }} className="padding-x-205 margin-bottom-7">
-                        <h1 className="desktop:display-none font-sans-lg margin-bottom-4 tablet:margin-top-neg-3">
-                        A tagline that explains the benefit of creating an account.
-                        </h1>
-
                         <div className="bg-white padding-y-3 padding-x-5 border border-base-lighter">
-                        <h1 className="margin-bottom-1">Sign in to your account</h1>
+                        <h1 className="margin-bottom-1">{t('login.signin')}</h1>
 
                         <div className="usa-prose">
                             <p className="margin-top-1">
-                            You can access your account by signing in with one of the
-                            options below.
+                            {t('login.signinDescription')}
                             </p>
                         </div>
 
                         <p>
-                            <Button onClick={handleLogin} type="button" outline={true} className="width-full">Sign in with Google</Button>
+                            <Button onClick={handleLogin} type="button" outline={true} className="width-full">{t('login.signinGoogle')}</Button>
                         </p>
 
                         <p>
                             <Button type="button" outline={true} className="width-full">
-                            Sign in with Microsoft (coming soon)
+                            {t('login.signinMicrosoft')}
                             </Button>
                         </p>
                         <div className="border-top border-base-lighter margin-top-6 padding-top-1">
                             <p>
-                            <strong>{"Don't have an account?"}</strong>
+                                <strong>{t('login.noAccount')}</strong>
                             </p>
-
+                            <p>{t('login.noAccountDescription')}</p>
                             <p>
-                            {"If you don't have an account already, sign up here:"}
-                            </p>
-
-                            <p>
-                            <Button type="button" className="width-full">
-                                Create account (coming soon)
-                            </Button>
+                            <Button type="button" className="width-full">{t('login.createAccountBtn')}</Button>
                             </p>
                         </div>
                         </div>
@@ -100,27 +117,25 @@ const Login = () => {
                     }} className="padding-x-205">
                         <div className="border-top border-base-lighter padding-top-4 desktop:border-0 desktop:padding-top-0">
                             <h2 className="display-none desktop:display-block">
-                                Log in to Express Tax today to see your estimated tax return!
+                                {t('login.appDescription')}
                             </h2>
 
                             <div className="usa-prose">
-                                <p>
-                                Welcome to Express Tax, where precision meets convenience. Log in now to access our powerful tax estimation platform, delivering lightning-fast calculations for your potential return or liability. 
-                                </p>
+                                <p>{t('login.appDescriptionTwo')}</p>
                                 <section className="usa-graphic-list">
                                 <div className="usa-graphic-list__row">
                                     <MediaBlockBody>
                                         <p>
-                                            <strong>Quick Estimation:  </strong>
-                                            With Express Tax users can get an instant estimate of their tax return without having to wait for the tax season or consulting a professional.
+                                            <strong>{t('login.quickEstimation')} </strong>
+                                            {t('login.quickEstimationDescription')}
                                         </p>
                                         <p>
-                                            <strong>Accuracy: </strong>
-                                            With our state-of-the-art algorithms, rest assured that your estimates are not just quick but incredibly accurate. 
+                                            <strong>{t('login.accuracy')} </strong>
+                                            {t('login.accuracyDescription')}
                                         </p>
                                         <p>
-                                            <strong>Secure and Private: </strong>
-                                            Your privacy is paramount — our secure login ensures that your financial data remains strictly confidential.
+                                            <strong>{t('login.private')} </strong>
+                                            {t('login.privateDescription')}
                                         </p>
                                     </MediaBlockBody>
                                 </div>

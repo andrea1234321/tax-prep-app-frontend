@@ -19,7 +19,6 @@ const Login = () => {
     const {i18n} = useTranslation();
     const [language, setLanguage] = useState("");
 
-    console.log(i18n.language)
     useEffect(() => {
         if (!globalInfo.isChanging) {
             if (globalInfo.isAdmin) {

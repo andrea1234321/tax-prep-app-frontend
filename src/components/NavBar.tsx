@@ -1,8 +1,8 @@
 import { Button, Header, Title, NavDropDownButton, Menu, PrimaryNav} from "@trussworks/react-uswds";
-import { UserInfo, backendUrl } from "../App";
+import { UserInfo, backendUrl, AppContext } from "../App";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useContext } from "react";
 
 type NavBarProps = {
     userInfo: UserInfo | null;
@@ -18,6 +18,7 @@ const NavBar = (props: NavBarProps) => {
     const { userInfo } = props;
     const [expanded, setExpanded] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
+    const [globalInfo, setGlobalInfo] = useContext(AppContext);
 
 
     const profileMenu =
@@ -51,11 +52,16 @@ const NavBar = (props: NavBarProps) => {
     function handleLogout() {
         window.location.replace(backendUrl + "/logout");
     }
+
+    const hanldeChangeGlobalInfo = () => {
+        setGlobalInfo(globalInfo => ({...globalInfo, stepNumber: 1}));
+    }
+
     return (
         <>
             <Header basic={true}>
                 <div className="grid-row flex-wrap flex-justify flex-align-end">
-                    <Title className="text-left"><Link to="/home">{t('nav.title')}</Link></Title>
+                    <Title className="text-left"><Link to="/home" onClick={hanldeChangeGlobalInfo}>{t('nav.title')}</Link></Title>
                     <div className="grid-row">
                         <PrimaryNav items={profileItemsMenu} mobileExpanded={expanded}></PrimaryNav>
                         {userInfo && (

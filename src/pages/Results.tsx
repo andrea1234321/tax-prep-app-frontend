@@ -3,7 +3,7 @@ import ProgressBar from "../components/ProgressBar";
 import { AppContext, backendUrl } from "../App";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { CardGroup, Card, CardHeader, CardBody, Button, ButtonGroup, Link } from "@trussworks/react-uswds";
+import { CardGroup, Card, CardHeader, CardBody, Button, ButtonGroup, Link, CardFooter } from "@trussworks/react-uswds";
 
 const Results = () => {
     const [globalInfo, setGlobalInfo] = useContext(AppContext);
@@ -45,12 +45,14 @@ const Results = () => {
                         <CardHeader>
                             {tax > 0 ? <h1>{t('results.taxOwed', {tax})}</h1> : <h1>{t('results.taxReturn', {tax})}</h1>}
                         </CardHeader>
-                        <ButtonGroup>
-                            <Link href="#" className="usa-button usa-button--outline" onClick={handleBack}>
-                            {t('results.back')}
-                            </Link>
-                            <Button type="submit" onClick={() => navigate('/home')}>{t('results.done')}</Button>
-                        </ButtonGroup>
+                        <CardFooter>
+                            <ButtonGroup>
+                                <Link href="#" className="usa-button usa-button--outline" onClick={handleBack}>
+                                {t('results.back')}
+                                </Link>
+                                <Button type="submit" onClick={() => navigate('/home')}>{t('results.done')}</Button>
+                            </ButtonGroup>
+                        </CardFooter>
                     </Card>
                 </CardGroup>
             </main>

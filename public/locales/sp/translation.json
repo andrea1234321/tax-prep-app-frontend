@@ -54,7 +54,9 @@
     "results": {
       "description": "Basado en la información que has ingresado",
       "taxOwed": "Se estima que debes: ${{tax}} en impuestos.",
-      "taxReturn": "Tu reembolso de impuestos estimado es: ${{tax}}"
+      "taxReturn": "Tu reembolso de impuestos estimado es: ${{tax}}",
+      "back": "Atrás",
+      "done": "Finalizar"
   },
     "spouse": {
       "info": "Información del cónyuge:",

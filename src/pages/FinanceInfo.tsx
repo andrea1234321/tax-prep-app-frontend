@@ -165,7 +165,10 @@ const FinanceInfo = () => {
             })
             .catch((error: Error) => console.error(error));
     };
-
+    const handleBack = () => {
+        setGlobalInfo(globalInfo => ({...globalInfo, stepNumber: 1}));
+        navigate("/personalInformation")
+    }
 
     useEffect(() => {
         fetch(backendUrl + "/finances", {
@@ -183,14 +186,14 @@ const FinanceInfo = () => {
             let formattedDOB
             let newSpouseSsn
             if(returnedData.spouseDateOfBirth.toString().length === 7){
-                const month= returnedData.spouseDateOfBirth.toString().slice(4,5)
-                const day= returnedData.spouseDateOfBirth.toString().slice(5,7)
-                const year= returnedData.spouseDateOfBirth.toString().slice(0,4)
+                const month= returnedData.spouseDateOfBirth.toString().slice(0,1)
+                const day= returnedData.spouseDateOfBirth.toString().slice(1,3)
+                const year= returnedData.spouseDateOfBirth.toString().slice(3,8)
                 formattedDOB = `0${month}/${day}/${year}`
             }if (returnedData.spouseDateOfBirth.toString().length === 8){
-                const month= returnedData.spouseDateOfBirth.toString().slice(4,6)
-                const day= returnedData.spouseDateOfBirth.toString().slice(6,8)
-                const year= returnedData.spouseDateOfBirth.toString().slice(0,4)
+                const month= returnedData.spouseDateOfBirth.toString().slice(0,2)
+                const day= returnedData.spouseDateOfBirth.toString().slice(2,4)
+                const year= returnedData.spouseDateOfBirth.toString().slice(4,9)
                 formattedDOB = `${month}/${day}/${year}`
             }if(returnedData.filingStatus === "Married Filing Jointly"){
                 setJointFiling(true)
@@ -206,6 +209,8 @@ const FinanceInfo = () => {
                 newSpouseSsn = ""
             }if (returnedData.spouseDateOfBirth === 0){
                 formattedDOB = ""
+            }if(returnedData.spouseSsn){
+                newSpouseSsn= returnedData.spouseSsn.toString()
             }
             setFinanceInfo({
                 ...returnedData, 
@@ -415,8 +420,8 @@ const FinanceInfo = () => {
                             </Grid>
                         </Grid>
                         <ButtonGroup>
-                            <Link href="#" className="usa-button usa-button--outline" onClick={() => navigate("/personalInformation")}>
-                                Back
+                            <Link href="#" className="usa-button usa-button--outline" onClick={handleBack}>
+                                {t('results.back')}
                             </Link>
                             <Button type="submit">{t('finance.button')}</Button>
                         </ButtonGroup>

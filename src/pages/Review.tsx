@@ -90,7 +90,12 @@ const Review = () => {
         }
         navigate("/results");
     };
-
+    const handleBack = (): void => {
+        setGlobalInfo(globalInfo => ({...globalInfo, stepNumber: 2}));
+        navigate("/financialInformation")
+    }
+    
+console.log(profile)
     return (
         <>
             <main id="main-content">
@@ -119,7 +124,10 @@ const Review = () => {
                             </div>                
                             <div className="grid-row flex-wrap flex-justify ">
                                 <p>{t('personal.dob')}: </p>
-                                <p>{profile?.dateOfBirth.toString().slice(0,2)}/{profile?.dateOfBirth.toString().slice(2,4)}/{profile?.dateOfBirth.toString().slice(4,10)}</p>
+                                {profile?.dateOfBirth.toString().length === 7 ? 
+                                    <p>0{profile?.dateOfBirth.toString().slice(0,1)}/{profile?.dateOfBirth.toString().slice(1,3)}/{profile?.dateOfBirth.toString().slice(3,7)}</p> :
+                                    <p>{profile?.dateOfBirth.toString().slice(0,2)}/{profile?.dateOfBirth.toString().slice(2,4)}/{profile?.dateOfBirth.toString().slice(4,8)}</p> 
+                                }
                             </div>                
                             <div className="grid-row flex-wrap flex-justify">
                                 <p>{t('personal.ssn')}: </p>
@@ -142,9 +150,10 @@ const Review = () => {
                                 </div>
                                 <div className="grid-row flex-wrap flex-justify">
                                     <p>{t('personal.dob')}: </p>
-                                    {finances?.spouseDateOfBirth &&
-                                        <p>{finances?.spouseDateOfBirth.toString().slice(4,6)}/{finances?.spouseDateOfBirth.toString().slice(6,8)}/{finances?.spouseDateOfBirth.toString().slice(0,4)}</p>
-                                    }
+                                    {finances.spouseDateOfBirth && finances?.spouseDateOfBirth.toString().length === 7 ? 
+                                    <p>0{finances?.spouseDateOfBirth.toString().slice(0,1)}/{finances?.spouseDateOfBirth.toString().slice(1,3)}/{finances?.spouseDateOfBirth.toString().slice(3,7)}</p> :
+                                    finances.spouseDateOfBirth && <p>{finances?.spouseDateOfBirth.toString().slice(0,2)}/{finances?.spouseDateOfBirth.toString().slice(2,4)}/{finances?.spouseDateOfBirth.toString().slice(4,8)}</p> 
+                                }
                                 </div>
                                 <div className="grid-row flex-wrap flex-justify">
                                     <p>{t('personal.ssn')}: </p>
@@ -189,8 +198,8 @@ const Review = () => {
                             </div>
                         </CardBody>
                         <ButtonGroup>
-                            <Link href="#" className="usa-button usa-button--outline" onClick={() => navigate("/financialInformation")}>
-                                Back
+                            <Link href="#" className="usa-button usa-button--outline" onClick={handleBack}>
+                                {t('results.back')}
                             </Link>
                             <Button onClick={handleSubmit} type="submit">{t('review.button')}</Button>
                         </ButtonGroup>

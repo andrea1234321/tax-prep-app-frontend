@@ -3,9 +3,10 @@ import ProgressBar from "../components/ProgressBar";
 import { AppContext, backendUrl } from "../App";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { CardGroup, Card, CardHeader, CardBody, Button } from "@trussworks/react-uswds";
+import { CardGroup, Card, CardHeader, CardBody, Button, ButtonGroup, Link } from "@trussworks/react-uswds";
+
 const Results = () => {
-    const [globalInfo, _] = useContext(AppContext);
+    const [globalInfo, setGlobalInfo] = useContext(AppContext);
     const navigate = useNavigate();
     const {t} = useTranslation();
 
@@ -27,6 +28,11 @@ const Results = () => {
             .catch(err => console.error(err));
     }, []);
 
+    const handleBack = (): void => {
+        setGlobalInfo(globalInfo => ({...globalInfo, stepNumber: 3}));
+        navigate("/review")
+    }
+
     return (
         <>
             <main id="main-content " >
@@ -39,7 +45,12 @@ const Results = () => {
                         <CardHeader>
                             {tax > 0 ? <h1>{t('results.taxOwed', {tax})}</h1> : <h1>{t('results.taxReturn', {tax})}</h1>}
                         </CardHeader>
-                        {/* <Button>Return</Button> */}
+                        <ButtonGroup>
+                            <Link href="#" className="usa-button usa-button--outline" onClick={handleBack}>
+                            {t('results.back')}
+                            </Link>
+                            <Button type="submit" onClick={() => navigate('/home')}>{t('results.done')}</Button>
+                        </ButtonGroup>
                     </Card>
                 </CardGroup>
             </main>

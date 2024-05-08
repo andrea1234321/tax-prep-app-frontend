@@ -13,7 +13,7 @@ import { AppContext, backendUrl } from "../App";
 import { useTranslation } from "react-i18next";
 
 const Login = () => {
-    const [globalInfo, setGlobalInfo] = useContext(AppContext);
+    const [globalInfo, _] = useContext(AppContext);
     const navigate = useNavigate();
     const {t} = useTranslation();
     const {i18n} = useTranslation();

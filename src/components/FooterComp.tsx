@@ -1,4 +1,4 @@
-import { Footer, Logo, Address } from "@trussworks/react-uswds";
+import { Footer, Address } from "@trussworks/react-uswds";
 const FooterComp = () => {
     return ( 
         <>

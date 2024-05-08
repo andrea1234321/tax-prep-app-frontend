@@ -17,6 +17,7 @@ import PersonalInfo from "./pages/PersonalInfo";
 import FinanceInfo from "./pages/FinanceInfo";
 import Review from "./pages/Review";
 import Results from "./pages/Results";
+import FooterComp from "./components/FooterComp";
 
 //stylesheets
 import "./App.css";
@@ -100,7 +101,6 @@ function App() {
     return (
         <>
             <AppContext.Provider value={[globalInfo, setGlobalInfo]}>
-                {/* if signed in, add navbar */}
                 <BrowserRouter basename="/">
                 {!globalInfo.isChanging && globalInfo.isLoggedIn && <NavBar userInfo={userInfo} />}
                     <Routes>
@@ -109,24 +109,25 @@ function App() {
                             element={
                                 <Login />
                             }
-                        />
+                            />
                         <Route path="/register" element={<Signup />} />
                         <Route
                             path="/home"
                             element={<Landing userInfo={userInfo} />}
-                        />
+                            />
                         <Route
                             path="/personalInformation"
                             element={<PersonalInfo />}
-                        />
+                            />
                         <Route
                             path="/financialInformation"
                             element={<FinanceInfo />}
-                        />
+                            />
                         <Route path="/review" element={<Review />} />
                         <Route path="/results" element={<Results />} />
                         <Route path="/admin" element={<Admin analytics={adminAnalytics}/>} />
                     </Routes>
+                    {!globalInfo.isChanging && globalInfo.isLoggedIn && <FooterComp />}
                 </BrowserRouter>
             </AppContext.Provider>
         </>

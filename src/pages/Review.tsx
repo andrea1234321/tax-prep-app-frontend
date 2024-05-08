@@ -6,6 +6,7 @@ import {
     CardBody,
     Button,
     CardGroup,
+    CardFooter,
     Alert,
     Fieldset,
     ValidationItem,
@@ -94,8 +95,7 @@ const Review = () => {
         setGlobalInfo(globalInfo => ({...globalInfo, stepNumber: 2}));
         navigate("/financialInformation")
     }
-    
-console.log(profile)
+
     return (
         <>
             <main id="main-content">
@@ -106,13 +106,13 @@ console.log(profile)
                             <h1 className="usa-card__heading">{t('review.title')}</h1>
                         </CardHeader>
                         <CardBody>
-                        <Fieldset>
-                            <Alert type="info" headingLevel="h4">
-                                <ValidationChecklist id="review">
-                                    <ValidationItem id="review" isValid={true}>{t('review.description')}</ValidationItem>
-                                </ValidationChecklist>
-                            </Alert>
-                        </Fieldset>
+                            <Fieldset>
+                                <Alert type="info" headingLevel="h4">
+                                    <ValidationChecklist id="review">
+                                        <ValidationItem id="review" isValid={true}>{t('review.description')}</ValidationItem>
+                                    </ValidationChecklist>
+                                </Alert>
+                            </Fieldset>
                         </CardBody>
                         <CardHeader>
                             <h1 className="usa-card__heading">{t('personal.title')}:</h1>
@@ -197,12 +197,14 @@ console.log(profile)
                                 <p>${finances?.prevTaxesPaid as number / 100}</p>
                             </div>
                         </CardBody>
-                        <ButtonGroup>
-                            <Link href="#" className="usa-button usa-button--outline" onClick={handleBack}>
-                                {t('results.back')}
-                            </Link>
-                            <Button onClick={handleSubmit} type="submit">{t('review.button')}</Button>
-                        </ButtonGroup>
+                        <CardFooter>
+                            <ButtonGroup>
+                                <Link href="#" className="usa-button usa-button--outline" onClick={handleBack}>
+                                    {t('results.back')}
+                                </Link>
+                                <Button onClick={handleSubmit} type="submit">{t('review.button')}</Button>
+                            </ButtonGroup>
+                        </CardFooter>
                     </Card>
                 </CardGroup>
             </main>

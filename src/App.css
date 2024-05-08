@@ -1,3 +1,11 @@
+.usa-navbar{
+    display: flex !important;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.usa-language-container{
+    width: fit-content;
+}
 .bg-base-lightest{
     height: 100vh !important;
 }
@@ -25,9 +33,6 @@
     width: 60px;
     height: 60px;
 }
-/* .usa-nav__submenu-item > .usa-nav{
-    background-color: red;
-} */
 #navLangButton{
     color: white;
     width: 100%;

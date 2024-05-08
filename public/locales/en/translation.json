@@ -1,4 +1,21 @@
 {
+  "login": {
+    "signin": "Express Tax",
+    "signinDescription": " You can access your account by signing in with one of the options below.",
+    "signinGoogle": "Sign in with Google",
+    "signinMicrosoft": "Sign in with Microsoft (coming soon)",
+    "noAccount": "Don't have an account?",
+    "noAccountDescription": "If you don't have an account already, sign up here:",
+    "createAccountBtn": "Create account (coming soon)",
+    "appDescription": "Log in to Express Tax today to see your estimated tax return!",
+    "appDescriptionTwo": "Welcome to Express Tax, where precision meets convenience. Log in now to access our powerful tax estimation platform, delivering lightning-fast calculations for your potential return or liability. ",
+    "quickEstimation": "Quick Estimation:",
+    "quickEstimationDescription": "With Express Tax users can get an instant estimate of their tax return without having to wait for the tax season or consulting a professional.",
+    "accuracy": "Accuracy:",
+    "accuracyDescription": "With our state-of-the-art algorithms, rest assured that your estimates are not just quick but incredibly accurate. ",
+    "private": "Secure and Private:",
+    "privateDescription": "Your privacy is paramount — our secure login ensures that your financial data remains strictly confidential."
+  },
   "landing": {
     "header": "Welcome",
     "description" : "It's time to file taxes",
@@ -64,7 +81,7 @@
     "joint-info": "Joint Financial information:"
   },
   "nav": {
-    "title": "Tax Return"
+    "title": "Express Tax"
   },
   "admin": {
     "stateFrequencies": "State Frequencies",

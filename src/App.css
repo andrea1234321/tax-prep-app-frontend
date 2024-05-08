@@ -3,6 +3,10 @@
     flex-direction: row;
     justify-content: space-between;
 }
+#main-content{
+    padding-top: 50px;
+    min-height: 70vh;
+}
 .usa-language-container{
     width: fit-content;
 }
@@ -18,6 +22,7 @@
 }
 .usa-step-indicator__segments {
     justify-content: center;
+
 }
 .usa-step-indicator__header {
     justify-content: center;
@@ -50,9 +55,6 @@
     background-color: white !important;
     color: #162e51 !important;
 }
-/* #main-content{
-    min-height: 100vh;
-} */
 .usa-card-group{
     justify-content: center;
 }
@@ -61,4 +63,12 @@
 }
 .usa-card__container > div{
     width: 80%;
+}
+.usa-footer__primary-section{
+    margin-top: 80px;
+}
+.usa-footer__contact-links{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }

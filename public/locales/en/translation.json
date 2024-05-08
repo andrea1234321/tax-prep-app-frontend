@@ -55,7 +55,9 @@
   "results": {
     "description": "Based on the information you have entered",
     "taxOwed": "You are estimated to owe: ${{tax}} in taxes.",
-    "taxReturn": "Your estimated tax return is: ${{tax}}"
+    "taxReturn": "Your estimated tax return is: ${{tax}}",
+    "back": "Back",
+    "done": "Finish"
   },
   "spouse": {
     "info": "Spouse Information:",

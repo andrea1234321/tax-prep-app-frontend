@@ -123,24 +123,24 @@ const PersonalInfo = () => {
                 return data.json();
             } 
         }).then((returnedData) => {
-            //if returned value is null change to empty string
             let formattedDOB
             if(returnedData.dateOfBirth.toString().length === 7){
-                const month= returnedData.dateOfBirth.toString().slice(4,5)
-                const day= returnedData.dateOfBirth.toString().slice(5,7)
-                const year= returnedData.dateOfBirth.toString().slice(0,4)
-                formattedDOB = `0${month}/${day}/${year}`
-            }else{
-                const month= returnedData.dateOfBirth.toString().slice(4,6)
-                const day= returnedData.dateOfBirth.toString().slice(6,8)
-                const year= returnedData.dateOfBirth.toString().slice(0,4)
-                formattedDOB = `${month}/${day}/${year}`
+                const month= returnedData.dateOfBirth.toString().slice(0,1)
+                const day= returnedData.dateOfBirth.toString().slice(1,3)
+                const year= returnedData.dateOfBirth.toString().slice(3,7)
+                formattedDOB = `${year}-0${month}-${day}`
+            }if (returnedData.dateOfBirth.toString().length === 8){
+                const month= returnedData.dateOfBirth.toString().slice(0,2)
+                const day= returnedData.dateOfBirth.toString().slice(2,4)
+                const year= returnedData.dateOfBirth.toString().slice(4,8)
+                formattedDOB = `${year}-${month}-${day}`
             }
-            setProfile({...returnedData, dateOfBirth: formattedDOB});
+            setProfile({...returnedData, dateOfBirth: formattedDOB, ssn: returnedData.ssn.toString()});
             setUpdate(true)
         })
         .catch(() => console.log("No existing personal information"));
     }, []);
+
 
     return (
         <>
@@ -162,7 +162,7 @@ const PersonalInfo = () => {
                                     name="firstName"
                                     type="text"
                                     required
-                                    value={profile && profile?.firstName}
+                                    value={profile.firstName}
                                     onChange={handleChange}
                                 />
                             </Grid>
@@ -174,7 +174,7 @@ const PersonalInfo = () => {
                                     id="middleInitial"
                                     name="middleInitial"
                                     type="text"
-                                    value={profile && profile?.middleInitial}
+                                    value={profile.middleInitial}
                                     onChange={handleChange}
                                 />
                             </Grid>
@@ -187,7 +187,7 @@ const PersonalInfo = () => {
                             name="lastName"
                             type="text"
                             required
-                            value={profile && profile?.lastName}
+                            value={profile.lastName}
                             onChange={handleChange}
                         />
                         <Label
@@ -197,7 +197,7 @@ const PersonalInfo = () => {
                         >
                             {t('personal.dob')}
                         </Label>
-                        <DatePicker id="dateOfBirth" name="dateOfBirth" required onChange={handleChangeDate} value={profile && profile?.dateOfBirth}/>
+                        <DatePicker id="dateOfBirth" name="dateOfBirth" required onChange={handleChangeDate} defaultValue={profile.dateOfBirth}/>
                         <Label htmlFor="address" requiredMarker>
                             {t('personal.address')}
                         </Label>
@@ -206,7 +206,7 @@ const PersonalInfo = () => {
                             name="address"
                             type="text"
                             required
-                            value={profile && profile?.address}
+                            value={profile.address}
                             onChange={handleChange}
                         />
 
@@ -217,7 +217,7 @@ const PersonalInfo = () => {
                             id="aptNumber"
                             name="aptNumber"
                             type="text"
-                            value={profile && profile?.aptNumber}
+                            value={profile.aptNumber}
                             onChange={handleChange}
                         />
                         <Grid row>
@@ -230,7 +230,7 @@ const PersonalInfo = () => {
                                     name="city"
                                     type="text"
                                     required
-                                    value={profile && profile?.city}
+                                    value={profile.city}
                                     onChange={handleChange}
                                 />
                             </Grid>
@@ -238,7 +238,7 @@ const PersonalInfo = () => {
                                 <Label htmlFor="state" requiredMarker>
                                     {t('personal.state')}
                                 </Label>
-                                <Select id="state" name="state" required value={profile && profile?.state} onChange={handleChange}>
+                                <Select id="state" name="state" required value={profile.state} onChange={handleChange}>
                                     <option>- {t('personal.select')} -</option>
                                     <option value="AL">Alabama</option>
                                     <option value="AK">Alaska</option>
@@ -306,32 +306,25 @@ const PersonalInfo = () => {
                             inputSize="medium"
                             pattern="[\d]{5}(-[\d]{4})?"
                             required
-                            value={profile && profile?.zipCode}
+                            value={profile.zipCode}
                             onChange={handleChange}
                         />
 
                         <Label htmlFor="ssn" requiredMarker>
                             {t('personal.ssn')}
                         </Label>
-                        <TextInput
-                            id="ssn"
-                            name="ssn"
-                            type="number"
-                            onChange={handleChange}
-                            value={profile && profile?.ssn}
-                        />
-                        {/* <TextInputMask
+                        <TextInputMask
                             id="ssn"
                             name="ssn"
                             type="text"
                             mask="___-__-____"
                             pattern="^(?!(000|666|9))\d{3}-(?!00)\d{2}-(?!0000)\d{4}$"
                             onChange={handleChange}
-                            value={profile && profile?.ssn}
-                        /> */}
+                            value={profile.ssn}
+                        />
                         <ButtonGroup>
                             <Link href="#" className="usa-button usa-button--outline" onClick={() => navigate("/home")}>
-                                Back
+                            {t('results.back')}
                             </Link>
                             <Button type="submit">{t('personal.button')}</Button>
                         </ButtonGroup>

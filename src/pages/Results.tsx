@@ -3,20 +3,20 @@ import ProgressBar from "../components/ProgressBar";
 import { AppContext, backendUrl } from "../App";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { CardGroup, Card, CardHeader, CardBody, Button, ButtonGroup, Link, CardFooter } from "@trussworks/react-uswds";
+import { CardGroup, Card, CardBody, Button, ButtonGroup, Link, CardFooter } from "@trussworks/react-uswds";
 
 const Results = () => {
-    const [globalInfo, setGlobalInfo] = useContext(AppContext);
+    const [_, setGlobalInfo] = useContext(AppContext);
     const navigate = useNavigate();
     const {t} = useTranslation();
 
     const [tax, setTax] = useState(0);
-
-    useEffect(() => {
-        if (!globalInfo.isLoggedIn || globalInfo.stepNumber < 4) {
-            navigate("/");
-        }
-    }, [globalInfo]);
+    const [absTax, setAbsTax] = useState(0)
+    // useEffect(() => {
+    //     if (!globalInfo.isLoggedIn || globalInfo.stepNumber < 4) {
+    //         navigate("/");
+    //     }
+    // }, [globalInfo]);
 
     useEffect(() => {
         fetch(backendUrl + "/calculate_taxes", {
@@ -24,10 +24,13 @@ const Results = () => {
             method: "GET",
         })
             .then(data => data.json())
-            .then(dataJson => setTax(Number(dataJson) / 100))
+            .then(dataJson => {
+                setTax(Number(dataJson) / 100)
+                setAbsTax(Math.abs(Number(dataJson)/100))
+            })
             .catch(err => console.error(err));
     }, []);
-
+console.log("absolute: ", absTax)
     const handleBack = (): void => {
         setGlobalInfo(globalInfo => ({...globalInfo, stepNumber: 3}));
         navigate("/review")
@@ -35,16 +38,14 @@ const Results = () => {
 
     return (
         <>
-            <main id="main-content " >
+            <main id="main-content" >
                 <ProgressBar stepNumber={4} />
                 <CardGroup>
                     <Card>
                         <CardBody>
-                            <p>{t('results.description')}</p>
+                            <h3>{t('results.description')}</h3>
+                            {tax > 0 ? <h1>{t('results.taxOwed', {tax})}</h1> : <h1>{t('results.taxReturn', {absTax})}</h1>}
                         </CardBody>
-                        <CardHeader>
-                            {tax > 0 ? <h1>{t('results.taxOwed', {tax})}</h1> : <h1>{t('results.taxReturn', {tax})}</h1>}
-                        </CardHeader>
                         <CardFooter>
                             <ButtonGroup>
                                 <Link href="#" className="usa-button usa-button--outline" onClick={handleBack}>

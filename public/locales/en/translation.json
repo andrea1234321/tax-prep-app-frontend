@@ -30,7 +30,7 @@
     "last-name": "Last Name",
     "dob": "Date of Birth (MM/DD/YYYY)",
     "address": "Street Address",
-    "apt": "Apartment",
+    "apt": "Apartment, Suite, etc.",
     "city": "City",
     "state": "State",
     "zip": "Zip Code",
@@ -72,7 +72,7 @@
   "results": {
     "description": "Based on the information you have entered",
     "taxOwed": "You are estimated to owe: ${{tax}} in taxes.",
-    "taxReturn": "Your estimated tax return is: ${{tax}}",
+    "taxReturn": "Your estimated tax return is: ${{absTax}}",
     "back": "Back",
     "done": "Finish"
   },

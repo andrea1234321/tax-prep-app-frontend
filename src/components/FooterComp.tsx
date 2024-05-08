@@ -1,10 +1,8 @@
-import { Footer, Logo, Address } from "@trussworks/react-uswds";
+import { Footer, Address } from "@trussworks/react-uswds";
 const FooterComp = () => {
     return ( 
         <>
         <div className="footer-container">
-
-
             <Footer 
             className="footer"
               size="medium"

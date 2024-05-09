@@ -12,7 +12,7 @@ type LandingProps = {
 const Landing = (props: LandingProps) => {
     const { userInfo } = props;
     const [globalInfo, _] = useContext(AppContext);
-    const {t} = useTranslation();
+    const { t } = useTranslation();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -26,13 +26,15 @@ const Landing = (props: LandingProps) => {
             <main id="main-content">
                 <GridContainer containerSize="mobile-lg">
                     {userInfo ? (
-                        <h1>{t('landing.header')} {userInfo.name}</h1>
+                        <h1>
+                            {t("landing.header")} {userInfo.name}
+                        </h1>
                     ) : (
-                        <h1>{t('landing.header')}</h1>
+                        <h1>{t("landing.header")}</h1>
                     )}
-                    <h2>{t('landing.description')}</h2>
+                    <h2>{t("landing.description")}</h2>
                     <Link to="/personalInformation">
-                        <Button type="button">{t('landing.button')}</Button>
+                        <Button type="button">{t("landing.button")}</Button>
                     </Link>
                 </GridContainer>
             </main>

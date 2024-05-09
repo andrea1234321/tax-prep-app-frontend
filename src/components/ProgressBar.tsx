@@ -8,7 +8,7 @@ type ProgressBarProps = {
 };
 
 const ProgressBar = ({ stepNumber }: ProgressBarProps) => {
-    const {t} = useTranslation();
+    const { t } = useTranslation();
     const [globalInfo, _] = useContext(AppContext);
 
     const getStatus = (currentStep: number, indicatorStep: number) => {
@@ -27,23 +27,23 @@ const ProgressBar = ({ stepNumber }: ProgressBarProps) => {
                 centered
                 counters="default"
                 headingLevel="h4"
-                ofText={t('progress.of')}
+                ofText={t("progress.of")}
                 stepText="Step"
             >
                 <StepIndicatorStep
-                    label={t('progress.personal')}
+                    label={t("progress.personal")}
                     status={getStatus(stepNumber, 1)}
                 />
                 <StepIndicatorStep
-                    label={t('progress.financial')}
+                    label={t("progress.financial")}
                     status={getStatus(stepNumber, 2)}
                 />
                 <StepIndicatorStep
-                    label={t('progress.review')}
+                    label={t("progress.review")}
                     status={getStatus(stepNumber, 3)}
                 />
                 <StepIndicatorStep
-                    label={t('progress.results')}
+                    label={t("progress.results")}
                     status={getStatus(stepNumber, 4)}
                 />
             </StepIndicator>

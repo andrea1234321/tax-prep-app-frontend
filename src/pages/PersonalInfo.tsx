@@ -20,26 +20,30 @@ import { useTranslation } from "react-i18next";
 const PersonalInfo = () => {
     const [globalInfo, setGlobalInfo] = useContext(AppContext);
     const navigate = useNavigate();
-    const {t} = useTranslation();
+    const { t } = useTranslation();
     const [profile, setProfile] = useState({
-        firstName: '',
-        middleInitial: '',
-        lastName: '',
-        dateOfBirth: '',
-        address: '',
-        city: '',
-        state: '',
-        aptNumber: '',
-        zipCode: '',
-        ssn: '',
+        firstName: "",
+        middleInitial: "",
+        lastName: "",
+        dateOfBirth: "",
+        address: "",
+        city: "",
+        state: "",
+        aptNumber: "",
+        zipCode: "",
+        ssn: "",
     });
-    const [update, setUpdate] = useState(false)
+    const [update, setUpdate] = useState(false);
 
-    const handleChange = (evt: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement> ) => {
-        evt.preventDefault()
-        const { name, value } = evt.target
-        setProfile({ ...profile, [name]: value })
-    }
+    const handleChange = (
+        evt:
+            | React.ChangeEvent<HTMLInputElement>
+            | React.ChangeEvent<HTMLSelectElement>,
+    ) => {
+        evt.preventDefault();
+        const { name, value } = evt.target;
+        setProfile({ ...profile, [name]: value });
+    };
 
     useEffect(() => {
         if (!globalInfo.isLoggedIn) {
@@ -47,12 +51,15 @@ const PersonalInfo = () => {
         }
     }, [globalInfo]);
 
-    const handleSubmit = (evt: React.FormEvent<HTMLFormElement> ) => {
+    const handleSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
         evt.preventDefault();
-        const body = JSON.stringify({...profile, 
-            dateOfBirth: Number(profile.dateOfBirth.replace('-', '').replace('-', '')),
+        const body = JSON.stringify({
+            ...profile,
+            dateOfBirth: Number(
+                profile.dateOfBirth.replace("-", "").replace("-", ""),
+            ),
             zipCode: Number(profile.zipCode),
-            ssn: Number(profile.ssn.replace('-', '').replace('-', '')),
+            ssn: Number(profile.ssn.replace("-", "").replace("-", "")),
         });
 
         fetch(backendUrl + "/profile", {
@@ -67,7 +74,10 @@ const PersonalInfo = () => {
                 if (data.ok) {
                     console.log("Post successful!");
                     if (globalInfo.stepNumber < 2) {
-                        setGlobalInfo(globalInfo => ({...globalInfo, stepNumber: 2}));
+                        setGlobalInfo((globalInfo) => ({
+                            ...globalInfo,
+                            stepNumber: 2,
+                        }));
                     }
                     navigate("/financialInformation");
                 } else {
@@ -76,13 +86,16 @@ const PersonalInfo = () => {
             })
             .catch((error: Error) => console.error(error));
     };
-    
-    const handleUpdate = (evt: React.FormEvent<HTMLFormElement> ) => {
+
+    const handleUpdate = (evt: React.FormEvent<HTMLFormElement>) => {
         evt.preventDefault();
-        const body = JSON.stringify({...profile, 
-            dateOfBirth: Number(profile.dateOfBirth.replace('-', '').replace('-', '')),
+        const body = JSON.stringify({
+            ...profile,
+            dateOfBirth: Number(
+                profile.dateOfBirth.replace("-", "").replace("-", ""),
+            ),
             zipCode: Number(profile.zipCode),
-            ssn: Number(profile.ssn.replace('-', '').replace('-', '')),
+            ssn: Number(profile.ssn.replace("-", "").replace("-", "")),
         });
         fetch(backendUrl + "/profile", {
             credentials: "include",
@@ -96,7 +109,10 @@ const PersonalInfo = () => {
                 if (data.ok) {
                     console.log("Update successful!");
                     if (globalInfo.stepNumber < 2) {
-                        setGlobalInfo(globalInfo => ({...globalInfo, stepNumber: 2}));
+                        setGlobalInfo((globalInfo) => ({
+                            ...globalInfo,
+                            stepNumber: 2,
+                        }));
                     }
                     navigate("/financialInformation");
                 } else {
@@ -105,7 +121,7 @@ const PersonalInfo = () => {
             })
             .catch((error: Error) => console.error(error));
     };
-    
+
     useEffect(() => {
         fetch(backendUrl + "/profile", {
             credentials: "include",
@@ -114,36 +130,41 @@ const PersonalInfo = () => {
                 "Content-Type": "application/json",
             },
         })
-        .then(data => {
-            if (data.ok) {
-                return data.json();
-            } 
-        }).then((returnedData) => {
-                const year= returnedData.dateOfBirth.toString().slice(0,4)
-                const month= returnedData.dateOfBirth.toString().slice(4,6)
-                const day= returnedData.dateOfBirth.toString().slice(6,8)
-                const formattedDOB = `${year}-${month}-${day}`
-            setProfile({...returnedData, dateOfBirth: formattedDOB, ssn: returnedData.ssn.toString()});
-            setUpdate(true)
-        })
-        .catch(() => console.log("No existing personal information"));
+            .then((data) => {
+                if (data.ok) {
+                    return data.json();
+                }
+            })
+            .then((returnedData) => {
+                const year = returnedData.dateOfBirth.toString().slice(0, 4);
+                const month = returnedData.dateOfBirth.toString().slice(4, 6);
+                const day = returnedData.dateOfBirth.toString().slice(6, 8);
+                const formattedDOB = `${year}-${month}-${day}`;
+                setProfile({
+                    ...returnedData,
+                    dateOfBirth: formattedDOB,
+                    ssn: returnedData.ssn.toString(),
+                });
+                setUpdate(true);
+            })
+            .catch(() => console.log("No existing personal information"));
     }, []);
 
-console.log(profile)
+    console.log(profile);
     return (
         <>
             <main id="main-content">
                 <ProgressBar stepNumber={1} />
                 <Form onSubmit={update ? handleUpdate : handleSubmit} large>
-                    <Fieldset legend={t('personal.title')} legendStyle="large">
-                        <p>{t('personal.description')}(
-                            <RequiredMarker />
-                            )
+                    <Fieldset legend={t("personal.title")} legendStyle="large">
+                        <p>
+                            {t("personal.description")}(
+                            <RequiredMarker />)
                         </p>
                         <Grid row>
                             <Grid col={6}>
                                 <Label htmlFor="firstName" requiredMarker>
-                                    {t('personal.first-name')}
+                                    {t("personal.first-name")}
                                 </Label>
                                 <TextInput
                                     id="firstName"
@@ -156,7 +177,7 @@ console.log(profile)
                             </Grid>
                             <Grid col={4} offset={2}>
                                 <Label htmlFor="middleInitial">
-                                    {t('personal.middle-initial')}
+                                    {t("personal.middle-initial")}
                                 </Label>
                                 <TextInput
                                     id="middleInitial"
@@ -168,7 +189,7 @@ console.log(profile)
                             </Grid>
                         </Grid>
                         <Label htmlFor="lastName" requiredMarker>
-                            {t('personal.last-name')}
+                            {t("personal.last-name")}
                         </Label>
                         <TextInput
                             id="lastName"
@@ -183,11 +204,19 @@ console.log(profile)
                             id="dateOfBirth"
                             requiredMarker
                         >
-                            {t('personal.dob')}
+                            {t("personal.dob")}
                         </Label>
-                        <input id="dateOfBirth" name="dateOfBirth" type="date" required value={profile.dateOfBirth} className="usa-input usa-date-picker_external-input" onChange={handleChange}/>
+                        <input
+                            id="dateOfBirth"
+                            name="dateOfBirth"
+                            type="date"
+                            required
+                            value={profile.dateOfBirth}
+                            className="usa-input usa-date-picker_external-input"
+                            onChange={handleChange}
+                        />
                         <Label htmlFor="address" requiredMarker>
-                            {t('personal.address')}
+                            {t("personal.address")}
                         </Label>
                         <TextInput
                             id="address"
@@ -198,9 +227,7 @@ console.log(profile)
                             onChange={handleChange}
                         />
 
-                        <Label htmlFor="aptNumber">
-                            {t('personal.apt')}
-                        </Label>
+                        <Label htmlFor="aptNumber">{t("personal.apt")}</Label>
                         <TextInput
                             id="aptNumber"
                             name="aptNumber"
@@ -211,7 +238,7 @@ console.log(profile)
                         <Grid row>
                             <Grid col={6}>
                                 <Label htmlFor="city" requiredMarker>
-                                    {t('personal.city')}
+                                    {t("personal.city")}
                                 </Label>
                                 <TextInput
                                     id="city"
@@ -224,10 +251,18 @@ console.log(profile)
                             </Grid>
                             <Grid col={4} offset={2}>
                                 <Label htmlFor="state" requiredMarker>
-                                    {t('personal.state')}
+                                    {t("personal.state")}
                                 </Label>
-                                <Select id="state" name="state" required value={profile.state} onChange={handleChange} >
-                                    <option value="" disabled >- {t('personal.select')} -</option>
+                                <Select
+                                    id="state"
+                                    name="state"
+                                    required
+                                    value={profile.state}
+                                    onChange={handleChange}
+                                >
+                                    <option value="" disabled>
+                                        - {t("personal.select")} -
+                                    </option>
                                     <option value="AL">Alabama</option>
                                     <option value="AK">Alaska</option>
                                     <option value="AZ">Arizona</option>
@@ -285,7 +320,7 @@ console.log(profile)
                             </Grid>
                         </Grid>
                         <Label htmlFor="zipCode" requiredMarker>
-                            {t('personal.zip')}
+                            {t("personal.zip")}
                         </Label>
                         <TextInput
                             id="zipCode"
@@ -299,7 +334,7 @@ console.log(profile)
                         />
 
                         <Label htmlFor="ssn" requiredMarker>
-                            {t('personal.ssn')}
+                            {t("personal.ssn")}
                         </Label>
                         <TextInputMask
                             id="ssn"
@@ -311,10 +346,16 @@ console.log(profile)
                             value={profile.ssn}
                         />
                         <ButtonGroup>
-                            <Link href="#" className="usa-button usa-button--outline" onClick={() => navigate("/home")}>
-                            {t('results.back')}
+                            <Link
+                                href="#"
+                                className="usa-button usa-button--outline"
+                                onClick={() => navigate("/home")}
+                            >
+                                {t("results.back")}
                             </Link>
-                            <Button type="submit">{t('personal.button')}</Button>
+                            <Button type="submit">
+                                {t("personal.button")}
+                            </Button>
                         </ButtonGroup>
                     </Fieldset>
                 </Form>

@@ -1,19 +1,19 @@
-.usa-navbar{
+.usa-navbar {
     display: flex !important;
     flex-direction: row;
     justify-content: space-between;
 }
-#main-content{
+#main-content {
     padding-top: 50px;
     min-height: 70vh;
 }
-.usa-language-container{
+.usa-language-container {
     width: fit-content;
 }
-.bg-base-lightest{
+.bg-base-lightest {
     height: 100vh !important;
 }
-.usa-header{
+.usa-header {
     padding: 0 30px 15px 30px;
 }
 .usa-step-indicator {
@@ -22,7 +22,6 @@
 }
 .usa-step-indicator__segments {
     justify-content: center;
-
 }
 .usa-step-indicator__header {
     justify-content: center;
@@ -33,46 +32,47 @@
 #spouse {
     margin-top: 0;
 }
-.profile-picture{
+.profile-picture {
     border-radius: 50%;
     width: 60px;
     height: 60px;
 }
-#navLangButton{
+#navLangButton {
     color: white;
     width: 100%;
 }
-.usa-nav{
+.usa-nav {
     width: fit-content !important;
 }
-.navLogoutButton{
+.navLogoutButton {
     color: white !important;
     font-weight: normal !important;
     width: 100%;
 }
-.navLogoutButton:hover, #navLangButton:hover{
+.navLogoutButton:hover,
+#navLangButton:hover {
     cursor: pointer;
     background-color: white !important;
     color: #162e51 !important;
 }
-.usa-card-group{
+.usa-card-group {
     justify-content: center;
 }
-.usa-card__container{
+.usa-card__container {
     align-items: center;
 }
-.usa-card__container > div{
+.usa-card__container > div {
     width: 80%;
 }
-.usa-footer__primary-section{
+.usa-footer__primary-section {
     margin-top: 80px;
 }
-.usa-footer__contact-links{
+.usa-footer__contact-links {
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
-.usa-button-group{
+.usa-button-group {
     display: flex;
     justify-content: center;
 }

@@ -332,10 +332,10 @@ const PersonalInfo = () => {
                             value={profile.zipCode}
                             onChange={handleChange}
                         />
-
                         <Label htmlFor="ssn" requiredMarker>
                             {t("personal.ssn")}
                         </Label>
+                        {profile.ssn ?
                         <TextInputMask
                             id="ssn"
                             name="ssn"
@@ -344,7 +344,17 @@ const PersonalInfo = () => {
                             pattern="^(?!(000|666|9))\d{3}-(?!00)\d{2}-(?!0000)\d{4}$"
                             onChange={handleChange}
                             value={profile.ssn}
+                        /> : 
+                        <TextInput
+                            id="ssn"
+                            name="ssn"
+                            type="text"
+                            required
+                            value={profile.ssn}
+                            onChange={handleChange}
                         />
+                        }
+                        
                         <ButtonGroup>
                             <Link
                                 href="#"

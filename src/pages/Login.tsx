@@ -66,7 +66,7 @@ const Login = () => {
                     />
                 </div>
             </Header>
-            <main id="main-content">
+            <main id="main">
                 <div className="bg-base-lightest">
                 <GridContainer className="usa-section">
                     <Grid row={true} className="margin-x-neg-205 margin-bottom-7 flex-justify-center">

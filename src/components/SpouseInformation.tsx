@@ -2,7 +2,6 @@ import {
     Grid,
     Label,
     TextInput,
-    DatePicker,
     TextInputMask,
 } from "@trussworks/react-uswds";
 import { useTranslation } from "react-i18next";
@@ -25,10 +24,9 @@ type FinanceInfoType = {
 
 const SpouseInformation = (props: {
     handleChange: (evt: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => void,
-    handleChangeDate: (newDate: string | undefined) => void,
     financeInfo: FinanceInfoType
 }) => {
-    const {handleChange, handleChangeDate, financeInfo} = props
+    const {handleChange, financeInfo} = props
     const {t}= useTranslation();
     return (
         <>
@@ -82,13 +80,7 @@ const SpouseInformation = (props: {
             >
                 {t('personal.dob')}
             </Label>
-            <DatePicker
-                id="spouseDateOfBirth"
-                name="spouseDateOfBirth"
-                required
-                value={financeInfo.spouseDateOfBirth}
-                onChange={handleChangeDate}
-            />
+            <input id="spouseDateOfBirth" name="spouseDateOfBirth" type="date" required value={financeInfo.spouseDateOfBirth} className="usa-input usa-date-picker_external-input" onChange={handleChange}/>
             <Label htmlFor="spouseSsn" requiredMarker>
                 {t('personal.ssn')}
             </Label>
@@ -97,7 +89,7 @@ const SpouseInformation = (props: {
                 name="spouseSsn"
                 type="text"
                 mask="___-__-____"
-                pattern="^(?!(000|666|9))\d{3}-(?!00)\d{2}-(?!0000)\d{4}$"
+                // pattern="^(?!(000|666|9))\d{3}-(?!00)\d{2}-(?!0000)\d{4}$"
                 value={financeInfo.spouseSsn}
                 onChange={handleChange}
             />

@@ -17,7 +17,8 @@ const Login = () => {
     const navigate = useNavigate();
     const { t } = useTranslation();
     const { i18n } = useTranslation();
-    const [language, setLanguage] = useState("");
+    const nextLanguage = i18n.languages[(i18n.languages.indexOf(i18n.language) + 1)]
+    const [language, setLanguage] = useState(nextLanguage);
 
     useEffect(() => {
         if (!globalInfo.isChanging) {

@@ -328,6 +328,7 @@ const PersonalInfo = () => {
                             type="text"
                             inputSize="medium"
                             pattern="[\d]{5}(-[\d]{4})?"
+                            maxLength={5}
                             required
                             value={profile.zipCode}
                             onChange={handleChange}

@@ -1,3 +1,14 @@
+:root {
+    --header-height: 90px;
+    --footer-height: 150px;
+}
+.usa-header{
+    min-height: var(--header-height);
+}
+.usa-header--basic{
+    padding: 0 30px 15px 30px;
+    min-height: var(--header-height);
+}
 .usa-navbar {
     display: flex !important;
     flex-direction: row;
@@ -11,10 +22,7 @@
     width: fit-content;
 }
 .bg-base-lightest {
-    height: 100vh !important;
-}
-.usa-header {
-    padding: 0 30px 15px 30px;
+    height: calc(100vh - var(--header-height)) !important;
 }
 .usa-step-indicator {
     display: flex;
@@ -75,4 +83,11 @@
 .usa-button-group {
     display: flex;
     justify-content: center;
+}
+#main-content {
+    min-height: calc(100vh - var(--header-height) - var(--footer-height) - 80px);
+    margin: 0;
+}
+.usa-footer__secondary-section {
+    min-height: var(--footer-height);
 }

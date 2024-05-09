@@ -9,7 +9,6 @@ import {
     Form,
     Button,
     Grid,
-    DatePicker,
     TextInputMask,
     ButtonGroup,
     Link,
@@ -42,10 +41,6 @@ const PersonalInfo = () => {
         setProfile({ ...profile, [name]: value })
     }
 
-    const handleChangeDate = (newDate: string | undefined) => {
-        newDate && setProfile({ ...profile, dateOfBirth: newDate })
-    }
-
     useEffect(() => {
         if (!globalInfo.isLoggedIn) {
             navigate("/");
@@ -55,9 +50,9 @@ const PersonalInfo = () => {
     const handleSubmit = (evt: React.FormEvent<HTMLFormElement> ) => {
         evt.preventDefault();
         const body = JSON.stringify({...profile, 
-            dateOfBirth: Number(profile.dateOfBirth.replace('/', '').replace('/', '')),
+            dateOfBirth: Number(profile.dateOfBirth.replace('-', '').replace('-', '')),
             zipCode: Number(profile.zipCode),
-            ssn: Number(profile.ssn),
+            ssn: Number(profile.ssn.replace('-', '').replace('-', '')),
         });
         fetch(backendUrl + "/profile", {
             credentials: "include",
@@ -84,9 +79,9 @@ const PersonalInfo = () => {
     const handleUpdate = (evt: React.FormEvent<HTMLFormElement> ) => {
         evt.preventDefault();
         const body = JSON.stringify({...profile, 
-            dateOfBirth: Number(profile.dateOfBirth.replace('/', '').replace('/', '')),
+            dateOfBirth: Number(profile.dateOfBirth.replace('-', '').replace('-', '')),
             zipCode: Number(profile.zipCode),
-            ssn: Number(profile.ssn),
+            ssn: Number(profile.ssn.replace('-', '').replace('-', '')),
         });
         fetch(backendUrl + "/profile", {
             credentials: "include",
@@ -123,25 +118,17 @@ const PersonalInfo = () => {
                 return data.json();
             } 
         }).then((returnedData) => {
-            let formattedDOB
-            if(returnedData.dateOfBirth.toString().length === 7){
-                const month= returnedData.dateOfBirth.toString().slice(0,1)
-                const day= returnedData.dateOfBirth.toString().slice(1,3)
-                const year= returnedData.dateOfBirth.toString().slice(3,7)
-                formattedDOB = `${year}-0${month}-${day}`
-            }if (returnedData.dateOfBirth.toString().length === 8){
-                const month= returnedData.dateOfBirth.toString().slice(0,2)
-                const day= returnedData.dateOfBirth.toString().slice(2,4)
-                const year= returnedData.dateOfBirth.toString().slice(4,8)
-                formattedDOB = `${year}-${month}-${day}`
-            }
+                const year= returnedData.dateOfBirth.toString().slice(0,4)
+                const month= returnedData.dateOfBirth.toString().slice(4,6)
+                const day= returnedData.dateOfBirth.toString().slice(6,8)
+                const formattedDOB = `${year}-${month}-${day}`
             setProfile({...returnedData, dateOfBirth: formattedDOB, ssn: returnedData.ssn.toString()});
             setUpdate(true)
         })
         .catch(() => console.log("No existing personal information"));
     }, []);
 
-
+console.log(profile)
     return (
         <>
             <main id="main-content">
@@ -197,7 +184,7 @@ const PersonalInfo = () => {
                         >
                             {t('personal.dob')}
                         </Label>
-                        <DatePicker id="dateOfBirth" name="dateOfBirth" required onChange={handleChangeDate} defaultValue={profile.dateOfBirth}/>
+                        <input id="dateOfBirth" name="dateOfBirth" type="date" required value={profile.dateOfBirth} className="usa-input usa-date-picker_external-input" onChange={handleChange}/>
                         <Label htmlFor="address" requiredMarker>
                             {t('personal.address')}
                         </Label>

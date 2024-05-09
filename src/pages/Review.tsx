@@ -124,10 +124,8 @@ const Review = () => {
                             </div>                
                             <div className="grid-row flex-wrap flex-justify ">
                                 <p>{t('personal.dob')}: </p>
-                                {profile?.dateOfBirth.toString().length === 7 ? 
-                                    <p>0{profile?.dateOfBirth.toString().slice(0,1)}/{profile?.dateOfBirth.toString().slice(1,3)}/{profile?.dateOfBirth.toString().slice(3,7)}</p> :
-                                    <p>{profile?.dateOfBirth.toString().slice(0,2)}/{profile?.dateOfBirth.toString().slice(2,4)}/{profile?.dateOfBirth.toString().slice(4,8)}</p> 
-                                }
+                                <p>{profile?.dateOfBirth.toString().slice(4,6)}/{profile?.dateOfBirth.toString().slice(6,8)}/{profile?.dateOfBirth.toString().slice(0,4)}</p> 
+                    
                             </div>                
                             <div className="grid-row flex-wrap flex-justify">
                                 <p>{t('personal.ssn')}: </p>
@@ -150,9 +148,7 @@ const Review = () => {
                                 </div>
                                 <div className="grid-row flex-wrap flex-justify">
                                     <p>{t('personal.dob')}: </p>
-                                    {finances.spouseDateOfBirth && finances?.spouseDateOfBirth.toString().length === 7 ? 
-                                    <p>0{finances?.spouseDateOfBirth.toString().slice(0,1)}/{finances?.spouseDateOfBirth.toString().slice(1,3)}/{finances?.spouseDateOfBirth.toString().slice(3,7)}</p> :
-                                    finances.spouseDateOfBirth && <p>{finances?.spouseDateOfBirth.toString().slice(0,2)}/{finances?.spouseDateOfBirth.toString().slice(2,4)}/{finances?.spouseDateOfBirth.toString().slice(4,8)}</p> 
+                                    {finances.spouseDateOfBirth && <p>{finances?.spouseDateOfBirth.toString().slice(4,6)}/{finances?.spouseDateOfBirth.toString().slice(6,8)}/{finances?.spouseDateOfBirth.toString().slice(0,4)}</p> 
                                 }
                                 </div>
                                 <div className="grid-row flex-wrap flex-justify">

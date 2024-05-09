@@ -78,10 +78,6 @@ const FinanceInfo = () => {
         }
     }
 
-    const handleChangeDate = (newDate: string | undefined) => {
-        newDate && setFinanceInfo({ ...financeInfo, spouseDateOfBirth: newDate })
-    }
-
     const handleOtherIncome = () => {
         setOtherIncome(!otherIncome)
         setFinanceInfo({ ...financeInfo, otherIncome: "0" })
@@ -101,9 +97,18 @@ const FinanceInfo = () => {
 
     const handleSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
         evt.preventDefault();
+        let formattedSpouseSsn
+        let formattedSpouseDateOfBirth
+        if(financeInfo.filingStatus === "Married Filing Jointly"){
+            formattedSpouseSsn= Number(financeInfo.spouseSsn.replace("-", "").replace("-", "")),
+            formattedSpouseDateOfBirth= Number(financeInfo.spouseDateOfBirth.replace('-', '').replace('-', ''))
+        }else{
+            formattedSpouseSsn= Number(financeInfo.spouseSsn)
+            formattedSpouseDateOfBirth= Number(financeInfo.spouseDateOfBirth)
+        }
         const body = JSON.stringify({...financeInfo, 
-            spouseSsn: Number(financeInfo.spouseSsn.replace("-", "").replace("-", "")),
-            spouseDateOfBirth:  Number(financeInfo.spouseDateOfBirth.replace('/', '').replace('/', '')),
+            spouseSsn: formattedSpouseSsn,
+            spouseDateOfBirth: formattedSpouseDateOfBirth,
             w2Income: Number(financeInfo.w2Income) * 100,
             otherIncome: Number(financeInfo.otherIncome) * 100,
             taxWithheldW2: Number(financeInfo.taxWithheldW2) * 100,
@@ -134,9 +139,18 @@ const FinanceInfo = () => {
     };
     const handleUpdate = (evt: React.FormEvent<HTMLFormElement>) => {
         evt.preventDefault();
+        let formattedSpouseSsn
+        let formattedSpouseDateOfBirth
+        if(financeInfo.filingStatus === "Married Filing Jointly"){
+            formattedSpouseSsn= Number(financeInfo.spouseSsn.replace("-", "").replace("-", "")),
+            formattedSpouseDateOfBirth= Number(financeInfo.spouseDateOfBirth.replace('-', '').replace('-', ''))
+        }else{
+            formattedSpouseSsn= Number(financeInfo.spouseSsn)
+            formattedSpouseDateOfBirth= Number(financeInfo.spouseDateOfBirth)
+        }
         const body = JSON.stringify({...financeInfo, 
-            spouseSsn: Number(financeInfo.spouseSsn.replace("-", "").replace("-", "")),
-            spouseDateOfBirth:  Number(financeInfo.spouseDateOfBirth.replace('/', '').replace('/', '')),
+            spouseSsn: formattedSpouseSsn,
+            spouseDateOfBirth: formattedSpouseDateOfBirth,
             w2Income: Number(financeInfo.w2Income) * 100,
             otherIncome: Number(financeInfo.otherIncome) * 100,
             taxWithheldW2: Number(financeInfo.taxWithheldW2) * 100,
@@ -183,18 +197,13 @@ const FinanceInfo = () => {
                 return data.json();
             } 
         }).then((returnedData) => {
-            let formattedDOB
             let newSpouseSsn
-            if(returnedData.spouseDateOfBirth.toString().length === 7){
-                const month= returnedData.spouseDateOfBirth.toString().slice(0,1)
-                const day= returnedData.spouseDateOfBirth.toString().slice(1,3)
-                const year= returnedData.spouseDateOfBirth.toString().slice(3,8)
-                formattedDOB = `0${month}/${day}/${year}`
-            }if (returnedData.spouseDateOfBirth.toString().length === 8){
-                const month= returnedData.spouseDateOfBirth.toString().slice(0,2)
-                const day= returnedData.spouseDateOfBirth.toString().slice(2,4)
-                const year= returnedData.spouseDateOfBirth.toString().slice(4,9)
-                formattedDOB = `${month}/${day}/${year}`
+            let formattedDOB
+            if(returnedData.spouseDateOfBirth){
+                const year= returnedData.spouseDateOfBirth.toString().slice(0,4)
+                const month= returnedData.spouseDateOfBirth.toString().slice(4,6)
+                const day= returnedData.spouseDateOfBirth.toString().slice(6,8)
+                formattedDOB = `${year}-${month}-${day}`
             }if(returnedData.filingStatus === "Married Filing Jointly"){
                 setJointFiling(true)
             }if(returnedData.otherIncome === 0){
@@ -212,6 +221,7 @@ const FinanceInfo = () => {
             }if(returnedData.spouseSsn){
                 newSpouseSsn= returnedData.spouseSsn.toString()
             }
+            console.log(returnedData)
             setFinanceInfo({
                 ...returnedData, 
                 spouseDateOfBirth: formattedDOB,
@@ -243,7 +253,7 @@ const FinanceInfo = () => {
                             <RequiredMarker />
                             ).
                         </p>
-                        <Label htmlFor="filingStatus" requiredMarker>
+                        <Label htmlFor="filingStatus" requiredMarker aria-required>
                             {t('finance.status')}
                         </Label>
                         <Grid row>
@@ -253,6 +263,7 @@ const FinanceInfo = () => {
                                     name="filingStatus"
                                     label={t('finance.single')}
                                     value="single"
+                                    required
                                     checked={financeInfo.filingStatus === "single"}
                                     onChange={handleChangeRadioBtn}
                                 />
@@ -278,7 +289,7 @@ const FinanceInfo = () => {
                                 />
                             </Grid>
                         </Grid>
-                        {jointFiling && <SpouseInfromation handleChange={handleChange} handleChangeDate={handleChangeDate} financeInfo={financeInfo}/>}
+                        {jointFiling && <SpouseInfromation handleChange={handleChange} financeInfo={financeInfo}/>}
                         <Label htmlFor="w2Income" requiredMarker>
                             {t('finance.w2-total')}
                         </Label>

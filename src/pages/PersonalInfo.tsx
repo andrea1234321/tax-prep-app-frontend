@@ -54,6 +54,7 @@ const PersonalInfo = () => {
             zipCode: Number(profile.zipCode),
             ssn: Number(profile.ssn.replace('-', '').replace('-', '')),
         });
+
         fetch(backendUrl + "/profile", {
             credentials: "include",
             method: "POST",

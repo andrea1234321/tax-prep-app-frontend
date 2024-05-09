@@ -89,6 +89,7 @@ const SpouseInformation = (props: {
                 name="spouseSsn"
                 type="text"
                 mask="___-__-____"
+                required
                 // pattern="^(?!(000|666|9))\d{3}-(?!00)\d{2}-(?!0000)\d{4}$"
                 value={financeInfo.spouseSsn}
                 onChange={handleChange}

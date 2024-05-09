@@ -6,17 +6,17 @@ import { useTranslation } from "react-i18next";
 import { CardGroup, Card, CardBody, Button, ButtonGroup, Link, CardFooter } from "@trussworks/react-uswds";
 
 const Results = () => {
-    const [_, setGlobalInfo] = useContext(AppContext);
+    const [globalInfo, setGlobalInfo] = useContext(AppContext);
     const navigate = useNavigate();
     const {t} = useTranslation();
 
     const [tax, setTax] = useState(0);
     const [absTax, setAbsTax] = useState(0)
-    // useEffect(() => {
-    //     if (!globalInfo.isLoggedIn || globalInfo.stepNumber < 4) {
-    //         navigate("/");
-    //     }
-    // }, [globalInfo]);
+    useEffect(() => {
+        if (!globalInfo.isLoggedIn || globalInfo.stepNumber < 4) {
+            navigate("/");
+        }
+    }, [globalInfo]);
 
     useEffect(() => {
         fetch(backendUrl + "/calculate_taxes", {
@@ -30,10 +30,14 @@ const Results = () => {
             })
             .catch(err => console.error(err));
     }, []);
-console.log("absolute: ", absTax)
+
     const handleBack = (): void => {
         setGlobalInfo(globalInfo => ({...globalInfo, stepNumber: 3}));
         navigate("/review")
+    }
+    const handleFinish = ():void => {
+        setGlobalInfo(globalInfo => ({...globalInfo, stepNumber: 1}))
+        navigate("/home")
     }
 
     return (
@@ -51,7 +55,7 @@ console.log("absolute: ", absTax)
                                 <Link href="#" className="usa-button usa-button--outline" onClick={handleBack}>
                                 {t('results.back')}
                                 </Link>
-                                <Button type="submit" onClick={() => navigate('/home')}>{t('results.done')}</Button>
+                                <Button type="submit" onClick={handleFinish}>{t('results.done')}</Button>
                             </ButtonGroup>
                         </CardFooter>
                     </Card>

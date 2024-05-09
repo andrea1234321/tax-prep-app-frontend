@@ -47,12 +47,10 @@ const FinanceInfo = () => {
     });
 
     useEffect(() => {
-        if (!globalInfo.isLoggedIn) {
+        if (!globalInfo.isLoggedIn || globalInfo.stepNumber < 2) {
             navigate("/");
         }
     }, [globalInfo]);
-
-    console.log(financeInfo)
 
     const handleChange = (evt: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement> ) => {
         evt.preventDefault()

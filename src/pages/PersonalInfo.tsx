@@ -226,8 +226,8 @@ console.log(profile)
                                 <Label htmlFor="state" requiredMarker>
                                     {t('personal.state')}
                                 </Label>
-                                <Select id="state" name="state" required value={profile.state} onChange={handleChange}>
-                                    <option>- {t('personal.select')} -</option>
+                                <Select id="state" name="state" required value={profile.state} onChange={handleChange} >
+                                    <option value="" disabled >- {t('personal.select')} -</option>
                                     <option value="AL">Alabama</option>
                                     <option value="AK">Alaska</option>
                                     <option value="AZ">Arizona</option>

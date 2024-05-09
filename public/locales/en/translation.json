@@ -1,94 +1,94 @@
 {
-  "login": {
-    "signin": "Express Tax",
-    "signinDescription": " You can access your account by signing in with one of the options below.",
-    "signinGoogle": "Sign in with Google",
-    "signinMicrosoft": "Sign in with Microsoft (coming soon)",
-    "noAccount": "Don't have an account?",
-    "noAccountDescription": "If you don't have an account already, sign up here:",
-    "createAccountBtn": "Create account (coming soon)",
-    "appDescription": "Log in to Express Tax today to see your estimated tax return!",
-    "appDescriptionTwo": "Welcome to Express Tax, where precision meets convenience. Log in now to access our powerful tax estimation platform, delivering lightning-fast calculations for your potential return or liability. ",
-    "quickEstimation": "Quick Estimation:",
-    "quickEstimationDescription": "With Express Tax users can get an instant estimate of their tax return without having to wait for the tax season or consulting a professional.",
-    "accuracy": "Accuracy:",
-    "accuracyDescription": "With our state-of-the-art algorithms, rest assured that your estimates are not just quick but incredibly accurate. ",
-    "private": "Secure and Private:",
-    "privateDescription": "Your privacy is paramount — our secure login ensures that your financial data remains strictly confidential."
-  },
-  "landing": {
-    "header": "Welcome",
-    "description" : "It's time to file taxes",
-    "button": "File Tax Return"
-  },
-  "personal": {
-    "title": "Personal Information",
-    "description": "Required fields are marked with an asterisk",
-    "tax-year": "Filing For Tax Year",
-    "first-name": "First Name",
-    "middle-initial": "Middle Initial",
-    "last-name": "Last Name",
-    "dob": "Date of Birth (MM/DD/YYYY)",
-    "address": "Street Address",
-    "apt": "Apartment, Suite, etc.",
-    "city": "City",
-    "state": "State",
-    "zip": "Zip Code",
-    "ssn": "Social Security No.",
-    "select": "select",
-    "button": "Financial Information"
-  },
-  "progress": {
-    "personal": "Personal Information",
-    "financial": "Financial Information",
-    "review": "Review",
-    "results": "Results",
-    "of": "of"
-  },
-  "finance": {
-    "title": "Financial Information",
-    "description": "Required fields are marked with an asterisk",
-    "status": "Filing Status",
-    "single": "Single",
-    "married-joint": "Married Filing Jointly",
-    "married-separate": "Married Filing Separately",
-    "w2-total": "W2 Form(s) total income",
-    "other-income": "Other income",
-    "w2-withheld": "W2 Form(s) total income tax withheld",
-    "1099-withheld": "1099 Form(s) total income tax withheld",
-    "other-withheld": "Other tax withheld",
-    "paid-taxes": "Paid taxes from",
-    "na": "N/a",
-    "button": "Review"
-  },
-  "review": {
-    "title": "Review",
-    "description": "Please review the information below and verify it is correct before submitting.",
-    "full-name": "Full Name",
-    "address": "Address",
-    "spouse-name": "Spouse Full Name",
-    "button": "Results"
-  },
-  "results": {
-    "description": "Based on the information you have entered",
-    "taxOwed": "You are estimated to owe: ${{tax}} in taxes.",
-    "taxReturn": "Your estimated tax return is: ${{absTax}}",
-    "back": "Back",
-    "done": "Finish"
-  },
-  "spouse": {
-    "info": "Spouse Information:",
-    "joint-info": "Joint Financial information:"
-  },
-  "nav": {
-    "title": "Express Tax"
-  },
-  "admin": {
-    "stateFrequencies": "State Frequencies",
-    "filingStatusFrequencies": "Filing Status Frequencies",
-    "incomeFrequencies": "W2 Income Distribution"
-  },
-  "footer": {
-    "contact": "Agency Contact Center"
-  }
+    "login": {
+        "signin": "Express Tax",
+        "signinDescription": " You can access your account by signing in with one of the options below.",
+        "signinGoogle": "Sign in with Google",
+        "signinMicrosoft": "Sign in with Microsoft (coming soon)",
+        "noAccount": "Don't have an account?",
+        "noAccountDescription": "If you don't have an account already, sign up here:",
+        "createAccountBtn": "Create account (coming soon)",
+        "appDescription": "Log in to Express Tax today to see your estimated tax return!",
+        "appDescriptionTwo": "Welcome to Express Tax, where precision meets convenience. Log in now to access our powerful tax estimation platform, delivering lightning-fast calculations for your potential return or liability. ",
+        "quickEstimation": "Quick Estimation:",
+        "quickEstimationDescription": "With Express Tax users can get an instant estimate of their tax return without having to wait for the tax season or consulting a professional.",
+        "accuracy": "Accuracy:",
+        "accuracyDescription": "With our state-of-the-art algorithms, rest assured that your estimates are not just quick but incredibly accurate. ",
+        "private": "Secure and Private:",
+        "privateDescription": "Your privacy is paramount — our secure login ensures that your financial data remains strictly confidential."
+    },
+    "landing": {
+        "header": "Welcome",
+        "description": "It's time to file taxes",
+        "button": "File Tax Return"
+    },
+    "personal": {
+        "title": "Personal Information",
+        "description": "Required fields are marked with an asterisk",
+        "tax-year": "Filing For Tax Year",
+        "first-name": "First Name",
+        "middle-initial": "Middle Initial",
+        "last-name": "Last Name",
+        "dob": "Date of Birth (MM/DD/YYYY)",
+        "address": "Street Address",
+        "apt": "Apartment, Suite, etc.",
+        "city": "City",
+        "state": "State",
+        "zip": "Zip Code",
+        "ssn": "Social Security No.",
+        "select": "select",
+        "button": "Financial Information"
+    },
+    "progress": {
+        "personal": "Personal Information",
+        "financial": "Financial Information",
+        "review": "Review",
+        "results": "Results",
+        "of": "of"
+    },
+    "finance": {
+        "title": "Financial Information",
+        "description": "Required fields are marked with an asterisk",
+        "status": "Filing Status",
+        "single": "Single",
+        "married-joint": "Married Filing Jointly",
+        "married-separate": "Married Filing Separately",
+        "w2-total": "W2 Form(s) total income",
+        "other-income": "Other income",
+        "w2-withheld": "W2 Form(s) total income tax withheld",
+        "1099-withheld": "1099 Form(s) total income tax withheld",
+        "other-withheld": "Other tax withheld",
+        "paid-taxes": "Paid taxes from",
+        "na": "N/a",
+        "button": "Review"
+    },
+    "review": {
+        "title": "Review",
+        "description": "Please review the information below and verify it is correct before submitting.",
+        "full-name": "Full Name",
+        "address": "Address",
+        "spouse-name": "Spouse Full Name",
+        "button": "Results"
+    },
+    "results": {
+        "description": "Based on the information you have entered",
+        "taxOwed": "You are estimated to owe: ${{tax}} in taxes.",
+        "taxReturn": "Your estimated tax return is: ${{absTax}}",
+        "back": "Back",
+        "done": "Finish"
+    },
+    "spouse": {
+        "info": "Spouse Information:",
+        "joint-info": "Joint Financial information:"
+    },
+    "nav": {
+        "title": "Express Tax"
+    },
+    "admin": {
+        "stateFrequencies": "State Frequencies",
+        "filingStatusFrequencies": "Filing Status Frequencies",
+        "incomeFrequencies": "W2 Income Distribution"
+    },
+    "footer": {
+        "contact": "Agency Contact Center"
+    }
 }

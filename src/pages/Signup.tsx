@@ -19,7 +19,7 @@ type UserData = {
 
 const Signup = () => {
     const [showPassword, setShowPassword] = useState(false);
-  
+
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const form = event.target;

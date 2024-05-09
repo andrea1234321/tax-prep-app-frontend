@@ -1,94 +1,93 @@
 {
-  "login": {
-    "signin": "Impuesto Express",
-    "signinDescription": " Puedes acceder a tu cuenta iniciando sesión con una de las opciones a continuación.",
-    "signinGoogle": "Iniciar sesión con Google",
-    "signinMicrosoft": "Iniciar sesión con Microsoft (próximamente)",
-    "noAccount": "¿No tienes una cuenta?",
-    "noAccountDescription": "Si aún no tienes una cuenta, regístrate aquí:",
-    "createAccountBtn": "Crear cuenta (próximamente)",
-    "appDescription": "¡Inicia sesión en Impuesto Express hoy para ver tu reembolso de impuestos estimado!",
-    "appDescriptionTwo": "Bienvenido a Impuesto Express, donde la precisión se encuentra con la conveniencia. Inicia sesión ahora para acceder a nuestra potente plataforma de estimación de impuestos, que ofrece cálculos ultrarrápidos para tu posible reembolso o responsabilidad fiscal.",
-    "quickEstimation": "Estimación rápida:",
-    "quickEstimationDescription": "Con Impuesto Express, los usuarios pueden obtener una estimación instantánea de su reembolso de impuestos sin tener que esperar la temporada de impuestos o consultar a un profesional.",
-    "accuracy": "Precisión:",
-    "accuracyDescription": "Con nuestros algoritmos de última generación, puedes estar seguro de que tus estimaciones no solo son rápidas, sino increíblemente precisas.",
-    "private": "Seguro y Privado:",
-    "privateDescription": "Tu privacidad es primordial; nuestro inicio de sesión seguro garantiza que tus datos financieros permanezcan estrictamente confidenciales."
-  },
-  "landing": {
-    "header": "Bienvenido",
-    "description" : "Es hora de declarar impuestos",
-    "button": "Declarar Impuestos"
-  },
+    "login": {
+        "signin": "Impuesto Express",
+        "signinDescription": " Puedes acceder a tu cuenta iniciando sesión con una de las opciones a continuación.",
+        "signinGoogle": "Iniciar sesión con Google",
+        "signinMicrosoft": "Iniciar sesión con Microsoft (próximamente)",
+        "noAccount": "¿No tienes una cuenta?",
+        "noAccountDescription": "Si aún no tienes una cuenta, regístrate aquí:",
+        "createAccountBtn": "Crear cuenta (próximamente)",
+        "appDescription": "¡Inicia sesión en Impuesto Express hoy para ver tu reembolso de impuestos estimado!",
+        "appDescriptionTwo": "Bienvenido a Impuesto Express, donde la precisión se encuentra con la conveniencia. Inicia sesión ahora para acceder a nuestra potente plataforma de estimación de impuestos, que ofrece cálculos ultrarrápidos para tu posible reembolso o responsabilidad fiscal.",
+        "quickEstimation": "Estimación rápida:",
+        "quickEstimationDescription": "Con Impuesto Express, los usuarios pueden obtener una estimación instantánea de su reembolso de impuestos sin tener que esperar la temporada de impuestos o consultar a un profesional.",
+        "accuracy": "Precisión:",
+        "accuracyDescription": "Con nuestros algoritmos de última generación, puedes estar seguro de que tus estimaciones no solo son rápidas, sino increíblemente precisas.",
+        "private": "Seguro y Privado:",
+        "privateDescription": "Tu privacidad es primordial; nuestro inicio de sesión seguro garantiza que tus datos financieros permanezcan estrictamente confidenciales."
+    },
+    "landing": {
+        "header": "Bienvenido",
+        "description": "Es hora de declarar impuestos",
+        "button": "Declarar Impuestos"
+    },
     "personal": {
-      "title": "Información Personal",
-      "description": "Los campos obligatorios están marcados con un asterisco",
-      "first-name": "Nombre",
-      "middle-initial": "Inicial del Segundo Nombre",
-      "last-name": "Apellido",
-      "dob": "Fecha de Nacimiento (MM/DD/AAAA)",
-      "address": "Dirección",
-      "apt": "Apartamento, Suite, etc.",
-      "city": "Ciudad",
-      "state": "Estado",
-      "zip": "Código Postal",
-      "ssn": "Número de Seguro Social",
-      "select": "seleccionar",
-      "button": "Información Financiera"
-  },
+        "title": "Información Personal",
+        "description": "Los campos obligatorios están marcados con un asterisco",
+        "first-name": "Nombre",
+        "middle-initial": "Inicial del Segundo Nombre",
+        "last-name": "Apellido",
+        "dob": "Fecha de Nacimiento (MM/DD/AAAA)",
+        "address": "Dirección",
+        "apt": "Apartamento, Suite, etc.",
+        "city": "Ciudad",
+        "state": "Estado",
+        "zip": "Código Postal",
+        "ssn": "Número de Seguro Social",
+        "select": "seleccionar",
+        "button": "Información Financiera"
+    },
     "progress": {
-      "personal": "Información Personal",
-      "financial": "Información Financiera",
-      "review": "Revisión",
-      "results": "Resultados",
-      "of": "de"
-  },
+        "personal": "Información Personal",
+        "financial": "Información Financiera",
+        "review": "Revisión",
+        "results": "Resultados",
+        "of": "de"
+    },
     "finance": {
-      "title": "Información Financiera",
-      "description": "Los campos obligatorios están marcados con un asterisco",
-      "status": "Estado de Declaración",
-      "single": "Soltero",
-      "married-joint": "Casado presentando conjuntamente",
-      "married-separate": "Casado presentando por separado",
-      "w2-total": "Ingresos totales del formulario W2",
-      "other-income": "Otros ingresos",
-      "w2-withheld": "Impuesto retenido total del formulario W2",
-      "1099-withheld": "Impuesto retenido total del formulario 1099",
-      "other-withheld": "Otros impuestos retenidos",
-      "paid-taxes": "Impuestos pagados del",
-      "na": "N/a",
-      "button": "Revisión"
-  },
-  "review": {
-    "title": "Revisión",
-    "description": "Por favor, revisa la información a continuación y verifica que sea correcta antes de enviar.",
-    "button": "Resultados",
-    "full-name": "Nombre completo",
-    "address": "Dirección",
-    "spouse-name": "Nombre completo del cónyuge"
-  },
+        "title": "Información Financiera",
+        "description": "Los campos obligatorios están marcados con un asterisco",
+        "status": "Estado de Declaración",
+        "single": "Soltero",
+        "married-joint": "Casado presentando conjuntamente",
+        "married-separate": "Casado presentando por separado",
+        "w2-total": "Ingresos totales del formulario W2",
+        "other-income": "Otros ingresos",
+        "w2-withheld": "Impuesto retenido total del formulario W2",
+        "1099-withheld": "Impuesto retenido total del formulario 1099",
+        "other-withheld": "Otros impuestos retenidos",
+        "paid-taxes": "Impuestos pagados del",
+        "na": "N/a",
+        "button": "Revisión"
+    },
+    "review": {
+        "title": "Revisión",
+        "description": "Por favor, revisa la información a continuación y verifica que sea correcta antes de enviar.",
+        "button": "Resultados",
+        "full-name": "Nombre completo",
+        "address": "Dirección",
+        "spouse-name": "Nombre completo del cónyuge"
+    },
     "results": {
-      "description": "Basado en la información que has ingresado",
-      "taxOwed": "Se estima que debes: ${{tax}} en impuestos.",
-      "taxReturn": "Tu reembolso de impuestos estimado es: ${{absTax}}",
-      "back": "Atrás",
-      "done": "Finalizar"
-  },
+        "description": "Basado en la información que has ingresado",
+        "taxOwed": "Se estima que debes: ${{tax}} en impuestos.",
+        "taxReturn": "Tu reembolso de impuestos estimado es: ${{absTax}}",
+        "back": "Atrás",
+        "done": "Finalizar"
+    },
     "spouse": {
-      "info": "Información del cónyuge:",
-      "joint-info": "Información Financiera Conjunta:"
-  },
+        "info": "Información del cónyuge:",
+        "joint-info": "Información Financiera Conjunta:"
+    },
     "nav": {
-      "title": "Impuesto Express"
+        "title": "Impuesto Express"
     },
     "admin": {
-      "stateFrequencies": "Frecuencias del Estados",
-      "filingStatusFrequencies": "Frecuencias del Estados de Declaración",
-      "incomeFrequencies": "La Distribución de Ingresos del Formulario W2"
+        "stateFrequencies": "Frecuencias del Estados",
+        "filingStatusFrequencies": "Frecuencias del Estados de Declaración",
+        "incomeFrequencies": "La Distribución de Ingresos del Formulario W2"
     },
     "footer": {
-      "contact": "Centro de Contacto de la Agencia"
+        "contact": "Centro de Contacto de la Agencia"
     }
-    
 }

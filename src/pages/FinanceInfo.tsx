@@ -22,7 +22,7 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 const FinanceInfo = () => {
-    const {t} = useTranslation();
+    const { t } = useTranslation();
     const [globalInfo, setGlobalInfo] = useContext(AppContext);
     const navigate = useNavigate();
     const [otherIncome, setOtherIncome] = useState(false);
@@ -32,18 +32,18 @@ const FinanceInfo = () => {
     const [jointFiling, setJointFiling] = useState(false);
     const [update, setUpdate] = useState(false);
     const [financeInfo, setFinanceInfo] = useState({
-        filingStatus: '',
-        spouseFirstName: '',
-        spouseMiddleInitial: '',
-        spouseLastName: '',
-        spouseDateOfBirth: '',
-        spouseSsn: '',
-        w2Income: '',
-        otherIncome: '',
-        taxWithheldW2: '',
-        taxWithheld1099: '',
-        taxWithheldOther: '',
-        prevTaxesPaid: ''
+        filingStatus: "",
+        spouseFirstName: "",
+        spouseMiddleInitial: "",
+        spouseLastName: "",
+        spouseDateOfBirth: "",
+        spouseSsn: "",
+        w2Income: "",
+        otherIncome: "",
+        taxWithheldW2: "",
+        taxWithheld1099: "",
+        taxWithheldOther: "",
+        prevTaxesPaid: "",
     });
 
     useEffect(() => {
@@ -52,59 +52,71 @@ const FinanceInfo = () => {
         }
     }, [globalInfo]);
 
-    const handleChange = (evt: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement> ) => {
-        evt.preventDefault()
-        const { name, value } = evt.target
-        setFinanceInfo({ ...financeInfo, [name]: value })
-    }
-  
-    const handleChangeRadioBtn = (evt: React.ChangeEvent<HTMLInputElement> ) => {
-        const { name, value } = evt.target
-        if (value === "Married Filing Jointly"){
-            setJointFiling(true)
-            setFinanceInfo({ ...financeInfo, [name]: value })
-        }else{
-            setJointFiling(false)
-            setFinanceInfo({...financeInfo,
+    const handleChange = (
+        evt:
+            | React.ChangeEvent<HTMLInputElement>
+            | React.ChangeEvent<HTMLSelectElement>,
+    ) => {
+        evt.preventDefault();
+        const { name, value } = evt.target;
+        setFinanceInfo({ ...financeInfo, [name]: value });
+    };
+
+    const handleChangeRadioBtn = (evt: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = evt.target;
+        if (value === "Married Filing Jointly") {
+            setJointFiling(true);
+            setFinanceInfo({ ...financeInfo, [name]: value });
+        } else {
+            setJointFiling(false);
+            setFinanceInfo({
+                ...financeInfo,
                 [name]: value,
-                spouseFirstName: '',
-                spouseMiddleInitial: '',
-                spouseLastName: '',
-                spouseDateOfBirth: '',
-                spouseSsn: '',
-            })
+                spouseFirstName: "",
+                spouseMiddleInitial: "",
+                spouseLastName: "",
+                spouseDateOfBirth: "",
+                spouseSsn: "",
+            });
         }
-    }
+    };
 
     const handleOtherIncome = () => {
-        setOtherIncome(!otherIncome)
-        setFinanceInfo({ ...financeInfo, otherIncome: "0" })
-    }
+        setOtherIncome(!otherIncome);
+        setFinanceInfo({ ...financeInfo, otherIncome: "0" });
+    };
     const handleTaxWithheld1099 = () => {
-        setTaxWithheld1099(!taxWithheld1099)
-        setFinanceInfo({ ...financeInfo, taxWithheld1099: "0" })
-    }
+        setTaxWithheld1099(!taxWithheld1099);
+        setFinanceInfo({ ...financeInfo, taxWithheld1099: "0" });
+    };
     const handleTaxWithheldOther = () => {
-        setTaxWithheldOther(!taxWithheldOther)
-        setFinanceInfo({ ...financeInfo, taxWithheldOther: "0" })
-    }
+        setTaxWithheldOther(!taxWithheldOther);
+        setFinanceInfo({ ...financeInfo, taxWithheldOther: "0" });
+    };
     const handlePrevTaxesPaid = () => {
-        setPrevTaxesPaid(!prevTaxesPaid)
-        setFinanceInfo({ ...financeInfo, prevTaxesPaid: "0" })
-    }
+        setPrevTaxesPaid(!prevTaxesPaid);
+        setFinanceInfo({ ...financeInfo, prevTaxesPaid: "0" });
+    };
 
     const handleSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
         evt.preventDefault();
-        let formattedSpouseSsn
-        let formattedSpouseDateOfBirth
-        if(financeInfo.filingStatus === "Married Filing Jointly"){
-            formattedSpouseSsn= Number(financeInfo.spouseSsn.replace("-", "").replace("-", "")),
-            formattedSpouseDateOfBirth= Number(financeInfo.spouseDateOfBirth.replace('-', '').replace('-', ''))
-        }else{
-            formattedSpouseSsn= Number(financeInfo.spouseSsn)
-            formattedSpouseDateOfBirth= Number(financeInfo.spouseDateOfBirth)
+        let formattedSpouseSsn;
+        let formattedSpouseDateOfBirth;
+        if (financeInfo.filingStatus === "Married Filing Jointly") {
+            (formattedSpouseSsn = Number(
+                financeInfo.spouseSsn.replace("-", "").replace("-", ""),
+            )),
+                (formattedSpouseDateOfBirth = Number(
+                    financeInfo.spouseDateOfBirth
+                        .replace("-", "")
+                        .replace("-", ""),
+                ));
+        } else {
+            formattedSpouseSsn = Number(financeInfo.spouseSsn);
+            formattedSpouseDateOfBirth = Number(financeInfo.spouseDateOfBirth);
         }
-        const body = JSON.stringify({...financeInfo, 
+        const body = JSON.stringify({
+            ...financeInfo,
             spouseSsn: formattedSpouseSsn,
             spouseDateOfBirth: formattedSpouseDateOfBirth,
             w2Income: Number(financeInfo.w2Income) * 100,
@@ -126,7 +138,10 @@ const FinanceInfo = () => {
                 if (data.ok) {
                     console.log("Post successful!");
                     if (globalInfo.stepNumber < 3) {
-                        setGlobalInfo(globalInfo => ({...globalInfo, stepNumber: 3}));
+                        setGlobalInfo((globalInfo) => ({
+                            ...globalInfo,
+                            stepNumber: 3,
+                        }));
                     }
                     navigate("/review");
                 } else {
@@ -137,16 +152,23 @@ const FinanceInfo = () => {
     };
     const handleUpdate = (evt: React.FormEvent<HTMLFormElement>) => {
         evt.preventDefault();
-        let formattedSpouseSsn
-        let formattedSpouseDateOfBirth
-        if(financeInfo.filingStatus === "Married Filing Jointly"){
-            formattedSpouseSsn= Number(financeInfo.spouseSsn.replace("-", "").replace("-", "")),
-            formattedSpouseDateOfBirth= Number(financeInfo.spouseDateOfBirth.replace('-', '').replace('-', ''))
-        }else{
-            formattedSpouseSsn= Number(financeInfo.spouseSsn)
-            formattedSpouseDateOfBirth= Number(financeInfo.spouseDateOfBirth)
+        let formattedSpouseSsn;
+        let formattedSpouseDateOfBirth;
+        if (financeInfo.filingStatus === "Married Filing Jointly") {
+            (formattedSpouseSsn = Number(
+                financeInfo.spouseSsn.replace("-", "").replace("-", ""),
+            )),
+                (formattedSpouseDateOfBirth = Number(
+                    financeInfo.spouseDateOfBirth
+                        .replace("-", "")
+                        .replace("-", ""),
+                ));
+        } else {
+            formattedSpouseSsn = Number(financeInfo.spouseSsn);
+            formattedSpouseDateOfBirth = Number(financeInfo.spouseDateOfBirth);
         }
-        const body = JSON.stringify({...financeInfo, 
+        const body = JSON.stringify({
+            ...financeInfo,
             spouseSsn: formattedSpouseSsn,
             spouseDateOfBirth: formattedSpouseDateOfBirth,
             w2Income: Number(financeInfo.w2Income) * 100,
@@ -168,7 +190,10 @@ const FinanceInfo = () => {
                 if (data.ok) {
                     console.log("Update successful!");
                     if (globalInfo.stepNumber < 3) {
-                        setGlobalInfo(globalInfo => ({...globalInfo, stepNumber: 3}));
+                        setGlobalInfo((globalInfo) => ({
+                            ...globalInfo,
+                            stepNumber: 3,
+                        }));
                     }
                     navigate("/review");
                 } else {
@@ -178,9 +203,9 @@ const FinanceInfo = () => {
             .catch((error: Error) => console.error(error));
     };
     const handleBack = () => {
-        setGlobalInfo(globalInfo => ({...globalInfo, stepNumber: 1}));
-        navigate("/personalInformation")
-    }
+        setGlobalInfo((globalInfo) => ({ ...globalInfo, stepNumber: 1 }));
+        navigate("/personalInformation");
+    };
 
     useEffect(() => {
         fetch(backendUrl + "/finances", {
@@ -190,50 +215,65 @@ const FinanceInfo = () => {
                 "Content-Type": "application/json",
             },
         })
-        .then(data => {
-            if (data.ok) {
-                return data.json();
-            } 
-        }).then((returnedData) => {
-            let newSpouseSsn
-            let formattedDOB
-            if(returnedData.spouseDateOfBirth){
-                const year= returnedData.spouseDateOfBirth.toString().slice(0,4)
-                const month= returnedData.spouseDateOfBirth.toString().slice(4,6)
-                const day= returnedData.spouseDateOfBirth.toString().slice(6,8)
-                formattedDOB = `${year}-${month}-${day}`
-            }if(returnedData.filingStatus === "Married Filing Jointly"){
-                setJointFiling(true)
-            }if(returnedData.otherIncome === 0){
-                setOtherIncome(!otherIncome)
-            }if(returnedData.taxWithheld1099 === 0){
-                setTaxWithheld1099(!taxWithheld1099)
-            }if(returnedData.taxWithheldOther === 0){
-                setTaxWithheldOther(!taxWithheldOther)
-            }if(returnedData.prevTaxesPaid === 0){
-                setPrevTaxesPaid(!prevTaxesPaid)
-            }if (returnedData.spouseSsn === 0){
-                newSpouseSsn = ""
-            }if (returnedData.spouseDateOfBirth === 0){
-                formattedDOB = ""
-            }if(returnedData.spouseSsn){
-                newSpouseSsn= returnedData.spouseSsn.toString()
-            }
-            console.log(returnedData)
-            setFinanceInfo({
-                ...returnedData, 
-                spouseDateOfBirth: formattedDOB,
-                spouseSsn: newSpouseSsn,
-                w2Income: returnedData.w2Income / 100,
-                otherIncome: returnedData.otherIncome / 100,
-                taxWithheldW2: returnedData.taxWithheldW2 / 100,
-                taxWithheld1099: returnedData.taxWithheld1099 / 100,
-                taxWithheldOther: returnedData.taxWithheldOther / 100,
-                prevTaxesPaid: returnedData.prevTaxesPaid / 100,
-            });
-            setUpdate(true)
-        })
-        .catch(() => console.log("No existing financial information"));
+            .then((data) => {
+                if (data.ok) {
+                    return data.json();
+                }
+            })
+            .then((returnedData) => {
+                let newSpouseSsn;
+                let formattedDOB;
+                if (returnedData.spouseDateOfBirth) {
+                    const year = returnedData.spouseDateOfBirth
+                        .toString()
+                        .slice(0, 4);
+                    const month = returnedData.spouseDateOfBirth
+                        .toString()
+                        .slice(4, 6);
+                    const day = returnedData.spouseDateOfBirth
+                        .toString()
+                        .slice(6, 8);
+                    formattedDOB = `${year}-${month}-${day}`;
+                }
+                if (returnedData.filingStatus === "Married Filing Jointly") {
+                    setJointFiling(true);
+                }
+                if (returnedData.otherIncome === 0) {
+                    setOtherIncome(!otherIncome);
+                }
+                if (returnedData.taxWithheld1099 === 0) {
+                    setTaxWithheld1099(!taxWithheld1099);
+                }
+                if (returnedData.taxWithheldOther === 0) {
+                    setTaxWithheldOther(!taxWithheldOther);
+                }
+                if (returnedData.prevTaxesPaid === 0) {
+                    setPrevTaxesPaid(!prevTaxesPaid);
+                }
+                if (returnedData.spouseSsn === 0) {
+                    newSpouseSsn = "";
+                }
+                if (returnedData.spouseDateOfBirth === 0) {
+                    formattedDOB = "";
+                }
+                if (returnedData.spouseSsn) {
+                    newSpouseSsn = returnedData.spouseSsn.toString();
+                }
+                console.log(returnedData);
+                setFinanceInfo({
+                    ...returnedData,
+                    spouseDateOfBirth: formattedDOB,
+                    spouseSsn: newSpouseSsn,
+                    w2Income: returnedData.w2Income / 100,
+                    otherIncome: returnedData.otherIncome / 100,
+                    taxWithheldW2: returnedData.taxWithheldW2 / 100,
+                    taxWithheld1099: returnedData.taxWithheld1099 / 100,
+                    taxWithheldOther: returnedData.taxWithheldOther / 100,
+                    prevTaxesPaid: returnedData.prevTaxesPaid / 100,
+                });
+                setUpdate(true);
+            })
+            .catch(() => console.log("No existing financial information"));
     }, []);
 
     return (
@@ -241,27 +281,30 @@ const FinanceInfo = () => {
             <main id="main-content">
                 <ProgressBar stepNumber={2} />
                 <Form onSubmit={update ? handleUpdate : handleSubmit} large>
-                    <Fieldset
-                        legend={t('finance.title')}
-                        legendStyle="large"
-                    >
+                    <Fieldset legend={t("finance.title")} legendStyle="large">
                         <p>
-                            {t('finance.description')} (
+                            {t("finance.description")} (
                             <RequiredMarker />
                             ).
                         </p>
-                        <Label htmlFor="filingStatus" requiredMarker aria-required>
-                            {t('finance.status')}
+                        <Label
+                            htmlFor="filingStatus"
+                            requiredMarker
+                            aria-required
+                        >
+                            {t("finance.status")}
                         </Label>
                         <Grid row>
                             <Grid col={3} offset={1}>
                                 <Radio
                                     id="single"
                                     name="filingStatus"
-                                    label={t('finance.single')}
+                                    label={t("finance.single")}
                                     value="single"
                                     required
-                                    checked={financeInfo.filingStatus === "single"}
+                                    checked={
+                                        financeInfo.filingStatus === "single"
+                                    }
                                     onChange={handleChangeRadioBtn}
                                 />
                             </Grid>
@@ -269,9 +312,12 @@ const FinanceInfo = () => {
                                 <Radio
                                     id="married-jointly"
                                     name="filingStatus"
-                                    label={t('finance.married-joint')}
+                                    label={t("finance.married-joint")}
                                     value="Married Filing Jointly"
-                                    checked={financeInfo.filingStatus === "Married Filing Jointly"}
+                                    checked={
+                                        financeInfo.filingStatus ===
+                                        "Married Filing Jointly"
+                                    }
                                     onChange={handleChangeRadioBtn}
                                 />
                             </Grid>
@@ -279,16 +325,24 @@ const FinanceInfo = () => {
                                 <Radio
                                     id="married-separately"
                                     name="filingStatus"
-                                    label={t('finance.married-separate')}
+                                    label={t("finance.married-separate")}
                                     value="Married Filing Separately"
-                                    checked={financeInfo.filingStatus === "Married Filing Separately"}
+                                    checked={
+                                        financeInfo.filingStatus ===
+                                        "Married Filing Separately"
+                                    }
                                     onChange={handleChangeRadioBtn}
                                 />
                             </Grid>
                         </Grid>
-                        {jointFiling && <SpouseInfromation handleChange={handleChange} financeInfo={financeInfo}/>}
+                        {jointFiling && (
+                            <SpouseInfromation
+                                handleChange={handleChange}
+                                financeInfo={financeInfo}
+                            />
+                        )}
                         <Label htmlFor="w2Income" requiredMarker>
-                            {t('finance.w2-total')}
+                            {t("finance.w2-total")}
                         </Label>
                         <InputGroup>
                             <InputPrefix>$</InputPrefix>
@@ -302,7 +356,9 @@ const FinanceInfo = () => {
                                 onChange={handleChange}
                             />
                         </InputGroup>
-                        <Label htmlFor="otherIncome">{t('finance.other-income')}</Label>
+                        <Label htmlFor="otherIncome">
+                            {t("finance.other-income")}
+                        </Label>
                         <Grid row>
                             <Grid col={6}>
                                 <InputGroup>
@@ -322,14 +378,14 @@ const FinanceInfo = () => {
                                 <Checkbox
                                     id="na otherIncome"
                                     name="otherIncome"
-                                    label={t('finance.na')}
+                                    label={t("finance.na")}
                                     checked={otherIncome}
                                     onChange={handleOtherIncome}
                                 />
                             </Grid>
                         </Grid>
                         <Label htmlFor="taxWithheldW2" requiredMarker>
-                            {t('finance.w2-withheld')}
+                            {t("finance.w2-withheld")}
                         </Label>
                         <InputGroup>
                             <InputPrefix>$</InputPrefix>
@@ -344,7 +400,7 @@ const FinanceInfo = () => {
                             />
                         </InputGroup>
                         <Label htmlFor="taxWithheld1099">
-                            {t('finance.1099-withheld')}
+                            {t("finance.1099-withheld")}
                         </Label>
                         <Grid row>
                             <Grid col={6}>
@@ -365,14 +421,14 @@ const FinanceInfo = () => {
                                 <Checkbox
                                     id="na taxWithheld1099"
                                     name="taxWithheld1099"
-                                    label={t('finance.na')}
+                                    label={t("finance.na")}
                                     checked={taxWithheld1099}
                                     onChange={handleTaxWithheld1099}
                                 />
                             </Grid>
                         </Grid>
                         <Label htmlFor="taxWithheldOther">
-                            {t('finance.other-withheld')}
+                            {t("finance.other-withheld")}
                         </Label>
                         <Grid row>
                             <Grid col={6}>
@@ -393,7 +449,7 @@ const FinanceInfo = () => {
                                 <Checkbox
                                     id="na taxWithheldOther"
                                     name="taxWithheldOther"
-                                    label={t('finance.na')}
+                                    label={t("finance.na")}
                                     checked={taxWithheldOther}
                                     onChange={handleTaxWithheldOther}
                                 />
@@ -401,7 +457,8 @@ const FinanceInfo = () => {
                         </Grid>
 
                         <Label htmlFor="prevTaxesPaid">
-                            {t('finance.paid-taxes')} {Number(new Date().getFullYear())-2}
+                            {t("finance.paid-taxes")}{" "}
+                            {Number(new Date().getFullYear()) - 2}
                         </Label>
                         <Grid row>
                             <Grid col={6}>
@@ -422,17 +479,21 @@ const FinanceInfo = () => {
                                 <Checkbox
                                     id="na prevTaxesPaid"
                                     name="prevTaxesPaid"
-                                    label={t('finance.na')}
+                                    label={t("finance.na")}
                                     checked={prevTaxesPaid}
                                     onChange={handlePrevTaxesPaid}
                                 />
                             </Grid>
                         </Grid>
                         <ButtonGroup>
-                            <Link href="#" className="usa-button usa-button--outline" onClick={handleBack}>
-                                {t('results.back')}
+                            <Link
+                                href="#"
+                                className="usa-button usa-button--outline"
+                                onClick={handleBack}
+                            >
+                                {t("results.back")}
                             </Link>
-                            <Button type="submit">{t('finance.button')}</Button>
+                            <Button type="submit">{t("finance.button")}</Button>
                         </ButtonGroup>
                     </Fieldset>
                 </Form>

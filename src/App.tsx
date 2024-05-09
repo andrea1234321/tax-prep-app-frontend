@@ -5,7 +5,6 @@ import "@trussworks/react-uswds/lib/uswds.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { createContext, useEffect, useState } from "react";
 
-
 //components
 import NavBar from "./components/NavBar";
 
@@ -22,7 +21,6 @@ import FooterComp from "./components/FooterComp";
 //stylesheets
 import "./App.css";
 import Admin from "./pages/Admin";
-
 
 // App context
 export type GlobalInfo = {
@@ -45,7 +43,9 @@ export type AdminAnalytics = {
 
 export const backendUrl = "http://localhost:8080";
 
-export const AppContext = createContext<[GlobalInfo, (g: (g: GlobalInfo) => GlobalInfo) => void]>([
+export const AppContext = createContext<
+    [GlobalInfo, (g: (g: GlobalInfo) => GlobalInfo) => void]
+>([
     { isLoggedIn: true, isAdmin: true, isChanging: true, stepNumber: 1 },
     () => {},
 ]);
@@ -81,53 +81,67 @@ function App() {
                     credentials: "include",
                     method: "GET",
                 })
-                    .then(data => {
+                    .then((data) => {
                         if (data.ok) {
                             return data.json();
                         }
                         throw new Error();
                     })
-                    .then(dataJson => setAdminAnalytics(dataJson))
+                    .then((dataJson) => setAdminAnalytics(dataJson))
                     .catch(() => {
-                        setGlobalInfo(globalInfo => ({ ...globalInfo, isAdmin: false }));
+                        setGlobalInfo((globalInfo) => ({
+                            ...globalInfo,
+                            isAdmin: false,
+                        }));
                     });
             })
             .catch(() => {
-                setGlobalInfo(globalInfo => ({ ...globalInfo, isLoggedIn: false, isAdmin: false }));
+                setGlobalInfo((globalInfo) => ({
+                    ...globalInfo,
+                    isLoggedIn: false,
+                    isAdmin: false,
+                }));
             })
-            .finally(() => setGlobalInfo(globalInfo => ({ ...globalInfo, isChanging: false })));
+            .finally(() =>
+                setGlobalInfo((globalInfo) => ({
+                    ...globalInfo,
+                    isChanging: false,
+                })),
+            );
     }, []);
 
     return (
         <>
             <AppContext.Provider value={[globalInfo, setGlobalInfo]}>
                 <BrowserRouter basename="/">
-                {!globalInfo.isChanging && globalInfo.isLoggedIn && <NavBar userInfo={userInfo} />}
+                    {!globalInfo.isChanging && globalInfo.isLoggedIn && (
+                        <NavBar userInfo={userInfo} />
+                    )}
                     <Routes>
-                        <Route
-                            path="/"
-                            element={
-                                <Login />
-                            }
-                            />
+                        <Route path="/" element={<Login />} />
                         <Route path="/register" element={<Signup />} />
                         <Route
                             path="/home"
                             element={<Landing userInfo={userInfo} />}
-                            />
+                        />
                         <Route
                             path="/personalInformation"
                             element={<PersonalInfo />}
-                            />
+                        />
                         <Route
                             path="/financialInformation"
                             element={<FinanceInfo />}
-                            />
+                        />
                         <Route path="/review" element={<Review />} />
                         <Route path="/results" element={<Results />} />
-                        <Route path="/admin" element={<Admin analytics={adminAnalytics}/>} />
+                        <Route
+                            path="/admin"
+                            element={<Admin analytics={adminAnalytics} />}
+                        />
                     </Routes>
-                    {!globalInfo.isChanging && globalInfo.isLoggedIn && <FooterComp />}
+                    {!globalInfo.isChanging && globalInfo.isLoggedIn && (
+                        <FooterComp />
+                    )}
                 </BrowserRouter>
             </AppContext.Provider>
         </>

@@ -57,8 +57,9 @@ const PersonalInfo = () => {
         const body = JSON.stringify({...profile, 
             dateOfBirth: Number(profile.dateOfBirth.replace('/', '').replace('/', '')),
             zipCode: Number(profile.zipCode),
-            ssn: Number(profile.ssn),
+            ssn: Number(profile.ssn.replace("-", "").replace("-", "")),
         });
+
         fetch(backendUrl + "/profile", {
             credentials: "include",
             method: "POST",

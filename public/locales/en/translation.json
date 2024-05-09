@@ -87,5 +87,8 @@
     "stateFrequencies": "State Frequencies",
     "filingStatusFrequencies": "Filing Status Frequencies",
     "incomeFrequencies": "W2 Income Distribution"
+  },
+  "footer": {
+    "contact": "Agency Contact Center"
   }
 }

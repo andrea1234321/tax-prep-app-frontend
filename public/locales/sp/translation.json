@@ -86,5 +86,9 @@
       "stateFrequencies": "Frecuencias del Estados",
       "filingStatusFrequencies": "Frecuencias del Estados de Declaración",
       "incomeFrequencies": "La Distribución de Ingresos del Formulario W2"
+    },
+    "footer": {
+      "contact": "Centro de Contacto de la Agencia"
     }
+    
 }

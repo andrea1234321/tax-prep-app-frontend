@@ -236,7 +236,6 @@ const FinanceInfo = () => {
         .catch(() => console.log("No existing financial information"));
     }, []);
 
-   console.log(new Date().getFullYear())
     return (
         <>
             <main id="main-content">
@@ -402,7 +401,7 @@ const FinanceInfo = () => {
                         </Grid>
 
                         <Label htmlFor="prevTaxesPaid">
-                            {t('finance.paid-taxes')} {Number(new Date().getFullYear())-1}
+                            {t('finance.paid-taxes')} {Number(new Date().getFullYear())-2}
                         </Label>
                         <Grid row>
                             <Grid col={6}>

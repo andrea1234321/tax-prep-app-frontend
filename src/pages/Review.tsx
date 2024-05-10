@@ -13,6 +13,10 @@ import {
     ValidationChecklist,
     ButtonGroup,
     Link,
+    IconListItem,
+    IconList,
+    Icon,
+    IconListIcon,
 } from "@trussworks/react-uswds";
 import { AppContext, backendUrl } from "../App";
 import { useNavigate } from "react-router-dom";
@@ -265,7 +269,7 @@ const Review = () => {
                                 </p>
                             </div>
                             <div className="grid-row flex-wrap flex-justify">
-                                <p>{t("finance.paid-taxes")}: </p>
+                                <p>{t("finance.paid-taxes")} {Number(new Date().getFullYear()) - 2}: </p>
                                 <p>
                                     ${(finances?.prevTaxesPaid as number) / 100}
                                 </p>
@@ -278,10 +282,24 @@ const Review = () => {
                                     className="usa-button usa-button--outline"
                                     onClick={handleBack}
                                 >
+                                    <IconList>
+                                        <IconListItem>
+                                            <IconListIcon>
+                                                <Icon.NavigateFarBefore />
+                                            </IconListIcon>
+                                        </IconListItem>
+                                    </IconList>
                                     {t("results.back")}
                                 </Link>
                                 <Button onClick={handleSubmit} type="submit">
                                     {t("review.button")}
+                                    <IconList>
+                                        <IconListItem>
+                                            <IconListIcon>
+                                                <Icon.NavigateFarNext />
+                                            </IconListIcon>
+                                        </IconListItem>
+                                    </IconList>
                                 </Button>
                             </ButtonGroup>
                         </CardFooter>

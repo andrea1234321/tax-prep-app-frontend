@@ -14,6 +14,10 @@ import {
     InputPrefix,
     ButtonGroup,
     Link,
+    IconListItem,
+    IconList,
+    Icon,
+    IconListIcon,
 } from "@trussworks/react-uswds";
 
 import SpouseInfromation from "../components/SpouseInformation";
@@ -491,9 +495,25 @@ const FinanceInfo = () => {
                                 className="usa-button usa-button--outline"
                                 onClick={handleBack}
                             >
+                                <IconList>
+                                    <IconListItem>
+                                        <IconListIcon>
+                                            <Icon.NavigateFarBefore />
+                                        </IconListIcon>
+                                    </IconListItem>
+                                </IconList>
                                 {t("results.back")}
                             </Link>
-                            <Button type="submit">{t("finance.button")}</Button>
+                            <Button type="submit">
+                                {t("finance.button")}
+                                <IconList>
+                                    <IconListItem>
+                                        <IconListIcon>
+                                            <Icon.NavigateFarNext />
+                                        </IconListIcon>
+                                    </IconListItem>
+                                </IconList>
+                            </Button>
                         </ButtonGroup>
                     </Fieldset>
                 </Form>

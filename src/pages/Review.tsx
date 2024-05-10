@@ -280,6 +280,7 @@ const Review = () => {
                                 <Link
                                     href="#"
                                     className="usa-button usa-button--outline"
+                                    id="btns"
                                     onClick={handleBack}
                                 >
                                     <IconList>
@@ -291,7 +292,7 @@ const Review = () => {
                                     </IconList>
                                     {t("results.back")}
                                 </Link>
-                                <Button onClick={handleSubmit} type="submit">
+                                <Button onClick={handleSubmit} type="submit" id="btns">
                                     {t("review.button")}
                                     <IconList>
                                         <IconListItem>

@@ -363,6 +363,7 @@ const PersonalInfo = () => {
                             <Link
                                 href="#"
                                 className="usa-button usa-button--outline"
+                                id="btns"
                                 onClick={() => navigate("/home")}
                             >
                                 <IconList>
@@ -374,7 +375,7 @@ const PersonalInfo = () => {
                                 </IconList>
                                 {t("results.back")}
                             </Link>
-                            <Button type="submit">
+                            <Button type="submit" id="btns">
                                 {t("personal.button")}
                                 <IconList>
                                     <IconListItem>

@@ -493,6 +493,7 @@ const FinanceInfo = () => {
                             <Link
                                 href="#"
                                 className="usa-button usa-button--outline"
+                                id="btns"
                                 onClick={handleBack}
                             >
                                 <IconList>
@@ -504,7 +505,7 @@ const FinanceInfo = () => {
                                 </IconList>
                                 {t("results.back")}
                             </Link>
-                            <Button type="submit">
+                            <Button type="submit" id="btns">
                                 {t("finance.button")}
                                 <IconList>
                                     <IconListItem>

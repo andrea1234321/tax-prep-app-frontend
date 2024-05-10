@@ -11,6 +11,10 @@ import {
     ButtonGroup,
     Link,
     CardFooter,
+    IconListItem,
+    IconList,
+    Icon,
+    IconListIcon,
 } from "@trussworks/react-uswds";
 
 const Results = () => {
@@ -69,10 +73,24 @@ const Results = () => {
                                     className="usa-button usa-button--outline"
                                     onClick={handleBack}
                                 >
+                                    <IconList>
+                                        <IconListItem>
+                                            <IconListIcon>
+                                                <Icon.NavigateFarBefore />
+                                            </IconListIcon>
+                                        </IconListItem>
+                                    </IconList>
                                     {t("results.back")}
                                 </Link>
                                 <Button type="submit" onClick={handleFinish}>
                                     {t("results.done")}
+                                    <IconList>
+                                    <IconListItem>
+                                        <IconListIcon>
+                                            <Icon.NavigateFarNext />
+                                        </IconListIcon>
+                                    </IconListItem>
+                                </IconList>
                                 </Button>
                             </ButtonGroup>
                         </CardFooter>

@@ -12,6 +12,10 @@ import {
     TextInputMask,
     ButtonGroup,
     Link,
+    IconList,
+    IconListItem,
+    IconListIcon,
+    Icon,
 } from "@trussworks/react-uswds";
 import { AppContext, backendUrl } from "../App";
 import { useNavigate } from "react-router-dom";
@@ -361,10 +365,24 @@ const PersonalInfo = () => {
                                 className="usa-button usa-button--outline"
                                 onClick={() => navigate("/home")}
                             >
+                                <IconList>
+                                    <IconListItem>
+                                        <IconListIcon>
+                                            <Icon.NavigateFarBefore />
+                                        </IconListIcon>
+                                    </IconListItem>
+                                </IconList>
                                 {t("results.back")}
                             </Link>
                             <Button type="submit">
                                 {t("personal.button")}
+                                <IconList>
+                                    <IconListItem>
+                                        <IconListIcon>
+                                            <Icon.NavigateFarNext />
+                                        </IconListIcon>
+                                    </IconListItem>
+                                </IconList>
                             </Button>
                         </ButtonGroup>
                     </Fieldset>

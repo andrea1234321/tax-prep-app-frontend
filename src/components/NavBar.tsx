@@ -4,7 +4,7 @@ import {
     Title,
     NavDropDownButton,
     Menu,
-    PrimaryNav,
+    PrimaryNav
 } from "@trussworks/react-uswds";
 import { UserInfo, backendUrl, AppContext } from "../App";
 import { useTranslation } from "react-i18next";

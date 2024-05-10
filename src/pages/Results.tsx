@@ -71,6 +71,7 @@ const Results = () => {
                                 <Link
                                     href="#"
                                     className="usa-button usa-button--outline"
+                                    id="btns"
                                     onClick={handleBack}
                                 >
                                     <IconList>
@@ -82,7 +83,7 @@ const Results = () => {
                                     </IconList>
                                     {t("results.back")}
                                 </Link>
-                                <Button type="submit" onClick={handleFinish}>
+                                <Button type="submit" id="btns" onClick={handleFinish}>
                                     {t("results.done")}
                                     <IconList>
                                     <IconListItem>
